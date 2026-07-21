@@ -1,0 +1,63 @@
+name: SAN task
+description: A simple durable work item for the shared network
+labels:
+  - status:ready
+  - authority:A
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        GitHub is the shared public work ledger. Do not include credentials,
+        private memory, confidential material, or owner-private context.
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+      description: What observable result should exist when this is done?
+    validations:
+      required: true
+  - type: dropdown
+    id: owner_team
+    attributes:
+      label: Owner team
+      options:
+        - Sameer + Expert
+        - Srini + Gideon
+        - Harris + Gerri
+        - Aneek + Nemertes
+        - Unclaimed
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: Success condition
+      description: The evidence that will prove completion.
+    validations:
+      required: true
+  - type: textarea
+    id: next_action
+    attributes:
+      label: Next action
+      description: The single next executable action and who owns it.
+    validations:
+      required: true
+  - type: textarea
+    id: blockers
+    attributes:
+      label: Blockers or dependencies
+      description: Write “None” when there are no blockers.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and artifacts
+      description: Links to PRs, files, receipts, or test results. May be empty at creation.
+  - type: checkboxes
+    id: public_boundary
+    attributes:
+      label: Public boundary
+      options:
+        - label: This issue contains no secrets, private memory, confidential material, or owner-private context.
+          required: true
