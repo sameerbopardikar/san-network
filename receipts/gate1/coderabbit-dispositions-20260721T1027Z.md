@@ -1,7 +1,8 @@
 # Gate1 CodeRabbit dispositions (20260721T1027Z)
 
 - Reviewed head (pre-fix): `a49b61331a0cf5344276f19a8c2803e7bcc8f794`
-- Post-fix head: (see latest commit; CI fix removes PyYAML dependency from relation parser)
+- Post-fix head: 
+CI: Actions run 29822408360 success on that SHA
 - CodeRabbit prior review submitted_at: 2026-07-21T10:10:18Z
 
 ## Applied (this commit)
