@@ -1,6 +1,11 @@
-# Gate1 CodeRabbit dispositions (HEAD pending commit)
+# Gate1 CodeRabbit dispositions
 
-Executor: Expert SAN controller (origin idle after tool-ceiling recovery). Not a merge. Gideon independent review still required on post-push HEAD.
+- Reviewed commit (immutable): `5bc5452328bf322698867d8373c29a6b0037beb7`
+- PR: https://github.com/sameerbopardikar/san-network/pull/1
+- Review evidence: CodeRabbit SUCCESS context on head `5bc5452` (submitted 2026-07-21T09:27:07Z); Actions run `29817587990` validate SUCCESS.
+- Executor: Expert SAN controller (origin idle after tool-ceiling recovery). Not a merge.
+- Gideon independent review still required on this SHA and any later HEAD.
+
 
 ## Fixed this cycle (2026-07-21T09:15Z)
 1. All ten concept `## Evidence basis` sections now name exactly the manifest `source_ids` for that artifact (stable ids + display labels).

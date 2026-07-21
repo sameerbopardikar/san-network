@@ -59,8 +59,11 @@ def _semantic_errors(data: object) -> list[str]:
 
 def validation_errors(path: Path) -> list[str]:
     """Return schema and semantic errors for one receipt file."""
-    schema = json.loads(SCHEMA_PATH.read_text())
-    data = json.loads(path.read_text())
+    try:
+        schema = json.loads(SCHEMA_PATH.read_text())
+        data = json.loads(path.read_text())
+    except json.JSONDecodeError as exc:
+        return [f"malformed JSON: {exc.msg} (line {exc.lineno} column {exc.colno})"]
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors = [error.message for error in validator.iter_errors(data)]
     errors.extend(_semantic_errors(data))

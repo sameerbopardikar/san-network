@@ -1,6 +1,11 @@
-# Gate1 CodeRabbit dispositions (HEAD pending commit)
+# Gate1 CodeRabbit dispositions
 
-Executor: Expert (controller recovery). Not a merge. Gideon independent review still required on post-push HEAD.
+- Reviewed commit (immutable): `6922dfb0ba4f1ab321860319786ed7125aee415a`
+- PR: https://github.com/sameerbopardikar/san-network/pull/1
+- Review evidence: CodeRabbit on PR#1 prior to this disposition push; Actions validate run after push.
+- Executor: Expert (controller recovery). Not a merge.
+- Gideon independent review still required on the then-current and any later HEAD.
+
 
 ## Fixed this cycle
 1. `.github/CODEOWNERS` — replace `@Aakashsrini` with authenticated `@AakashSrinivasan`; keep `.coderabbit.yaml` ownership.

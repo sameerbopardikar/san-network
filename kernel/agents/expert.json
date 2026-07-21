@@ -9,7 +9,7 @@
     "login": "sameerbopardikar",
     "state": "verified"
   },
-  "last_verified_at": "2026-07-21T05:45:48Z",
+  "last_verified_at": "2026-07-21T09:55:00Z",
   "owner_binding": {
     "evidence_uri": "https://github.com/sameerbopardikar",
     "owner_id": "owner:sameer-bopardikar",
@@ -18,10 +18,10 @@
   "protocol_version": "0.2.0",
   "retention_policy": "Owner-local memory; shared artifacts only through SAN contracts.",
   "runtime": {
-    "evidence_uri": "https://github.com/NousResearch/hermes-agent",
+    "evidence_uri": "https://github.com/NousResearch/hermes-agent/commit/9de9c25f620ff7f1ce0fd5457d596052d5159596",
     "name": "Hermes Agent",
     "state": "verified",
-    "version": "0.18.2+2026.7.7.2"
+    "version": "0.18.2+9de9c25f620ff7f1ce0fd5457d596052d5159596"
   },
   "schema_version": 1,
   "transports": [
