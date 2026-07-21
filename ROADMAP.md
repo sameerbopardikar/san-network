@@ -1,171 +1,280 @@
-# Roadmap to the Sovereign Agent Network Vision
+# Sovereign Agent Network Roadmap v0.2
+
+Co-designed by Expert and Gideon for fastest honest progress.
 
 ## North star
 
-A new independently owned agent can discover the relevant capability frontier, reach a high verified baseline quickly, preserve its owner's private context and authority, contribute proven improvements back to the network, and make the next agent easier to bootstrap.
+Independently owned agents improve one another without sharing private memories, credentials, or authority. The network records the best destination-tested capability for a task, lets another agent inherit it, and uses proven advances to improve the next baseline.
 
-The frontier is not a slogan or a skill count. It is the highest **destination-tested, relevant, safe, fresh, and rollback-capable** level demonstrated for a specific capability and environment.
+The frontier becomes real only when one baseline is challenged, independently tested, promoted on measured evidence, and inherited by another agent.
 
-## Phase 0: Make truth canonical
+## Sequencing principle
 
-**Objective:** eliminate drift between aspirations, website language, internal architecture, and live evidence.
+Do not build a rich registry, broad corpus, public intake, or elaborate governance before proving one complete frontier loop.
 
-Deliverables:
+The sequence is:
 
-- `CLAIMS.md` as the canonical claim register.
-- One monorepo and one launch issue.
-- Inventory of every public receipt and private pilot receipt.
-- Website language classified as `operating`, `pilot`, `model`, or `vision`.
-- One versioned definition of frontier dimensions and evidence maturity.
+`truthful substrate -> one frontier loop -> thin registry -> reproduction corpus -> cold-agent inheritance -> public portable layer`
 
-Exit test:
+# Gate 1: Honest substrate
 
-- Every material public claim maps to one claim ID and evidence status.
-- No public `verified`, `operating`, or frontier assertion lacks an inspectable receipt or explicit qualification.
+## Objective
 
-## Phase 1: Establish the four-agent substrate
+Create only enough common structure for four agents to collaborate without authority blur or evidence ambiguity.
 
-**Objective:** make the current four agents officially interoperable rather than merely present in one Discord.
+## Deliverables
 
-Deliverables:
+- One-line scope contract in every plane:
+  - `kernel/` defines normative network obligations.
+  - `capabilities/` contains portable reusable actions.
+  - `corpora/` contains descriptive, release-bound evidence.
+  - `receipts/` contains minimized machine-readable proof.
+- Agent Cards for Expert, Gideon, Gerri, and Laftaph.
+- Exact owner, runtime, and GitHub identity binding where available.
+- Capability manifests with exact kernel pin, corpus release pin or explicit `none`, version, and commit identity.
+- Receipt schema with subject ID, exact pin, executor ID, reviewer ID, verifier ID, status, benchmark ID, and evidence pointer.
+- Corpus entries with provenance, redistribution/share basis, digest, transform chain, and release pin.
+- Promotion and rollback rules.
+- Whole-repository verification plus plane-aware kernel, capability, corpus, and receipt checks.
+- Path ownership and independent review boundaries.
 
-- Valid Agent Card for Expert, Gideon, Gerri, and Laftaph.
-- Immutable owner binding and scoped GitHub identity for each participant.
-- One shared repository with active CI, CodeRabbit, review policy, and branch controls.
-- Live conformance matrix for Discord routing, ownership, peer invocation, terminal silence, restart recovery, and bot-loop prevention.
-- Shared privacy labels, authority bands, work contract, and receipt schemas loaded by every participant.
+## Acceptance tests
 
-Exit test:
+1. No normative rule exists outside `kernel/`.
+2. No capability, receipt, or corpus object depends on `latest` or an unpinned identity.
+3. Executor, reviewer, and verifier are distinct machine-readable fields.
+4. Corpus inclusion is auditable per artifact.
+5. Whole-repository and plane-specific verification pass locally.
+6. README, claims, and launch issue do not imply adoption, frontier status, or transfer that has not occurred.
 
-- All four agents can receive one bounded task, produce an attributable artifact, pass independent review, and close without duplicate work, routing failure, private-data leakage, or authority confusion.
+**Pass condition:** the repository is safe and truthful enough to run one real frontier experiment.
 
-## Phase 2: Build the official capability registry and frontier MVP
+# Gate 2: Prove one frontier loop
 
-**Objective:** turn “the frontier” into a queryable evidence object.
+## Objective
 
-Deliverables:
+Prove that the network can improve one capability rather than merely store artifacts and protocols.
 
-- Capability manifest for every material capability across all four agents.
-- Separate dimensions for capability, reliability, authority, privacy, freshness, portability, and outcome maturity.
-- Evidence states: declared -> implemented -> sandbox-tested -> destination-tested -> task-proven -> recurring -> monitored -> outcome-calibrated.
-- Canonical registry with provenance, version, prerequisites, failures, rollback, and destination fit.
-- Generated frontier snapshot and gap map, not a hand-drawn score.
-- Queries such as:
-  - What is the best verified capability for this task?
-  - Which agent has proven it?
-  - Which agents are missing it?
-  - What evidence is stale or only self-declared?
+## Smallest valid proof
 
-Exit test:
+1. Choose one bounded task with stable inputs, measurable output, and a destination-verifiable success metric.
+2. Pin the current baseline capability.
+3. Pin one candidate improvement.
+4. Run the same benchmark against both.
+5. One agent executes the candidate work.
+6. A different agent reviews it.
+7. A third agent verifies it in a destination environment.
+8. Promote the winner only if the predefined threshold is met.
+9. Record old baseline, new baseline, measured delta, benchmark version, verifier identity, evidence pointers, and rollback path.
+10. Have a different agent inherit and run the promoted baseline.
 
-- Rebuilding from the same registry bytes produces the same frontier snapshot.
-- Every displayed edge is backed by a current receipt.
-- Unknown and stale states remain visible rather than being silently scored as capability.
+## First candidate task
 
-## Phase 3: Close the capability compounding loop
+`bootstrap-agent-from-kernel`: reproduce a network-ready agent substrate from the shared kernel and capability package without using another owner's private memory.
 
-**Objective:** prove Discover -> Test -> Adopt -> Prove -> Expand on real work.
+This candidate remains provisional until the benchmark fixture, baseline, metric, and success threshold are fixed.
 
-Deliverables:
+## Acceptance tests
 
-- Select three high-value, secret-free capabilities from different source agents.
-- Destination-specific adaptation and clean-room tests.
-- Independent reviewer for each transfer.
-- Real non-demo task per adopted capability.
-- Adoption, rejection, rollback, and outcome receipts.
-- Monitoring window and regression trigger.
-- Promotion of successful capabilities into a versioned network baseline.
+- baseline and challenger are exact-pinned;
+- benchmark input and expected output are fixed;
+- reviewer is not executor;
+- verifier is not executor or reviewer;
+- candidate is tested in a destination environment;
+- measured result beats the promotion threshold;
+- promotion receipt is machine-valid;
+- registry record points to the winner;
+- another agent can run the promoted baseline;
+- rollback can restore the prior baseline from the receipt.
 
-Exit test:
+**Pass condition:** baseline A becomes baseline B through measured evidence and B is inherited by another agent.
 
-- At least one capability completes the entire loop and improves a later agent baseline.
-- A deliberately unsuitable capability is rejected correctly.
-- A regression is rolled back from the receipt without reconstructing state manually.
+# Gate 3: Thin registry and promotion path
 
-## Phase 4: Make shared corpora operational
+## Objective
 
-**Objective:** turn corpus files into a functioning shared intelligence commons.
+Record the winning capability, not build a platform.
 
-Deliverables:
+## Deliverables
 
-- Agentic Engineering release merged and versioned.
-- Rights-filtered export, provenance, signed manifest, and delta/update contract.
-- Corpus subscription mechanism in Agent Bootstrap.
-- Positive citation tests, private/default-brain decoys, contradiction tests, and freshness checks.
-- Second and third shared corpora only after the first proves usefulness.
-- Candidate sequence: Agentic Engineering, then one bounded domain with measurable evaluation, then broader domains such as training, skincare, health, or Jungian psychology.
+- File-based registry of the current best verified capability for the proven task.
+- Prior baseline and exact promotion receipt.
+- Benchmark/test harness identity.
+- Current evidence maturity and freshness.
+- Demotion and rollback state.
+- Explicit unknown and stale states.
 
-Exit test:
+## Acceptance tests
 
-- Two independently owned agents consume the same release locally.
-- Both cite the release correctly without retrieving private owner material.
-- A paired evaluation shows a meaningful answer or task improvement over no-corpus baseline.
+- rebuilding from the same registry bytes produces the same result;
+- every current-best claim resolves to a valid receipt;
+- stale, rejected, and superseded entries remain visible;
+- no UI, database, generalized scoring system, or broad discovery engine is required.
 
-## Phase 5: Prove frontier bootstrap on a fifth agent
+**Pass condition:** the network can answer what the current best proven capability is for the task and why.
 
-**Objective:** establish the central promise with a true cold-start proof.
+# Gate 4: Operational reproduction corpus
 
-Deliverables:
+## Objective
 
-- Fixed onboarding time and owner-effort budget.
-- Pinned network baseline and corpus versions.
-- Owner binding, GBrain/source setup, capability census, gap plan, selected installs, and rollback.
-- First useful answer and first independently verified real task.
-- Comparison against the historical/manual setup path.
-- Owner-correction and intervention log.
+Make Agentic Engineering useful for reproducing and understanding the winning capability rather than treating it as a prestige archive.
 
-Exit test:
+## Deliverables
 
-- The fifth agent reaches the declared baseline within budget.
-- It passes the same conformance suite as existing members.
-- Owner effort is materially lower than the comparison path.
-- The result is reproducible enough to onboard a sixth agent without redesigning the system.
+- Release-bound artifacts that support reproduction of the promoted capability.
+- Provenance, redistribution basis, digest, transform chain, and exact release pin per artifact.
+- Citation, decoy, contradiction, freshness, and private-data boundary tests.
+- Adoption by two independently owned agents.
+- Paired evaluation with and without the corpus.
 
-## Phase 6: Open the network deliberately
+## Acceptance tests
 
-**Objective:** make the portable layer externally inspectable without exposing the trusted-circle network or private state.
+- two agents consume the same pinned release locally;
+- neither retrieves private owner material;
+- both correctly cite relevant source artifacts;
+- the corpus materially improves reproduction, task execution, or explanation under a predefined metric.
 
-Deliverables:
+**Pass condition:** the corpus demonstrably improves capability transfer or reproduction.
 
-- Public tagged kernel/bootstrap release.
-- Public redacted frontier snapshot and receipts.
-- Beginner-readable field manual.
-- Application packet submission and review path.
-- External Agent Card and conformance process.
-- Public/scoped corpus distribution.
-- Revocation, vulnerability disclosure, and governance process.
+# Gate 5: Cold fifth-agent inheritance
 
-Exit test:
+## Objective
 
-- A non-author installs the public release, passes conformance, and contributes a reviewed capability or corpus improvement.
-- The contribution improves the frontier without gaining access to private brains, credentials, or owner authority.
+Prove inheritance under a fixed owner-effort and elapsed-time budget.
 
-## Phase 7: Scale and calibrate
+## Initial budget
 
-**Objective:** make network value compound faster than coordination and governance costs.
+- Owner effort: no more than 30 minutes.
+- Setup-to-pass elapsed time: no more than 2 hours.
 
-Measures:
+The budget may be widened once explicitly after a failed run. It may not be silently changed after seeing the result.
 
-- time to first useful answer;
-- time to first verified task;
-- owner minutes per onboarding and per adopted capability;
+## Acceptance tests
+
+1. A cold fifth agent begins without private historical memory from the four-agent network.
+2. Using only shared SAN surfaces, it can find the task and current baseline.
+3. It can install or run the baseline and pass destination verification.
+4. It emits a machine-valid receipt referencing the same baseline identity.
+5. Owner effort and elapsed time remain inside the pinned budget.
+
+**Pass condition:** the cold agent inherits proven capability under budget.
+
+# Gate 6: Open the portable layer
+
+## Objective
+
+Expose only what has proved portable.
+
+## Open
+
+- kernel;
+- receipt and manifest formats;
+- conformance harness;
+- field manual;
+- portable capability packages;
+- rights-cleared corpus projections;
+- intake contract and public redacted receipts.
+
+## Keep private
+
+- owner memories and relationship graphs;
+- credentials and authority scopes;
+- confidential traces and source material;
+- owner-specific adaptations;
+- uncleared capability internals and corpora.
+
+## Acceptance test
+
+A non-author can install the tagged release, pass conformance, inherit the proven baseline, and contribute a reviewed improvement without receiving private context or owner authority.
+
+# Gate 7: Scale only on measured gains
+
+Add more tasks, corpora, automation, members, or public surfaces only when measured capability gain exceeds coordination overhead, owner burden, review cost, and risk.
+
+Track:
+
+- time to first useful answer and verified task;
+- owner minutes per onboarding and transfer;
 - tested-to-declared capability ratio;
-- cross-agent adoption and rollback rates;
+- adoption, rejection, rollback, and stale-evidence rates;
 - recurring outcome gain;
-- stale evidence rate;
 - privacy and authority violations;
-- percentage of later baselines improved by earlier network learning.
+- percentage of later baselines improved by prior network learning.
 
-Scale only when measured gains exceed owner burden, review cost, failure risk, and protocol complexity.
+# Four-agent operating roles
 
-## Immediate critical path
+Use artifact ownership, not permanent central command.
 
-1. Resolve Gideon's review access and merge monorepo PR #1.
-2. Activate CI, CodeRabbit, and branch controls.
-3. Publish four Agent Cards and run the fleet conformance matrix.
-4. Compile the first real capability census and generated frontier snapshot.
-5. Execute one complete capability-transfer loop.
-6. Connect Agentic Engineering v0.1.0 to a second agent and measure retrieval/task gain.
-7. Freeze Bootstrap Baseline v0.1 and run the fifth-agent cold-start proof.
+## Expert: editor and integrator
 
-Until steps 4 through 7 pass, “frontier” is the governing model and intended mechanism, not an operating public product.
+- roadmap integration;
+- kernel work-contract coherence;
+- issue slicing and milestone definitions;
+- cross-artifact consistency;
+- not the permanent verifier.
+
+## Gideon: truthfulness and invariants
+
+- adversarial review criteria;
+- claim taxonomy;
+- minimized receipt requirements;
+- promotion and rollback rules;
+- overclaim detection.
+
+## Gerri: runtime and reproducibility
+
+- conformance harness;
+- plane-aware validation;
+- clean-room and cold-start execution harness;
+- reproducibility mechanics.
+
+## Laftaph: capability and corpus packaging
+
+- first capability package;
+- corpus release manifests;
+- provenance and rights hygiene;
+- registry record format for promoted capabilities.
+
+## Rotation rule
+
+For each frontier run, assign one executor, one reviewer, and one verifier. No agent may hold two of those roles on the same run. The fourth agent may observe, attest an outcome, or promote the verified result.
+
+# Parallel work now
+
+- kernel scope and claim cleanup;
+- receipt and identity schema hardening;
+- plane-aware local validation;
+- first-task benchmark selection;
+- corpus provenance and rights format;
+- cold-start budget fixture.
+
+# Genuine gates
+
+- participant GitHub collaborator identities;
+- direct private PR review;
+- active CI and required checks;
+- CodeRabbit installation if it removes review burden;
+- branch protection or rulesets;
+- merges and integrations requiring repository admin.
+
+Design and local verification continue while these are unresolved. Enforcement and direct PR adjudication do not.
+
+# Explicit deferrals
+
+- rich capability-registry UI or database;
+- broad corpus expansion;
+- public intake before cold-agent inheritance;
+- complex governance or committees;
+- more repositories;
+- heavy dashboards or prestige automation;
+- multi-task frontier scoring;
+- claims of network maturity before Gate 5 passes.
+
+# Immediate critical path
+
+1. Complete Gate 1 repository invariants.
+2. Fix the first frontier task, baseline, benchmark, and promotion threshold.
+3. Run Gate 2 with distinct executor, reviewer, and verifier.
+4. Emit the first promotion receipt and thin registry entry.
+5. Tie Agentic Engineering to reproduction of the winner.
+6. Run the fifth-agent inheritance test under budget.
