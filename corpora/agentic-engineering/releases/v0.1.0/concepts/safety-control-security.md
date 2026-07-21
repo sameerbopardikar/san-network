@@ -69,7 +69,7 @@ Defenses include:
 - confirmation at consequential boundaries;
 - adversarial evaluation in realistic tool environments.
 
-The current corpus’s AgentDojo evidence adds an executable benchmark lane for testing prompt-injection attacks and defenses in tool-enabled tasks.
+AgentDojo is cited only as a pinned external benchmark reference for prompt-injection attacks and defenses in tool-enabled tasks. This corpus does not claim an immutable, release-bound AgentDojo execution artifact or an adopted benchmark lane.
 
 ## Least privilege and isolation
 

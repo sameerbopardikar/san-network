@@ -193,7 +193,8 @@
         "enum": [
           "derived-only",
           "confidential-source",
-          "secret"
+          "secret",
+          "no-raw-owner-memory"
         ]
       },
       "type": "array",

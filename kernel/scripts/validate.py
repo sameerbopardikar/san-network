@@ -42,6 +42,11 @@ MATURITY_EVIDENCE = {
 }
 
 
+def _norm_digest(value: str) -> str:
+    """Strip the optional sha256: prefix so digests compare by hash bytes."""
+    return value.removeprefix("sha256:")
+
+
 def _identity_registry() -> dict[str, str]:
     """Map verified SAN agent IDs to canonical GitHub principals."""
     registry = {}
@@ -179,8 +184,8 @@ def work_object_errors(
             )
         if (
             data["golden_fixture"]["required"]
-            and item["environment_digest"]
-            != data["golden_fixture"]["environment_digest"]
+            and _norm_digest(item["environment_digest"])
+            != _norm_digest(data["golden_fixture"]["environment_digest"])
         ):
             errors.append(f"{item['kind']} evidence uses the wrong environment digest")
 

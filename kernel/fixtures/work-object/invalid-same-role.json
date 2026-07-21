@@ -105,7 +105,7 @@
       "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
       "uri": "receipts/example/gideon-review.json",
       "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
-      "actor": "agent:gideon",
+      "actor": "agent:expert",
       "timestamp": "2026-07-21T06:15:00Z",
       "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
       "verdict": "go"

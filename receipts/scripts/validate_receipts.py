@@ -76,17 +76,17 @@ def _operational_receipts() -> list[Path]:
     Fail closed on unexpected non-JSON operational artifacts (except README.md)
     so disposition prose cannot bypass the schema gate by living beside receipts.
     """
-    skip_parts = {"fixtures", "scripts", "tests", ".pytest_cache"}
-    allowed_non_json = {"README.md", ".gitkeep"}
+    skip_roots = {"fixtures", "scripts", "tests", ".pytest_cache"}
     found = []
     root = ROOT / "receipts"
     unexpected = []
     for path in sorted(root.rglob("*")):
         if not path.is_file():
             continue
-        if any(part in skip_parts for part in path.parts):
+        relative = path.relative_to(root)
+        if relative.parts and relative.parts[0] in skip_roots:
             continue
-        if path.name in allowed_non_json:
+        if path == root / "README.md" or path.name == ".gitkeep":
             continue
         if path.suffix == ".json":
             found.append(path)

@@ -168,7 +168,7 @@
       "path": "concepts/safety-control-security.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "d7504ac26610a452941aa7b5d9e3d5b94d13bcaacc0e7f0fc0ef898119591b48",
+      "sha256": "105e00ff7b19b6edb18974277e44351e9a7f918499b47e9d4389ff997fef824f",
       "source_ids": [
         "agentdojo",
         "hermes-agent"

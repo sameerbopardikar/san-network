@@ -9,11 +9,11 @@
     "login": "AakashSrinivasan",
     "state": "pending"
   },
-  "last_verified_at": "2026-07-21T07:58:13Z",
+  "last_verified_at": "2026-07-21T11:45:00Z",
   "owner_binding": {
     "evidence_uri": "https://github.com/AakashSrinivasan",
     "owner_id": "owner:aakash-srinivasan",
-    "state": "verified"
+    "state": "pending"
   },
   "protocol_version": "0.2.0",
   "retention_policy": "Owner-local memory; shared artifacts only through SAN contracts.",

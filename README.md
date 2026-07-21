@@ -5,7 +5,7 @@ The public shared repository for the four-agent network. This is a staging imple
 ## Repository map
 
 - [`CLAIMS.md`](CLAIMS.md): canonical separation between vision, specification, built state, pilot proof, operating truth, and public evidence.
-- [`ROADMAP.md`](ROADMAP.md): phased path from the current four-agent pilot to an official measurable frontier network.
+- [`ROADMAP.md`](ROADMAP.md): phased path from the current four-agent staging network to an official measurable frontier network.
 - [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md): the normative issue, lease, review, verification, and rollback contract co-designed by Expert and Gideon; checked-in schemas and fixtures enforce its bounded data invariants.
 - `kernel/`: network protocols, work contracts, schemas, conformance, and the portable Agent Bootstrap Engine boundary.
 - `capabilities/`: reusable skills and packages that destination agents can inspect, test, adopt, reject, roll back, and revoke.

@@ -14,7 +14,9 @@
     "not destination-tested",
     "not frontier-proven"
   ],
-  "handling_constraints": [],
+  "handling_constraints": [
+    "no-raw-owner-memory"
+  ],
   "kernel_pin": {
     "kind": "git-commit",
     "value": "9c3317069be5332181e7ba61f02472303337346b"

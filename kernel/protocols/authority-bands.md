@@ -16,4 +16,4 @@ Credentials, integration or permission changes, spending, production/work system
 
 Credential exchange, raw private-memory pooling, impersonation, owner-control bypass, or undisclosed authority expansion.
 
-A shared repository merge never widens a destination agent's local authority.
+A shared repository merge is not authority to widen a destination agent's local authority. Destination-local policy remains authoritative; machine enforcement of Bands A–D lives in destination runtimes and is not fully encoded in this repository's agent-card schema yet.

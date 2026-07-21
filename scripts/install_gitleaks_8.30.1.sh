@@ -39,6 +39,8 @@ cleanup() { rm -rf "${WORKDIR}"; }
 trap cleanup EXIT
 
 curl --fail --location --silent --show-error \
+  --connect-timeout 15 \
+  --max-time 120 \
   --output "${WORKDIR}/${ASSET}" \
   "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/${ASSET}"
 echo "${SHA256}  ${WORKDIR}/${ASSET}" | sha256sum --check
