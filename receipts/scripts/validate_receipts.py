@@ -71,14 +71,33 @@ def validation_errors(path: Path) -> list[str]:
 
 
 def _operational_receipts() -> list[Path]:
-    """Return committed non-fixture receipt JSON under receipts/."""
+    """Return committed non-fixture receipt JSON under receipts/.
+
+    Fail closed on unexpected non-JSON operational artifacts (except README.md)
+    so disposition prose cannot bypass the schema gate by living beside receipts.
+    """
     skip_parts = {"fixtures", "scripts", "tests", ".pytest_cache"}
+    allowed_non_json = {"README.md", ".gitkeep"}
     found = []
     root = ROOT / "receipts"
-    for path in sorted(root.rglob("*.json")):
+    unexpected = []
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
         if any(part in skip_parts for part in path.parts):
             continue
-        found.append(path)
+        if path.name in allowed_non_json:
+            continue
+        if path.suffix == ".json":
+            found.append(path)
+            continue
+        unexpected.append(path)
+    if unexpected:
+        rel = ", ".join(str(p.relative_to(ROOT)) for p in unexpected)
+        raise SystemExit(
+            "unsupported non-JSON operational receipt artifact(s): "
+            f"{rel}. Move prose dispositions under docs/ or convert to schema-valid JSON."
+        )
     return found
 
 

@@ -69,11 +69,27 @@ class DraftTests(unittest.TestCase):
                 "sha256": "1" * 64,
                 "actor": "agent:expert",
                 "timestamp": "2026-07-21T10:00:00Z",
+                "environment_digest": "2" * 64,
                 "verdict": "pass",
             }
         ]
         # mismatched evidence kind is rejected by contains-items schema
         self.assert_error_mentions(data, "does not contain items matching")
+
+    def test_evidence_requires_environment_digest(self):
+        data = copy.deepcopy(self.manifest)
+        data["evidence_maturity"] = "sandbox-tested"
+        data["evidence"] = [
+            {
+                "kind": "sandbox-tested",
+                "uri": "receipts/sandbox.json",
+                "sha256": "3" * 64,
+                "actor": "agent:expert",
+                "timestamp": "2026-07-21T10:00:00Z",
+                "verdict": "pass",
+            }
+        ]
+        self.assert_error_mentions(data, "environment_digest")
 
     def test_cross_plane_artifact_path_is_rejected(self):
         data = copy.deepcopy(self.manifest)

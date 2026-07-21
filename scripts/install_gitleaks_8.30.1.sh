@@ -4,6 +4,14 @@ set -euo pipefail
 
 VERSION="8.30.1"
 INSTALL_DIR="${GITLEAKS_INSTALL_DIR:-${HOME}/.local/bin}"
+OS_RAW="$(uname -s)"
+case "${OS_RAW}" in
+  Linux) ;;
+  *)
+    echo "unsupported operating system: ${OS_RAW} (linux only)" >&2
+    exit 1
+    ;;
+esac
 ARCH_RAW="$(uname -m)"
 case "${ARCH_RAW}" in
   x86_64|amd64) ARCH="x64" ;;

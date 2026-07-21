@@ -28,5 +28,22 @@ class ReceiptTests(unittest.TestCase):
         self.assertTrue(any("passed benchmark" in error for error in errors))
 
 
+
+    def test_non_json_operational_artifact_fails_closed(self):
+        import tempfile, os, subprocess, sys
+        with tempfile.TemporaryDirectory() as td:
+            # run validator against a fake tree is hard; instead call helper after monkeypatch
+            root = ROOT / "receipts"
+            stray = root / "gate1" / "_tmp_fail_closed_probe.md"
+            try:
+                stray.parent.mkdir(parents=True, exist_ok=True)
+                stray.write_text("probe\n")
+                with self.assertRaises(SystemExit) as ctx:
+                    MODULE._operational_receipts()
+                self.assertIn("unsupported non-JSON", str(ctx.exception))
+            finally:
+                if stray.exists():
+                    stray.unlink()
+
 if __name__ == "__main__":
     unittest.main()

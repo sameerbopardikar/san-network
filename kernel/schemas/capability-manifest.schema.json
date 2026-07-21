@@ -245,6 +245,11 @@
               "go",
               "no-go"
             ]
+          },
+          "environment_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA-256 digest of the exact environment/tooling set used for the evidence event."
           }
         },
         "required": [
@@ -253,7 +258,8 @@
           "sha256",
           "actor",
           "timestamp",
-          "verdict"
+          "verdict",
+          "environment_digest"
         ],
         "type": "object"
       },
