@@ -134,6 +134,18 @@ class ReleaseTests(unittest.TestCase):
             MODULE._parse_iso_utc("2026-07-21T06:00:00+00:00"),
         )
 
+    def test_latest_retrieval_selects_by_utc_instant_not_lexical(self):
+        # Lexically 05:00:00-01:00 < 05:30:00Z, but as UTC instants 06:00Z > 05:30Z.
+        candidates = [
+            ("a", MODULE._parse_iso_utc("2026-07-21T05:30:00Z")),
+            ("b", MODULE._parse_iso_utc("2026-07-21T05:00:00-01:00")),
+        ]
+        latest_id, _ = max(candidates, key=lambda item: item[1])
+        self.assertEqual(latest_id, "b")
+        lexical = max(
+            ["2026-07-21T05:30:00Z", "2026-07-21T05:00:00-01:00"]
+        )
+        self.assertEqual(lexical, "2026-07-21T05:30:00Z")
 
 
 if __name__ == "__main__":

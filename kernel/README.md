@@ -22,7 +22,7 @@ From the repository root:
 
 ```bash
 python kernel/scripts/validate.py
-python -m unittest discover -s kernel/tests -v
+PYTHONPATH=kernel python -m unittest discover -s kernel/tests -v
 ```
 
-Or `cd kernel` and run `python scripts/validate.py` plus `python -m unittest discover -s tests -v`.
+Or `cd kernel` and run `python scripts/validate.py` plus `PYTHONPATH=. python -m unittest discover -s tests -v`.

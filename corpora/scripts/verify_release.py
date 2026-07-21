@@ -277,17 +277,28 @@ def validate_release(release: Path) -> tuple[str, str, int]:
         )
 
     sources = load_provenance(release / "provenance.ndjson")
-    latest_retrieval = max(row["retrieved_at"] for row in sources.values())
+    parsed_retrievals: list[tuple[str, datetime]] = []
+    for source_id, row in sources.items():
+        retrieved_at = row["retrieved_at"]
+        if not isinstance(retrieved_at, str):
+            raise ValueError(f"retrieved_at must be a string for {source_id}")
+        try:
+            parsed_retrievals.append((retrieved_at, _parse_iso_utc(retrieved_at)))
+        except ValueError as exc:
+            raise ValueError(
+                f"provenance retrieved_at must be ISO-8601 for {source_id} "
+                f"(retrieved_at={retrieved_at!r}): {exc}"
+            ) from exc
+    latest_retrieval, latest_dt = max(parsed_retrievals, key=lambda item: item[1])
     released_at = data.get("released_at")
     if not isinstance(released_at, str):
         raise ValueError("released_at must be an ISO-8601 timestamp string")
     try:
         released_dt = _parse_iso_utc(released_at)
-        latest_dt = _parse_iso_utc(latest_retrieval)
     except ValueError as exc:
         raise ValueError(
-            f"released_at / provenance retrieved_at must be ISO-8601 "
-            f"(released_at={released_at!r} latest_retrieval={latest_retrieval!r}): {exc}"
+            f"released_at must be ISO-8601 "
+            f"(released_at={released_at!r}): {exc}"
         ) from exc
     if released_dt <= latest_dt:
         raise ValueError(

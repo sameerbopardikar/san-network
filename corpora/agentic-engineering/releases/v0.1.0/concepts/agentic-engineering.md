@@ -76,7 +76,7 @@ Agents improve when they can observe whether their actions worked. [[concepts/va
 
 Agentic coding applies these ideas to software development: plans become executable prompts, test suites become feedback, worktrees provide isolation, and code review supplies independent judgment. Agentic engineering is broader. The same architecture can govern research, operations, personal administration, knowledge metabolism, or company-building, but each domain needs its own evidence model, validators, and authority boundaries.
 
-The strongest current practitioner formulation in this corpus describes an “agentic layer” around application code and emphasizes reusable workflows, focused agents, and closed feedback loops. That synthesis is captured in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). A longer practitioner trajectory appears in IndyDevDan YouTube Corpus: Operating Synthesis (excluded from this public release candidate and not public verification evidence). These are source-bounded practitioner views, not universal proof.
+Public verification for this distinction rests only on the included, provenance-bound source cards in this release (Claude Code, Hermes Agent, OpenAI Codex, and the evaluation/bench cards listed on this artifact). Excluded practitioner materials—Tactical Agentic Coding and IndyDevDan YouTube corpora—are boundary disclosures only; they are not used here as reconstructable evidence for any substantive claim.
 
 ## What good looks like
 

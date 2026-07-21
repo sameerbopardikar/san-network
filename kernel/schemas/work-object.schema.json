@@ -170,20 +170,15 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "required",
-        "path",
-        "sha256",
-        "schema_version",
-        "environment_digest",
-        "seed",
-        "clock_policy",
-        "network_policy",
-        "normalization",
-        "expected_output_sha256"
+        "required"
       ],
       "properties": {
         "required": {
           "type": "boolean"
+        },
+        "inapplicable_reason": {
+          "type": "string",
+          "minLength": 1
         },
         "path": {
           "type": "string",
@@ -218,7 +213,45 @@
         "expected_output_sha256": {
           "$ref": "#/$defs/sha256"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "required": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "path",
+              "sha256",
+              "schema_version",
+              "environment_digest",
+              "seed",
+              "clock_policy",
+              "network_policy",
+              "normalization",
+              "expected_output_sha256"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "required": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "inapplicable_reason"
+            ]
+          }
+        }
+      ]
     },
     "checks": {
       "type": "object",

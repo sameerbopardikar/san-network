@@ -191,6 +191,22 @@ class SchemaTests(unittest.TestCase):
         }
         self.assertEqual(list(validator.iter_errors(data)), [])
 
+    def test_golden_fixture_required_false_needs_only_reason(self):
+        data = copy.deepcopy(json.loads((WORK_FIXTURE_DIR / "valid.json").read_text()))
+        data["golden_fixture"] = {
+            "required": False,
+            "inapplicable_reason": "no deterministic golden fixture for this work object class",
+        }
+        self.assertEqual(list(self.work_validator.iter_errors(data)), [])
+        bare = {"required": False}
+        self.assertTrue(list(self.work_validator.iter_errors({**data, "golden_fixture": bare})))
+
+    def test_corpus_release_handling_constraints_include_no_raw_owner_memory(self):
+        enum = self.schemas["corpus-release.schema.json"]["properties"][
+            "handling_constraints"
+        ]["items"]["enum"]
+        self.assertIn("no-raw-owner-memory", enum)
+
 
 if __name__ == "__main__":
     unittest.main()

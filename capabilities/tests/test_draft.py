@@ -111,7 +111,10 @@ class DraftTests(unittest.TestCase):
             or "path" in err.message.lower()
             or any("path" in str(p).lower() for p in (err.path or ()))
         ]
-        self.assertTrue(path_errors or self.errors(data), msg="expected path-related error")
+        self.assertTrue(
+            path_errors,
+            msg="expected path-targeted rejection for cross-plane artifact path",
+        )
 
     def test_released_manifest_requires_no_raw_owner_memory_constraint(self):
         data = copy.deepcopy(self.manifest)

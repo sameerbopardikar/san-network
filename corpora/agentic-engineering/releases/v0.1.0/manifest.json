@@ -64,7 +64,7 @@
       "path": "concepts/agentic-engineering.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "dbcbccb7766dcd4ec16b2d7bc1ccdfc39dcf545e2a4bb54f7e8e4769a616d11e",
+      "sha256": "357935cffb33b8861d2e0735aad76b714dba6eed488e229b54cb675684f0cfbc",
       "source_ids": [
         "agentdojo",
         "claude-code",
