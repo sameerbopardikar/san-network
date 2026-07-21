@@ -148,5 +148,35 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual(lexical, "2026-07-21T05:30:00Z")
 
 
+
+    def test_offset_less_timestamp_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "explicit timezone"):
+            MODULE._parse_iso_utc("2026-07-21T05:45:48")
+
+    def test_on_disk_source_card_matches_provenance(self):
+        sources = MODULE.load_provenance(RELEASE / "provenance.ndjson")
+        MODULE.validate_on_disk_source_cards(RELEASE, sources)
+
+    def test_on_disk_source_card_url_drift_is_rejected(self):
+        sources = MODULE.load_provenance(RELEASE / "provenance.ndjson")
+        with tempfile.TemporaryDirectory() as tmp:
+            release = Path(tmp)
+            sources_dir = release / "sources"
+            sources_dir.mkdir()
+            # copy all cards then mutate one after hash would pass
+            import shutil
+            for p in (RELEASE / "sources").glob("*.md"):
+                shutil.copy(p, sources_dir / p.name)
+            target = sources_dir / "hermes-agent.md"
+            body = target.read_text().replace(
+                "https://github.com/NousResearch/hermes-agent",
+                "https://example.invalid/drifted-url",
+                1,
+            )
+            target.write_text(body)
+            with self.assertRaisesRegex(ValueError, "on-disk source card provenance mismatch"):
+                MODULE.validate_on_disk_source_cards(release, sources)
+
+
 if __name__ == "__main__":
     unittest.main()

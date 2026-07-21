@@ -127,6 +127,76 @@ def validate_source_bindings(data: dict, sources: dict[str, dict]) -> None:
                     )
 
 
+SOURCE_CARD_FIELD_MAP = {
+    "URL": "url",
+    "Immutable revision": "revision",
+    "Revision URL": "revision_url",
+    "Retrieved at": "retrieved_at",
+    "Evidence lane": "evidence_lane",
+    "Rights basis": "rights_basis",
+}
+
+
+def _parse_source_card_markdown(text: str) -> dict:
+    """Extract provenance-bound fields from an on-disk source-card Markdown body."""
+    fields: dict[str, object] = {}
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line.startswith("- "):
+            continue
+        body = line[2:].strip()
+        if ":" not in body:
+            continue
+        label, _, value = body.partition(":")
+        label = label.strip()
+        value = value.strip()
+        key = SOURCE_CARD_FIELD_MAP.get(label)
+        if key is None:
+            if label == "Raw third-party body included":
+                lowered = value.lower()
+                if lowered in {"no", "false", "0"}:
+                    fields["included_raw_body"] = False
+                elif lowered in {"yes", "true", "1"}:
+                    fields["included_raw_body"] = True
+                else:
+                    raise ValueError(
+                        f"unparseable included_raw_body value: {value!r}"
+                    )
+            continue
+        fields[key] = value
+    return fields
+
+
+def validate_on_disk_source_cards(release: Path, sources: dict[str, dict]) -> None:
+    """Require each sources/*.md artifact to match its provenance row field-for-field."""
+    required = (
+        "url",
+        "revision",
+        "revision_url",
+        "retrieved_at",
+        "rights_basis",
+        "evidence_lane",
+        "included_raw_body",
+    )
+    for source_id, row in sorted(sources.items()):
+        relative = f"sources/{source_id}.md"
+        path = release / relative
+        if not path.is_file():
+            raise ValueError(f"missing on-disk source card: {relative}")
+        try:
+            card = _parse_source_card_markdown(path.read_text())
+        except ValueError as exc:
+            raise ValueError(f"source card parse failed for {relative}: {exc}") from exc
+        for field in required:
+            if field not in card:
+                raise ValueError(f"source card missing {field} for {relative}")
+            if card[field] != row[field]:
+                raise ValueError(
+                    f"on-disk source card provenance mismatch for {relative}: "
+                    f"{field} card={card[field]!r} provenance={row[field]!r}"
+                )
+
+
 def _front_matter(text: str) -> dict:
     """Parse optional YAML front matter without external YAML deps.
 
@@ -238,13 +308,19 @@ def validate_links(release: Path, artifact_paths: set[str]) -> None:
 
 
 def _parse_iso_utc(value: str) -> datetime:
-    """Parse an ISO-8601 timestamp and normalize to aware UTC."""
+    """Parse an ISO-8601 timestamp with explicit timezone; normalize to UTC.
+
+    Offsets and trailing Z are accepted. Naive (offset-less) timestamps are
+    rejected so provenance cannot silently assume UTC.
+    """
     text = value.strip()
     if text.endswith("Z"):
         text = text[:-1] + "+00:00"
     dt = datetime.fromisoformat(text)
     if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=timezone.utc)
+        raise ValueError(
+            f"ISO-8601 timestamp requires explicit timezone offset or Z: {value!r}"
+        )
     return dt.astimezone(timezone.utc)
 
 
@@ -308,6 +384,7 @@ def validate_release(release: Path) -> tuple[str, str, int]:
     if len(sources) != data["source_count"]:
         raise ValueError("source_count does not match provenance rows")
     validate_source_bindings(data, sources)
+    validate_on_disk_source_cards(release, sources)
     validate_links(release, set(expected))
     return data["corpus_id"], data["version"], len(actual)
 
