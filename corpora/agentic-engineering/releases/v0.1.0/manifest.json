@@ -1,0 +1,119 @@
+{
+  "artifacts": [
+    {
+      "kind": "synthesis",
+      "path": "RELEASE.md",
+      "sha256": "c76debd62fc74693c023ddfd879045549a4a0e59ce271dbcd1e948be2a77b80f"
+    },
+    {
+      "kind": "manifest",
+      "path": "blobs.lock",
+      "sha256": "28ec67ac0e542d2197824f2a0f069e55913321cd68335779d62f8150adee0730"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/agent-lifecycle.md",
+      "sha256": "edb9687f54a6a3625b333d9f8616d3ce0b6b38a9c2fd8b98f8a16b9ca121eac9"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/agentic-engineering.md",
+      "sha256": "e3078babb4fc79dd080ad8c5c65683ac004816d2030e485444af97ea4098670a"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/agentic-layer.md",
+      "sha256": "72399ce100bd7d145cdd3eaf0a764660a3506321fe076ab1471b625f1653bc71"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/context-and-memory.md",
+      "sha256": "bcaa2dc532e4cb8b96c3df4b9bf6547d7e183b211adb8bb07d6a1f2bcd0a6285"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/durable-execution.md",
+      "sha256": "e019ce62fac57cf19431b8e95ae78b615d94d513caf90411e06560b019b49358"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/evaluation-observability.md",
+      "sha256": "be483f28031ec154fa24af205a976f47b3d58f77bee57aa1d95f3023aa70c724"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/multi-agent-orchestration.md",
+      "sha256": "c1d206b6229aad886a042ff5a116cb79cf26d4396cc07b8e22202580a5e20fd8"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/safety-control-security.md",
+      "sha256": "774885e02cc14985cd30772265a80328938d65a31f586f685e2a97ba6d142461"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/validation-feedback-loops.md",
+      "sha256": "fe4700ca6a24823192341fb0ee412118750b2720c0da7a70f3b6bfc1240dd46e"
+    },
+    {
+      "kind": "concept",
+      "path": "concepts/work-ownership.md",
+      "sha256": "36b1ef89308aff7957261be66b5fee8958c035658968514d6c4e77889f5678d3"
+    },
+    {
+      "kind": "manifest",
+      "path": "provenance.ndjson",
+      "sha256": "302e76e93a9eed37fce6db017e8e9da6a66753180a357c0f5c748856e1c0f5ee"
+    },
+    {
+      "kind": "source-card",
+      "path": "sources/agentdojo.md",
+      "sha256": "a93946c2514f727e5d44bc15b0c70085acb7709a45468ce7756bdd62cde13255"
+    },
+    {
+      "kind": "source-card",
+      "path": "sources/claude-code.md",
+      "sha256": "a6bf497ee07b84eb64b3525e2b1252c99194ca460ee1679ac80957fa2f82b5af"
+    },
+    {
+      "kind": "source-card",
+      "path": "sources/cloudevents.md",
+      "sha256": "0dd0c948a8f895dde55cb667539dc48515bc7721cceb9158e529db615049586d"
+    },
+    {
+      "kind": "source-card",
+      "path": "sources/hermes-agent.md",
+      "sha256": "f00fb8d2c6119039c1ff1eea6b93bc7907698afe9c5fd535f6a8624f38061ce9"
+    },
+    {
+      "kind": "source-card",
+      "path": "sources/openai-codex.md",
+      "sha256": "7bcfbcc7d7353afd0b32b14a0741d5be0f1da270e33c2406d4e0fb0663799653"
+    },
+    {
+      "kind": "source-card",
+      "path": "sources/opentelemetry-genai.md",
+      "sha256": "66946cce372a54e7f3d4c39db0234b141b492175d473e6bf2e52446425f8c53f"
+    },
+    {
+      "kind": "source-card",
+      "path": "sources/tau2-bench.md",
+      "sha256": "155cbebe69c9c09a5a65d8846e4207a604642962e288b721111c2584ca50e613"
+    }
+  ],
+  "confidentiality": "network",
+  "corpus_id": "agentic-engineering",
+  "exclusions": [
+    "private course bodies and transcripts",
+    "raw social/video content",
+    "owner-private operational records",
+    "credentials and secrets"
+  ],
+  "external_blobs": [],
+  "released_at": "2026-07-21T00:00:00Z",
+  "rights_policy": "Only network-authored derived material and source pointers to publicly accessible references are included.",
+  "schema_version": 1,
+  "source_count": 7,
+  "title": "Agentic Engineering Network Projection",
+  "version": "0.1.0"
+}

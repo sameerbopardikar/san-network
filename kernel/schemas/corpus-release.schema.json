@@ -1,0 +1,108 @@
+{
+  "$id": "https://san.local/schemas/corpus-release.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "concept",
+              "source-card",
+              "synthesis",
+              "manifest",
+              "eval",
+              "blob-pointer"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "kind"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "confidentiality": {
+      "enum": [
+        "public",
+        "network",
+        "bilateral"
+      ]
+    },
+    "corpus_id": {
+      "pattern": "^[a-z0-9][a-z0-9-]{1,80}$",
+      "type": "string"
+    },
+    "exclusions": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "external_blobs": {
+      "items": {
+        "properties": {
+          "sha256": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uri",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "released_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "rights_policy": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "source_count": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "corpus_id",
+    "version",
+    "title",
+    "confidentiality",
+    "rights_policy",
+    "released_at",
+    "source_count",
+    "artifacts",
+    "exclusions"
+  ],
+  "title": "Corpus Release",
+  "type": "object"
+}

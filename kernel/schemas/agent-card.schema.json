@@ -1,0 +1,86 @@
+{
+  "$id": "https://san.local/schemas/agent-card.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{1,62}$",
+      "type": "string"
+    },
+    "authority_profile": {
+      "enum": [
+        "recommend-only",
+        "band-a",
+        "band-b",
+        "custom"
+      ]
+    },
+    "capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "display_name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "last_verified_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "owner_id": {
+      "minLength": 3,
+      "type": "string"
+    },
+    "protocol_version": {
+      "type": "string"
+    },
+    "public_key": {
+      "type": "string"
+    },
+    "retention_policy": {
+      "type": "string"
+    },
+    "runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "transports": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "agent_id",
+    "display_name",
+    "owner_id",
+    "runtime",
+    "protocol_version",
+    "transports",
+    "authority_profile",
+    "retention_policy"
+  ],
+  "title": "Agent Card",
+  "type": "object"
+}

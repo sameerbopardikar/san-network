@@ -1,0 +1,7 @@
+{"evidence_lane": "canonical", "included_raw_body": false, "rights_basis": "public repository", "source_id": "hermes-agent", "url": "https://github.com/NousResearch/hermes-agent"}
+{"evidence_lane": "canonical", "included_raw_body": false, "rights_basis": "public repository", "source_id": "openai-codex", "url": "https://github.com/openai/codex"}
+{"evidence_lane": "canonical", "included_raw_body": false, "rights_basis": "public repository", "source_id": "claude-code", "url": "https://github.com/anthropics/claude-code"}
+{"evidence_lane": "security-evaluation", "included_raw_body": false, "rights_basis": "MIT repository", "source_id": "agentdojo", "url": "https://github.com/ethz-spylab/agentdojo"}
+{"evidence_lane": "evaluation", "included_raw_body": false, "rights_basis": "public repository", "source_id": "tau2-bench", "url": "https://github.com/sierra-research/tau2-bench"}
+{"evidence_lane": "foundational", "included_raw_body": false, "rights_basis": "public specification", "source_id": "cloudevents", "url": "https://github.com/cloudevents/spec"}
+{"evidence_lane": "foundational", "included_raw_body": false, "rights_basis": "public specification", "source_id": "opentelemetry-genai", "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/"}

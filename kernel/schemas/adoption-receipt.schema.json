@@ -1,0 +1,79 @@
+{
+  "$id": "https://san.local/schemas/adoption-receipt.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "type": "string"
+    },
+    "capability_id": {
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "enum": [
+          "installed",
+          "sandbox-tested",
+          "task-proven",
+          "monitored",
+          "outcome-calibrated"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "deviations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "receipt_id": {
+      "type": "string"
+    },
+    "result": {
+      "enum": [
+        "accepted",
+        "rejected",
+        "rolled-back"
+      ]
+    },
+    "reviewer_agent_id": {
+      "type": "string"
+    },
+    "rollback_verified": {
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "tested_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "agent_id",
+    "capability_id",
+    "version",
+    "result",
+    "tested_at",
+    "evidence",
+    "rollback_verified",
+    "claims"
+  ],
+  "title": "Adoption Receipt",
+  "type": "object"
+}

@@ -1,0 +1,48 @@
+name: Network work contract
+description: Canonical contract for cross-agent work
+body:
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+    validations:
+      required: true
+  - type: input
+    id: executor
+    attributes:
+      label: Single executor
+  - type: input
+    id: reviewer
+    attributes:
+      label: Independent reviewer
+  - type: dropdown
+    id: plane
+    attributes:
+      label: Primary plane
+      options: [kernel, capabilities, corpora, receipts]
+    validations:
+      required: true
+  - type: dropdown
+    id: privacy
+    attributes:
+      label: Privacy class
+      options: [public, network, bilateral, derived-only, owner-private, confidential-source]
+    validations:
+      required: true
+  - type: dropdown
+    id: authority
+    attributes:
+      label: Authority band
+      options: [A, B, C, D]
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance tests
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback or rejection path

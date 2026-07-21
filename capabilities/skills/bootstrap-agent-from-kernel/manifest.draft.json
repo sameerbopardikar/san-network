@@ -1,0 +1,22 @@
+{
+  "authority_band": "A",
+  "capability_id": "bootstrap-agent-from-kernel",
+  "confidentiality": "network",
+  "dependencies": [
+    "network-kernel>=0.1.0",
+    "network-corpora/agentic-engineering>=0.1.0"
+  ],
+  "description": "Compile and test a destination-specific agent baseline from pinned network releases.",
+  "explicit_non_claims": [
+    "not released",
+    "not adopted",
+    "not task-proven"
+  ],
+  "rollback": "Remove the staged package and restore the prior baseline pointer.",
+  "schema_version": 1,
+  "status": "planned-not-released",
+  "tests": [
+    "pending: clean-room conformance"
+  ],
+  "version": "0.1.0"
+}
