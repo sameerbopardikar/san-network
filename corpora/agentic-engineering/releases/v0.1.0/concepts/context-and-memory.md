@@ -86,4 +86,4 @@ Retrieved text is data, not authority. Documents, web pages, transcripts, and to
 
 ## Evidence basis
 
-The context and memory distinctions here are network-authored doctrine. Public corroboration is limited to the pinned Hermes Agent and Claude Code source cards. No excluded private corpus supports a public verification claim.
+This article is network-authored doctrine. Public corroboration is limited to the pinned Claude Code and Hermes Agent source card(s) listed by stable source_id in the release manifest for this artifact (claude-code, hermes-agent). Excluded private or local material is not public verification evidence.

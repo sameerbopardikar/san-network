@@ -100,4 +100,4 @@ The objective is not merely self-correction within one run. It is compounding re
 
 ## Evidence basis
 
-The feedback-loop doctrine here is network-authored synthesis. Public corroboration is limited to the pinned OpenTelemetry, AgentDojo, and tau2-bench source cards. Excluded private implementation references are disclosed as absent and do not support public verification claims.
+This article is network-authored doctrine. Public corroboration is limited to the pinned Claude Code, Hermes Agent, OpenAI Codex, and tau2-bench source card(s) listed by stable source_id in the release manifest for this artifact (claude-code, hermes-agent, openai-codex, tau2-bench). Excluded private or local material is not public verification evidence.

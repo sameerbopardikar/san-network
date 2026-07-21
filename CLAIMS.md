@@ -52,6 +52,7 @@ This register separates vision from operating truth. Public language must use th
 ### SAN-006: The network has a shared corpus commons
 
 - Status: **Built**
+- Evidence boundary: Built scaffold/process evidence only; no immutable conformance receipt yet. Do not treat as operating proof.
 - Evidence: Agentic Engineering release candidate v0.1.0 has provenance and 20 hash-bound artifacts in PR #1.
 - Missing: merge, participant access, local subscription by a second agent, retrieval evaluation, update/delta lifecycle, and measured answer improvement.
 - Official when: two independently owned agents consume the pinned release, pass citation/decoy tests, and demonstrate a measured task or answer improvement.
@@ -66,6 +67,7 @@ This register separates vision from operating truth. Public language must use th
 ### SAN-008: The network has an open-source portable kernel
 
 - Status: **Built**
+- Evidence boundary: Public monorepo and CI on a PR branch are process evidence; tagged release/clean-room install receipts are missing.
 - Evidence: public monorepo PR #1 with schemas, protocols, validators, capability draft, corpus projection, and CodeRabbit review.
 - Missing: completed review remediation, merge, active CI, branch controls, license, tagged release, installation documentation, and external clean-room use.
 - Official when: a tagged public release passes CI and a non-author clean-room install.
@@ -73,6 +75,7 @@ This register separates vision from operating truth. Public language must use th
 ### SAN-009: The public website stages the network model
 
 - Status: **Built**
+- Evidence boundary: Live website is deployment evidence for staging content only; not an immutable operating-network receipt.
 - Evidence: live verified website, live four-agent Discord, bounded bootstrap and transfer pilots.
 - Limit: the frontier, public registry, intake, and compounding baseline are not yet operating products.
 - Public wording rule: describe these as the model and roadmap until the corresponding claims above become official.

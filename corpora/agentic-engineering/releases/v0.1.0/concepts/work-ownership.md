@@ -87,4 +87,4 @@ This distinction prevents false green states where a system reports success beca
 
 ## Evidence basis
 
-The work-ownership doctrine here is network-authored synthesis. Public corroboration is limited to the pinned Claude Code, Hermes Agent, and CloudEvents source cards. Excluded local portfolio or ledger references are not included and do not support public verification claims.
+This article is network-authored doctrine. Public corroboration is limited to the pinned CloudEvents, Hermes Agent, and tau2-bench source card(s) listed by stable source_id in the release manifest for this artifact (cloudevents, hermes-agent, tau2-bench). Excluded private or local material is not public verification evidence.

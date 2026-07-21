@@ -108,4 +108,4 @@ Raw token count, tool-call count, and agent count are activity measures, not suc
 
 ## Evidence basis
 
-The evaluation doctrine here is network-authored synthesis. Public benchmark and observability pointers are the pinned AgentDojo, tau2-bench, and OpenTelemetry source cards included in this release. Raw benchmark bodies and excluded local receipts are not included or claimed as reproduced evidence.
+This article is network-authored doctrine. Public corroboration is limited to the pinned AgentDojo, OpenTelemetry, and tau2-bench source card(s) listed by stable source_id in the release manifest for this artifact (agentdojo, opentelemetry-genai, tau2-bench). Excluded private or local material is not public verification evidence.

@@ -96,4 +96,4 @@ Those can support a durable system, but none is the source of operational truth.
 
 ## Evidence basis
 
-The durability model here is network-authored doctrine. Public corroboration is limited to the pinned CloudEvents, OpenTelemetry, and Hermes Agent source cards. Excluded local implementations are disclosed as absent and do not support public verification claims.
+This article is network-authored doctrine. Public corroboration is limited to the pinned CloudEvents, Hermes Agent, and tau2-bench source card(s) listed by stable source_id in the release manifest for this artifact (cloudevents, hermes-agent, tau2-bench). Excluded private or local material is not public verification evidence.

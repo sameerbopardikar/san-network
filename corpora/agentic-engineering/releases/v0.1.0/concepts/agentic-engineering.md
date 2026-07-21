@@ -95,4 +95,4 @@ The standard is not maximum autonomy. It is **maximum useful autonomy at a demon
 
 ## Evidence basis
 
-This article is network-authored synthesis. Public corroboration is limited to the pinned Hermes Agent, Claude Code, OpenAI Codex, and OpenTelemetry source cards in this release. Excluded private or local material is not public verification evidence.
+This article is network-authored doctrine. Public corroboration is limited to the pinned AgentDojo, Claude Code, CloudEvents, Hermes Agent, OpenAI Codex, OpenTelemetry, and tau2-bench source card(s) listed by stable source_id in the release manifest for this artifact (agentdojo, claude-code, cloudevents, hermes-agent, openai-codex, opentelemetry-genai, tau2-bench). Excluded private or local material is not public verification evidence.

@@ -88,4 +88,4 @@ If the answers exist only in the memory of the human operator or a previous chat
 
 ## Evidence basis
 
-The agentic-layer formulation here is network-authored doctrine. Public corroboration is limited to the pinned Hermes Agent, Claude Code, and OpenAI Codex source cards. Excluded practitioner material is not public verification evidence.
+This article is network-authored doctrine. Public corroboration is limited to the pinned Claude Code, Hermes Agent, and OpenAI Codex source card(s) listed by stable source_id in the release manifest for this artifact (claude-code, hermes-agent, openai-codex). Excluded private or local material is not public verification evidence.

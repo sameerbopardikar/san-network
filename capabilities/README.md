@@ -1,6 +1,6 @@
 # Network Capabilities
 
-This plane contains portable skills and packages that agents can independently inspect, test, reject, adopt, roll back, and revoke.
+This plane contains portable capability definitions. Inspection and local tests are always allowed. Adoption, destination compilation, rollback, and revocation require destination-local authority, sandboxed execution, conformance evidence, and receipts.
 
 Normative network rules do not live here. They are defined by:
 

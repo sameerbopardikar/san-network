@@ -46,7 +46,7 @@
       "path": "concepts/agent-lifecycle.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "ca2c60636652bbfde8d37df894a8f1f062ee361f695763149bd21ab332ac715c",
+      "sha256": "7823716ff0fbbf12f1f2b2ec3b30f62b362d927aa97378dd066700ae93e2ab40",
       "source_ids": [
         "claude-code",
         "hermes-agent",
@@ -64,7 +64,7 @@
       "path": "concepts/agentic-engineering.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "0b74bb56c3a684bdba80751ed5a3445985fee81b9e5620250f7f067cf0688005",
+      "sha256": "dbcbccb7766dcd4ec16b2d7bc1ccdfc39dcf545e2a4bb54f7e8e4769a616d11e",
       "source_ids": [
         "agentdojo",
         "claude-code",
@@ -85,7 +85,7 @@
       "path": "concepts/agentic-layer.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "f7961619b7dda1414bf2a18798df86071c3af93abafa8d953400321dd9ea3443",
+      "sha256": "71e2b77d80d114e07c01051ef086529a2388615519c1b49db72eb75e1aaa72bd",
       "source_ids": [
         "claude-code",
         "hermes-agent",
@@ -102,7 +102,7 @@
       "path": "concepts/context-and-memory.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "31dbcbae8c5c1516648b1eb43ad111ae7cdbb4367adb97b4968606cc6055bc8a",
+      "sha256": "5d1de92f6e76f0a02a058ae8404911ef7eb03dba722efbd8e8c3dbfc97092375",
       "source_ids": [
         "claude-code",
         "hermes-agent"
@@ -118,7 +118,7 @@
       "path": "concepts/durable-execution.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "6de887158f70dd08d203c279a63467ce8b3ccadff5e01b931fbd507f0c3a0d62",
+      "sha256": "4a4d749811e96be77470c6ba7bf86b2a4597b8d4f3bf0fe8c8060a2bf3437ef8",
       "source_ids": [
         "cloudevents",
         "hermes-agent",
@@ -135,7 +135,7 @@
       "path": "concepts/evaluation-observability.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "d9502e36c9581d7684397996f12a503048d29a73c6e6d7f29ba3ba3ad44a0044",
+      "sha256": "ab59bfaf5b415a0660e588ca6f1539f4d48b0d42003faf1caba4ccca2a011b79",
       "source_ids": [
         "agentdojo",
         "opentelemetry-genai",
@@ -152,7 +152,7 @@
       "path": "concepts/multi-agent-orchestration.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "ae4985bad3cb3c91a175922acb5ca400164114b57c17d5e782b2bf00dd9f3b2b",
+      "sha256": "dff75d502f8f15336d8b9a7fe6ec1310e391e07cf18615de5146e797c7a8fd1b",
       "source_ids": [
         "hermes-agent",
         "tau2-bench"
@@ -168,7 +168,7 @@
       "path": "concepts/safety-control-security.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "8a4e88069cf11da047642c7442cd4d355113ea2db3306c8c9781841c8527776b",
+      "sha256": "d7504ac26610a452941aa7b5d9e3d5b94d13bcaacc0e7f0fc0ef898119591b48",
       "source_ids": [
         "agentdojo",
         "hermes-agent"
@@ -184,7 +184,7 @@
       "path": "concepts/validation-feedback-loops.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "7d05f75344263eb450271a352fc8d42948f02ae8fc7a1de50ca80ddd0234aa20",
+      "sha256": "ad7a8e270c03459a944f3fc90f108133cf266cfb427403e56d1f4805902e840c",
       "source_ids": [
         "claude-code",
         "hermes-agent",
@@ -202,7 +202,7 @@
       "path": "concepts/work-ownership.md",
       "release_version": "0.1.0",
       "rights_basis": "network-authored synthesis; no raw third-party body",
-      "sha256": "79987f7146e6a8d7e87261b12958db00789321f64db2f30e66846496c6f333d8",
+      "sha256": "ab60c964459cfba00f6e35eabc57e3b4aaa03cd9d19844c9e253e258a16b38a0",
       "source_ids": [
         "cloudevents",
         "hermes-agent",
@@ -339,6 +339,7 @@
       ]
     }
   ],
+  "audience": "public",
   "corpus_id": "agentic-engineering",
   "exclusions": [
     "private course bodies",
@@ -347,12 +348,11 @@
     "secrets and private memory"
   ],
   "external_blobs": [],
+  "handling_constraints": [],
   "released_at": "2026-07-21T05:45:48Z",
   "rights_policy": "Public-source pointers and network-authored synthesis only; no raw third-party bodies.",
   "schema_version": 1,
   "source_count": 7,
   "title": "Agentic Engineering Network Projection",
-  "version": "0.1.0",
-  "audience": "public",
-  "handling_constraints": []
+  "version": "0.1.0"
 }

@@ -91,4 +91,4 @@ Routine internal work can use recoverable failures and automatic retries. The bo
 
 ## Evidence basis
 
-The safety and control doctrine here is network-authored synthesis. The pinned AgentDojo source card is an included public benchmark pointer and interpretation; the pinned Hermes Agent source card supplies public runtime context. Raw benchmark bodies and excluded private policies are not included or used as public verification evidence.
+This article is network-authored doctrine. Public corroboration is limited to the pinned AgentDojo and Hermes Agent source card(s) listed by stable source_id in the release manifest for this artifact (agentdojo, hermes-agent). Excluded private or local material is not public verification evidence.

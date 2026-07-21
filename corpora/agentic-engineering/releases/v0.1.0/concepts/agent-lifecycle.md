@@ -82,4 +82,4 @@ Recovery uses checkpoints and idempotency to resume safely. It must also detect 
 
 ## Evidence basis
 
-This release candidate proposes the lifecycle decomposition as network-authored doctrine. Public corroboration is limited to the pinned Hermes Agent, Claude Code, and CloudEvents source cards in this release. No excluded local receipt or private practitioner source supports a public verification claim.
+This article is network-authored doctrine. Public corroboration is limited to the pinned Claude Code, Hermes Agent, OpenAI Codex, and tau2-bench source card(s) listed by stable source_id in the release manifest for this artifact (claude-code, hermes-agent, openai-codex, tau2-bench). Excluded private or local material is not public verification evidence.
