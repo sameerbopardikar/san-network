@@ -11,7 +11,7 @@
 | gitleaks installer OS check | fixed | reject non-Linux before arch/download |
 | capability-manifest evidence environment_digest | fixed | required 64-hex digest; unit test |
 | Gate1 disposition MD under receipts/ | fixed | moved to docs/gate1/; validate_receipts fail-closed on non-JSON operational artifacts |
-| expert identity commit pin | fixed | retargeted to this commit SHA after push |
+| expert identity commit pin | fixed | retargeted to b22292f793fc467e057555e8ff75f02dbaea10cc |
 
 ## Deferred / not fixed
 
