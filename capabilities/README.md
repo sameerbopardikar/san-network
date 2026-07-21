@@ -1,13 +1,11 @@
 # Network Capabilities
 
-Portable skills and packages that agents can independently inspect, test, reject, adopt, roll back, and revoke.
+This plane contains portable skills and packages that agents can independently inspect, test, reject, adopt, roll back, and revoke.
 
-## Rules
+Normative network rules do not live here. They are defined by:
 
-- A manifest or PR merge is not adoption.
-- Every package binds exact artifact hashes and deterministic tests.
-- Destination policy always wins.
-- No credentials, owner-private context, or confidential source instances.
-- Maturity advances only through destination evidence.
+- `kernel/protocols/capability-adoption.md`;
+- `kernel/protocols/promotion-and-rollback.md`; and
+- `kernel/schemas/capability-manifest.schema.json`.
 
-The first planned capability is `bootstrap-agent-from-kernel`, which will be published only after the kernel and first corpus release are addressable by immutable version.
+The first planned capability is `bootstrap-agent-from-kernel`. It remains a draft until its exact pins, deterministic tests, destination verification, and release receipt satisfy the kernel contracts.

@@ -1,0 +1,46 @@
+{
+  "benchmark_id": "fixture-bootstrap-benchmark",
+  "benchmark_result": "passed",
+  "benchmark_version": "0.1.0",
+  "candidate_pin": {
+    "kind": "git-commit",
+    "value": "2222222222222222222222222222222222222222"
+  },
+  "claims": [
+    "task-proven"
+  ],
+  "destination_agent_id": "agent:fixture-destination",
+  "deviations": [],
+  "event_type": "promote",
+  "evidence": [
+    "https://example.invalid/san/fixture-evidence"
+  ],
+  "evidence_maturity": "task-proven",
+  "executor_agent_id": "agent:fixture-one-role",
+  "observed_result": "claimed pass",
+  "previous_baseline_pin": {
+    "kind": "git-commit",
+    "value": "1111111111111111111111111111111111111111"
+  },
+  "receipt_id": "receipt:fixture-invalid-same-role",
+  "result": "accepted",
+  "resulting_baseline_pin": {
+    "kind": "git-commit",
+    "value": "2222222222222222222222222222222222222222"
+  },
+  "reviewer_agent_id": "agent:fixture-one-role",
+  "rollback_target_pin": {
+    "kind": "git-commit",
+    "value": "1111111111111111111111111111111111111111"
+  },
+  "rollback_verified": true,
+  "schema_version": 1,
+  "subject_id": "bootstrap-agent-from-kernel",
+  "subject_pin": {
+    "kind": "git-commit",
+    "value": "2222222222222222222222222222222222222222"
+  },
+  "tested_at": "2026-07-21T00:00:00Z",
+  "threshold": "all checks pass",
+  "verifier_agent_id": "agent:fixture-one-role"
+}

@@ -1,7 +1,7 @@
 ---
 title: Agentic Engineering
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The discipline of engineering systems in which probabilistic agents can perform useful work reliably through explicit context, durable ownership, deterministic controls, and evidence-backed evaluation.
 taxonomy_path:
@@ -76,7 +76,7 @@ Agents improve when they can observe whether their actions worked. [[concepts/va
 
 Agentic coding applies these ideas to software development: plans become executable prompts, test suites become feedback, worktrees provide isolation, and code review supplies independent judgment. Agentic engineering is broader. The same architecture can govern research, operations, personal administration, knowledge metabolism, or company-building, but each domain needs its own evidence model, validators, and authority boundaries.
 
-The strongest current practitioner formulation in this corpus describes an “agentic layer” around application code and emphasizes reusable workflows, focused agents, and closed feedback loops. That synthesis is captured in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]]. A longer practitioner trajectory appears in [[synthesis/indydevdan-youtube-operating-synthesis|IndyDevDan YouTube Corpus: Operating Synthesis]]. These are source-bounded practitioner views, not universal proof.
+The strongest current practitioner formulation in this corpus describes an “agentic layer” around application code and emphasizes reusable workflows, focused agents, and closed feedback loops. That synthesis is captured in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). A longer practitioner trajectory appears in IndyDevDan YouTube Corpus: Operating Synthesis (excluded from this public release candidate and not public verification evidence). These are source-bounded practitioner views, not universal proof.
 
 ## What good looks like
 
@@ -95,4 +95,4 @@ The standard is not maximum autonomy. It is **maximum useful autonomy at a demon
 
 ## Evidence basis
 
-This article synthesizes the course-bounded doctrine in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]], the practitioner chronology in [[synthesis/indydevdan-youtube-chronology-doctrine|IndyDevDan: Chronology and Doctrine]], the corpus operating contract in [[index|Agentic Engineering Operating Corpus]], and local proof receipts linked from that index. Claims remain subject to stronger scientific, production, and local evaluation evidence as the corpus expands.
+This article synthesizes the course-bounded doctrine in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence), the practitioner chronology in IndyDevDan: Chronology and Doctrine (excluded from this public release candidate and not public verification evidence), the corpus operating contract in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence), and local proof receipts linked from that index. Claims remain subject to stronger scientific, production, and local evaluation evidence as the corpus expands.

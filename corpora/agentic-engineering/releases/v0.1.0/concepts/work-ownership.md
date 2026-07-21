@@ -1,7 +1,7 @@
 ---
 title: Work Ownership
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The durable assignment of responsibility for advancing, pausing, recovering, or terminating a work object, independent of any single process or conversation.
 taxonomy_path:
@@ -87,4 +87,4 @@ This distinction prevents false green states where a system reports success beca
 
 ## Evidence basis
 
-Work ownership is a central question in [[index|Agentic Engineering Operating Corpus]]. The strongest local evidence comes from the replayable portfolio and shadow-ledger receipts, including [[receipts/2026-07-14-local-proof-portfolio-adapter-v1|Local Proof: Replayable Portfolio Adapter v1]] and [[receipts/2026-07-14-local-proof-shadow-ledger-v1|Local Proof: Durable Shadow Portfolio Ledger v1]]. Practitioner material supplies the out-of-loop workflow framing, but durable ownership requires stronger distributed-systems and local-proof mechanisms than prompt practice alone.
+Work ownership is a central question in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence). The strongest local evidence comes from the replayable portfolio and shadow-ledger receipts, including Local Proof: Replayable Portfolio Adapter v1 (excluded from this public release candidate and not public verification evidence) and Local Proof: Durable Shadow Portfolio Ledger v1 (excluded from this public release candidate and not public verification evidence). Practitioner material supplies the out-of-loop workflow framing, but durable ownership requires stronger distributed-systems and local-proof mechanisms than prompt practice alone.

@@ -1,13 +1,118 @@
 {
   "$id": "https://san.local/schemas/adoption-receipt.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": false,
-  "properties": {
+  "$defs": {
     "agent_id": {
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{1,62}$",
       "type": "string"
     },
-    "capability_id": {
+    "exact_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "git-commit",
+            "manifest-sha256",
+            "release",
+            "none"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "git-commit"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "manifest-sha256"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "release"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "const": "none"
+              }
+            }
+          }
+        }
+      ],
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "benchmark_id": {
+      "pattern": "^[a-z0-9][a-z0-9-]{1,100}$",
       "type": "string"
+    },
+    "benchmark_result": {
+      "enum": [
+        "passed",
+        "failed",
+        "not-run"
+      ]
+    },
+    "benchmark_version": {
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "type": "string"
+    },
+    "candidate_pin": {
+      "$ref": "#/$defs/exact_pin"
     },
     "claims": {
       "items": {
@@ -22,20 +127,55 @@
       "type": "array",
       "uniqueItems": true
     },
+    "destination_agent_id": {
+      "$ref": "#/$defs/agent_id"
+    },
     "deviations": {
       "items": {
         "type": "string"
       },
       "type": "array"
     },
+    "event_type": {
+      "enum": [
+        "adopt",
+        "reject",
+        "promote",
+        "demote",
+        "rollback"
+      ]
+    },
     "evidence": {
       "items": {
+        "format": "uri-reference",
+        "minLength": 1,
         "type": "string"
       },
       "minItems": 1,
       "type": "array"
     },
+    "evidence_maturity": {
+      "enum": [
+        "declared",
+        "installed",
+        "sandbox-tested",
+        "task-proven",
+        "monitored",
+        "outcome-calibrated"
+      ]
+    },
+    "executor_agent_id": {
+      "$ref": "#/$defs/agent_id"
+    },
+    "observed_result": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "previous_baseline_pin": {
+      "$ref": "#/$defs/exact_pin"
+    },
     "receipt_id": {
+      "pattern": "^receipt:[a-z0-9][a-z0-9-]{1,120}$",
       "type": "string"
     },
     "result": {
@@ -45,8 +185,14 @@
         "rolled-back"
       ]
     },
+    "resulting_baseline_pin": {
+      "$ref": "#/$defs/exact_pin"
+    },
     "reviewer_agent_id": {
-      "type": "string"
+      "$ref": "#/$defs/agent_id"
+    },
+    "rollback_target_pin": {
+      "$ref": "#/$defs/exact_pin"
     },
     "rollback_verified": {
       "type": "boolean"
@@ -54,26 +200,52 @@
     "schema_version": {
       "const": 1
     },
+    "subject_id": {
+      "pattern": "^[a-z0-9][a-z0-9-]{1,100}$",
+      "type": "string"
+    },
+    "subject_pin": {
+      "$ref": "#/$defs/exact_pin"
+    },
     "tested_at": {
       "format": "date-time",
       "type": "string"
     },
-    "version": {
+    "threshold": {
+      "minLength": 1,
       "type": "string"
+    },
+    "verifier_agent_id": {
+      "$ref": "#/$defs/agent_id"
     }
   },
   "required": [
     "schema_version",
     "receipt_id",
-    "agent_id",
-    "capability_id",
-    "version",
+    "event_type",
+    "subject_id",
+    "subject_pin",
+    "destination_agent_id",
+    "executor_agent_id",
+    "reviewer_agent_id",
+    "verifier_agent_id",
+    "benchmark_id",
+    "benchmark_version",
+    "benchmark_result",
+    "threshold",
+    "observed_result",
+    "previous_baseline_pin",
+    "candidate_pin",
+    "resulting_baseline_pin",
+    "rollback_target_pin",
     "result",
     "tested_at",
     "evidence",
+    "evidence_maturity",
     "rollback_verified",
-    "claims"
+    "claims",
+    "deviations"
   ],
-  "title": "Adoption Receipt",
+  "title": "Adoption and Promotion Receipt",
   "type": "object"
 }

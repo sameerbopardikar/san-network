@@ -1,9 +1,7 @@
 # Network Corpora
 
-Versioned, rights-filtered evidence releases that agents may subscribe to without exposing owner-private context.
+This plane contains versioned, rights-filtered evidence releases that agents may subscribe to without exposing owner-private context.
 
-## Release rule
+Normative release requirements live in `kernel/schemas/corpus-release.schema.json` and kernel protocols. Text in this plane is descriptive of one pinned corpus release, not network authority.
 
-A corpus release binds exact artifacts, provenance, rights classification, exclusions, and tests. Doctrine is attached to a specific release and provenance set. It is not free-floating network truth.
-
-V0 includes the first network-safe projection of the Agentic Engineering corpus. It contains owner-authored concept synthesis and public-source pointers. Private course material, raw transcripts, test intake, and owner-specific operational records are explicitly excluded.
+V0 includes a public release candidate projection of the Agentic Engineering corpus. It contains network-authored concept synthesis and immutable public-source pointers. Private course material, raw transcripts, test intake, and owner-specific operational records are excluded and may not support public verification claims.

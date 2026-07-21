@@ -1,7 +1,7 @@
 ---
 title: Validation and Feedback Loops
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The checks and corrective cycles that let an agent observe whether its work satisfies the intended contract, repair failures, and rerun until a valid stop condition is reached.
 taxonomy_path:
@@ -100,4 +100,4 @@ The objective is not merely self-correction within one run. It is compounding re
 
 ## Evidence basis
 
-The practitioner doctrine is developed in [[sources/private-practitioner/agentic-engineer-tactical-agentic-coding-close-the-loops|Close the Loops: More Compute, More Confidence]] and synthesized in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]]. Local receipts linked from [[index|Agentic Engineering Operating Corpus]] provide bounded implementation evidence for replay and validation contracts.
+The practitioner doctrine is developed in Close the Loops: More Compute, More Confidence (excluded from this public release candidate and not public verification evidence) and synthesized in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). Local receipts linked from Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence) provide bounded implementation evidence for replay and validation contracts.

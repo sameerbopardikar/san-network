@@ -1,7 +1,7 @@
 ---
 title: Agentic Layer
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The reusable layer of prompts, context contracts, orchestration, policies, validators, and receipts that enables agents to operate an application or workflow reliably.
 taxonomy_path:
@@ -88,4 +88,4 @@ If the answers exist only in the memory of the human operator or a previous chat
 
 ## Evidence basis
 
-The term and its practitioner formulation are developed in [[sources/private-practitioner/agentic-engineer-tactical-agentic-coding-the-agentic-layer|The Agentic Layer]] and synthesized across eight course modules in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]]. The broader evolution from coding tools toward owned harnesses and software factories is documented in [[synthesis/indydevdan-youtube-operating-synthesis|IndyDevDan YouTube Corpus: Operating Synthesis]].
+The term and its practitioner formulation are developed in The Agentic Layer (excluded from this public release candidate and not public verification evidence) and synthesized across eight course modules in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). The broader evolution from coding tools toward owned harnesses and software factories is documented in IndyDevDan YouTube Corpus: Operating Synthesis (excluded from this public release candidate and not public verification evidence).

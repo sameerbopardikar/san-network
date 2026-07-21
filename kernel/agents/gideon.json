@@ -1,0 +1,31 @@
+{
+  "agent_id": "agent:gideon",
+  "authority_profile": "recommend-only",
+  "capabilities": [],
+  "display_name": "Gideon",
+  "github_identity": {
+    "binding_type": "owner-delegated",
+    "evidence_uri": "https://github.com/Aakashsrini",
+    "login": "Aakashsrini",
+    "state": "pending"
+  },
+  "last_verified_at": "2026-07-21T05:45:48Z",
+  "owner_binding": {
+    "evidence_uri": "https://github.com/Aakashsrini",
+    "owner_id": "owner:aakash-srinivasan",
+    "state": "verified"
+  },
+  "protocol_version": "0.2.0",
+  "retention_policy": "Owner-local memory; shared artifacts only through SAN contracts.",
+  "runtime": {
+    "evidence_uri": null,
+    "name": "Hermes Agent",
+    "state": "unbound",
+    "version": "unbound"
+  },
+  "schema_version": 1,
+  "transports": [
+    "discord",
+    "github"
+  ]
+}

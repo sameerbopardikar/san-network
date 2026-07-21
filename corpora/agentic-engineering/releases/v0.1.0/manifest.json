@@ -1,117 +1,355 @@
 {
   "artifacts": [
     {
-      "kind": "synthesis",
+      "kind": "manifest",
+      "origin": "SAN release boundary declaration",
       "path": "RELEASE.md",
-      "sha256": "c76debd62fc74693c023ddfd879045549a4a0e59ce271dbcd1e948be2a77b80f"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored release metadata",
+      "sha256": "ad01dd45adca922ea118fcb7de279febd6c360c262eec9ecee3833db699ca3e6",
+      "source_ids": [
+        "agentdojo",
+        "claude-code",
+        "cloudevents",
+        "hermes-agent",
+        "openai-codex",
+        "opentelemetry-genai",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "summarized release inclusions and exclusions"
+      ]
     },
     {
-      "kind": "manifest",
+      "kind": "blob-pointer",
+      "origin": "SAN external-blob declaration",
       "path": "blobs.lock",
-      "sha256": "28ec67ac0e542d2197824f2a0f069e55913321cd68335779d62f8150adee0730"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored metadata",
+      "sha256": "28ec67ac0e542d2197824f2a0f069e55913321cd68335779d62f8150adee0730",
+      "source_ids": [
+        "agentdojo",
+        "claude-code",
+        "cloudevents",
+        "hermes-agent",
+        "openai-codex",
+        "opentelemetry-genai",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "declared empty external blob set"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/agent-lifecycle.md",
-      "sha256": "edb9687f54a6a3625b333d9f8616d3ce0b6b38a9c2fd8b98f8a16b9ca121eac9"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "746456f7f99d9c73f8082637b8f70dc7c47ffa980a687a91f0fa39f073ff5817",
+      "source_ids": [
+        "claude-code",
+        "hermes-agent",
+        "openai-codex",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/agentic-engineering.md",
-      "sha256": "e3078babb4fc79dd080ad8c5c65683ac004816d2030e485444af97ea4098670a"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "82b8a9753287ecbf19b81ed111aee337b21b0124dd8f29210992ed41ce1ec560",
+      "source_ids": [
+        "agentdojo",
+        "claude-code",
+        "cloudevents",
+        "hermes-agent",
+        "openai-codex",
+        "opentelemetry-genai",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/agentic-layer.md",
-      "sha256": "72399ce100bd7d145cdd3eaf0a764660a3506321fe076ab1471b625f1653bc71"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "da1dbd3c3c2d327deceaab4de9235b53011405eb7780940fa312cba859cc72a7",
+      "source_ids": [
+        "claude-code",
+        "hermes-agent",
+        "openai-codex"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/context-and-memory.md",
-      "sha256": "bcaa2dc532e4cb8b96c3df4b9bf6547d7e183b211adb8bb07d6a1f2bcd0a6285"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "acbf7aeaf7628ddbb5071e7143cd4c7b84fcb5a2bc872d4f33235a7cb2e6b2af",
+      "source_ids": [
+        "claude-code",
+        "hermes-agent"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/durable-execution.md",
-      "sha256": "e019ce62fac57cf19431b8e95ae78b615d94d513caf90411e06560b019b49358"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "4765907740b5d3ebd5eabebbc2d0357775ef4cff21d98fc3e998aa77e551f94a",
+      "source_ids": [
+        "cloudevents",
+        "hermes-agent",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/evaluation-observability.md",
-      "sha256": "be483f28031ec154fa24af205a976f47b3d58f77bee57aa1d95f3023aa70c724"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "69afbf7da143c45dccdea8249b811d428af794c5ecfdb1b444bd3136f131d12c",
+      "source_ids": [
+        "agentdojo",
+        "opentelemetry-genai",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/multi-agent-orchestration.md",
-      "sha256": "c1d206b6229aad886a042ff5a116cb79cf26d4396cc07b8e22202580a5e20fd8"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "b0d9d5732f0c4195215de30d838c0e410f03f8a474427a95dea874a68b3bfe39",
+      "source_ids": [
+        "hermes-agent",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/safety-control-security.md",
-      "sha256": "774885e02cc14985cd30772265a80328938d65a31f586f685e2a97ba6d142461"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "3e60f8abd7d16d8e868343fb43fa6fa1ac34be1e879938c32fdea2b3de98abb7",
+      "source_ids": [
+        "agentdojo",
+        "hermes-agent"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/validation-feedback-loops.md",
-      "sha256": "fe4700ca6a24823192341fb0ee412118750b2720c0da7a70f3b6bfc1240dd46e"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "f5210ae6c2dee5ccce4f355669d5c8df7f37393d8176db388401e33fcb5c11dd",
+      "source_ids": [
+        "claude-code",
+        "hermes-agent",
+        "openai-codex",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "concept",
+      "origin": "SAN network-authored public synthesis",
       "path": "concepts/work-ownership.md",
-      "sha256": "36b1ef89308aff7957261be66b5fee8958c035658968514d6c4e77889f5678d3"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored synthesis; no raw third-party body",
+      "sha256": "6d3c294e4d5d0a4a334218e46e4a523722dced9188f10d623fb5d9a682aa170e",
+      "source_ids": [
+        "cloudevents",
+        "hermes-agent",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "synthesized from immutable public source pointers",
+        "removed excluded private and owner-local references"
+      ]
     },
     {
       "kind": "manifest",
+      "origin": "SAN normalized provenance ledger",
       "path": "provenance.ndjson",
-      "sha256": "302e76e93a9eed37fce6db017e8e9da6a66753180a357c0f5c748856e1c0f5ee"
+      "release_version": "0.1.0",
+      "rights_basis": "network-authored metadata derived from public source records",
+      "sha256": "e8ca64716c167dfe523a16b0af8adecdd6a7433b3e1d57e3c7907d9f76c744fc",
+      "source_ids": [
+        "agentdojo",
+        "claude-code",
+        "cloudevents",
+        "hermes-agent",
+        "openai-codex",
+        "opentelemetry-genai",
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "normalized public source metadata to NDJSON"
+      ]
     },
     {
       "kind": "source-card",
+      "origin": "SAN normalized upstream metadata pointer",
       "path": "sources/agentdojo.md",
-      "sha256": "a93946c2514f727e5d44bc15b0c70085acb7709a45468ce7756bdd62cde13255"
+      "release_version": "0.1.0",
+      "rights_basis": "public source metadata pointer; no raw third-party body",
+      "sha256": "56c3349c5d991256760c1f50a76c1083d6a40dfa7b4ede62b9b52c7b6e3bc615",
+      "source_ids": [
+        "agentdojo"
+      ],
+      "transform_chain": [
+        "normalized public upstream metadata",
+        "pinned immutable upstream revision"
+      ]
     },
     {
       "kind": "source-card",
+      "origin": "SAN normalized upstream metadata pointer",
       "path": "sources/claude-code.md",
-      "sha256": "a6bf497ee07b84eb64b3525e2b1252c99194ca460ee1679ac80957fa2f82b5af"
+      "release_version": "0.1.0",
+      "rights_basis": "public source metadata pointer; no raw third-party body",
+      "sha256": "c0492717ff7a1c143daa4092718c4c00bd2c0c9bd051b608834feb66611a04e3",
+      "source_ids": [
+        "claude-code"
+      ],
+      "transform_chain": [
+        "normalized public upstream metadata",
+        "pinned immutable upstream revision"
+      ]
     },
     {
       "kind": "source-card",
+      "origin": "SAN normalized upstream metadata pointer",
       "path": "sources/cloudevents.md",
-      "sha256": "0dd0c948a8f895dde55cb667539dc48515bc7721cceb9158e529db615049586d"
+      "release_version": "0.1.0",
+      "rights_basis": "public source metadata pointer; no raw third-party body",
+      "sha256": "cc911345028cf170a430656ddaa97c0fe409f65cf29bca51e4858c5a45fe0c4c",
+      "source_ids": [
+        "cloudevents"
+      ],
+      "transform_chain": [
+        "normalized public upstream metadata",
+        "pinned immutable upstream revision"
+      ]
     },
     {
       "kind": "source-card",
+      "origin": "SAN normalized upstream metadata pointer",
       "path": "sources/hermes-agent.md",
-      "sha256": "f00fb8d2c6119039c1ff1eea6b93bc7907698afe9c5fd535f6a8624f38061ce9"
+      "release_version": "0.1.0",
+      "rights_basis": "public source metadata pointer; no raw third-party body",
+      "sha256": "9a17ea59b1ea85d950a06ea1fe35415cf15c26e4b229279d37f98a9f04b8fbaf",
+      "source_ids": [
+        "hermes-agent"
+      ],
+      "transform_chain": [
+        "normalized public upstream metadata",
+        "pinned immutable upstream revision"
+      ]
     },
     {
       "kind": "source-card",
+      "origin": "SAN normalized upstream metadata pointer",
       "path": "sources/openai-codex.md",
-      "sha256": "7bcfbcc7d7353afd0b32b14a0741d5be0f1da270e33c2406d4e0fb0663799653"
+      "release_version": "0.1.0",
+      "rights_basis": "public source metadata pointer; no raw third-party body",
+      "sha256": "764dd697856913d1ee5c3bf17173fb78ef93419087e369faa652d5d542e08365",
+      "source_ids": [
+        "openai-codex"
+      ],
+      "transform_chain": [
+        "normalized public upstream metadata",
+        "pinned immutable upstream revision"
+      ]
     },
     {
       "kind": "source-card",
+      "origin": "SAN normalized upstream metadata pointer",
       "path": "sources/opentelemetry-genai.md",
-      "sha256": "66946cce372a54e7f3d4c39db0234b141b492175d473e6bf2e52446425f8c53f"
+      "release_version": "0.1.0",
+      "rights_basis": "public source metadata pointer; no raw third-party body",
+      "sha256": "344fdd85318777ab1c64a45d2101231b34dbb54c13f29aae149b49fbf6a2e2a6",
+      "source_ids": [
+        "opentelemetry-genai"
+      ],
+      "transform_chain": [
+        "normalized public upstream metadata",
+        "pinned immutable upstream revision"
+      ]
     },
     {
       "kind": "source-card",
+      "origin": "SAN normalized upstream metadata pointer",
       "path": "sources/tau2-bench.md",
-      "sha256": "155cbebe69c9c09a5a65d8846e4207a604642962e288b721111c2584ca50e613"
+      "release_version": "0.1.0",
+      "rights_basis": "public source metadata pointer; no raw third-party body",
+      "sha256": "289e2ae9ce37c7c3664612a1c73bb2d597adddecd3a0a3ae4ad27994350817a9",
+      "source_ids": [
+        "tau2-bench"
+      ],
+      "transform_chain": [
+        "normalized public upstream metadata",
+        "pinned immutable upstream revision"
+      ]
     }
   ],
   "confidentiality": "public",
   "corpus_id": "agentic-engineering",
   "exclusions": [
-    "private course bodies and transcripts",
-    "raw social/video content",
-    "owner-private operational records",
-    "credentials and secrets"
+    "private course bodies",
+    "raw transcripts",
+    "owner-specific operational receipts",
+    "secrets and private memory"
   ],
   "external_blobs": [],
   "released_at": "2026-07-21T00:00:00Z",
-  "rights_policy": "Only network-authored derived material and source pointers to publicly accessible references are included.",
+  "rights_policy": "Public-source pointers and network-authored synthesis only; no raw third-party bodies.",
   "schema_version": 1,
   "source_count": 7,
   "title": "Agentic Engineering Network Projection",

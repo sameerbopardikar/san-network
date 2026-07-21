@@ -17,18 +17,53 @@
               "blob-pointer"
             ]
           },
+          "origin": {
+            "minLength": 3,
+            "type": "string"
+          },
           "path": {
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+            "type": "string"
+          },
+          "release_version": {
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+            "type": "string"
+          },
+          "rights_basis": {
+            "minLength": 3,
             "type": "string"
           },
           "sha256": {
             "pattern": "^[a-f0-9]{64}$",
             "type": "string"
+          },
+          "source_ids": {
+            "items": {
+              "pattern": "^[a-z0-9][a-z0-9-]{1,100}$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "transform_chain": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
           }
         },
         "required": [
           "path",
           "sha256",
-          "kind"
+          "kind",
+          "source_ids",
+          "origin",
+          "rights_basis",
+          "transform_chain",
+          "release_version"
         ],
         "type": "object"
       },
@@ -54,11 +89,14 @@
     },
     "external_blobs": {
       "items": {
+        "additionalProperties": false,
         "properties": {
           "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
             "type": "string"
           },
           "uri": {
+            "format": "uri",
             "type": "string"
           }
         },
@@ -75,19 +113,22 @@
       "type": "string"
     },
     "rights_policy": {
+      "minLength": 3,
       "type": "string"
     },
     "schema_version": {
       "const": 1
     },
     "source_count": {
-      "minimum": 0,
+      "minimum": 1,
       "type": "integer"
     },
     "title": {
+      "minLength": 3,
       "type": "string"
     },
     "version": {
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
       "type": "string"
     }
   },
@@ -101,7 +142,8 @@
     "released_at",
     "source_count",
     "artifacts",
-    "exclusions"
+    "exclusions",
+    "external_blobs"
   ],
   "title": "Corpus Release",
   "type": "object"

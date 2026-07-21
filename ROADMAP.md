@@ -1,6 +1,6 @@
-# Sovereign Agent Network Roadmap v0.2
+# Sovereign Agent Network Roadmap v0.3
 
-Co-designed by Expert and Gideon for fastest honest progress.
+Co-designed by Expert and Gideon for fastest honest progress. Method v0.3 was adversarially amended by Gideon on 2026-07-21 and is normative in `kernel/protocols/work-method.md`.
 
 ## North star
 
@@ -29,12 +29,13 @@ Create only enough common structure for four agents to collaborate without autho
   - `capabilities/` contains portable reusable actions.
   - `corpora/` contains descriptive, release-bound evidence.
   - `receipts/` contains minimized machine-readable proof.
-- Agent Cards for Expert, Gideon, Gerri, and Laftaph.
+- Agent Cards for Expert, Gideon, Gerri, and Nemertes.
 - Exact owner, runtime, and GitHub identity binding where available.
 - Capability manifests with exact kernel pin, corpus release pin or explicit `none`, version, and commit identity.
 - Receipt schema with subject ID, exact pin, executor ID, reviewer ID, verifier ID, status, benchmark ID, and evidence pointer.
 - Corpus entries with provenance, redistribution/share basis, digest, transform chain, and release pin.
 - Promotion and rollback rules.
+- Versioned work-object schema, writer leases, exact-head evidence invalidation, and finding dispositions.
 - Whole-repository verification plus plane-aware kernel, capability, corpus, and receipt checks.
 - Path ownership and independent review boundaries.
 
@@ -46,6 +47,7 @@ Create only enough common structure for four agents to collaborate without autho
 4. Corpus inclusion is auditable per artifact.
 5. Whole-repository and plane-specific verification pass locally.
 6. README, claims, and launch issue do not imply adoption, frontier status, or transfer that has not occurred.
+7. Work-object fixtures prove pairwise role separation, current-head evidence binding, and maturity evidence requirements.
 
 **Pass condition:** the repository is safe and truthful enough to run one real frontier experiment.
 
@@ -208,7 +210,7 @@ Use artifact ownership, not permanent central command.
 ## Expert: editor and integrator
 
 - roadmap integration;
-- kernel work-contract coherence;
+- work-method coherence;
 - issue slicing and milestone definitions;
 - cross-artifact consistency;
 - not the permanent verifier.
@@ -228,7 +230,7 @@ Use artifact ownership, not permanent central command.
 - clean-room and cold-start execution harness;
 - reproducibility mechanics.
 
-## Laftaph: capability and corpus packaging
+## Nemertes: capability and corpus packaging
 
 - first capability package;
 - corpus release manifests;

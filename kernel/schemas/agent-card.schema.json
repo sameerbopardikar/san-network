@@ -1,6 +1,15 @@
 {
   "$id": "https://san.local/schemas/agent-card.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "binding_state": {
+      "enum": [
+        "verified",
+        "pending",
+        "unbound"
+      ]
+    }
+  },
   "additionalProperties": false,
   "properties": {
     "agent_id": {
@@ -17,6 +26,7 @@
     },
     "capabilities": {
       "items": {
+        "pattern": "^[a-z0-9][a-z0-9-]{1,80}$",
         "type": "string"
       },
       "type": "array",
@@ -26,36 +36,171 @@
       "minLength": 1,
       "type": "string"
     },
+    "github_identity": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_type": {
+          "enum": [
+            "agent-account",
+            "owner-delegated",
+            "unbound"
+          ]
+        },
+        "evidence_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "login": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "$ref": "#/$defs/binding_state"
+        }
+      },
+      "required": [
+        "state",
+        "binding_type",
+        "login",
+        "evidence_uri"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "verified",
+                  "pending"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence_uri": {
+                "format": "uri",
+                "type": "string"
+              },
+              "login": {
+                "pattern": "^[A-Za-z0-9-]{1,39}$",
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unbound"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "binding_type": {
+                "const": "unbound"
+              },
+              "evidence_uri": {
+                "const": null
+              },
+              "login": {
+                "const": null
+              }
+            }
+          }
+        }
+      ],
+      "type": "object"
+    },
     "last_verified_at": {
       "format": "date-time",
       "type": "string"
     },
-    "owner_id": {
-      "minLength": 3,
-      "type": "string"
+    "owner_binding": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "owner_id": {
+          "pattern": "^owner:[a-z0-9][a-z0-9-]{1,80}$",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/$defs/binding_state"
+        }
+      },
+      "required": [
+        "owner_id",
+        "state",
+        "evidence_uri"
+      ],
+      "type": "object"
     },
     "protocol_version": {
-      "type": "string"
-    },
-    "public_key": {
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
       "type": "string"
     },
     "retention_policy": {
+      "minLength": 3,
       "type": "string"
     },
     "runtime": {
       "additionalProperties": false,
       "properties": {
+        "evidence_uri": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "name": {
+          "minLength": 1,
           "type": "string"
         },
+        "state": {
+          "$ref": "#/$defs/binding_state"
+        },
         "version": {
+          "pattern": "^(?:[0-9]+\\.[0-9]+\\.[0-9]+(?:[+.][0-9A-Za-z.-]+)?|unbound)$",
           "type": "string"
         }
       },
       "required": [
         "name",
-        "version"
+        "version",
+        "state",
+        "evidence_uri"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unbound"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence_uri": {
+                "const": null
+              },
+              "version": {
+                "const": "unbound"
+              }
+            }
+          }
+        }
       ],
       "type": "object"
     },
@@ -64,8 +209,14 @@
     },
     "transports": {
       "items": {
-        "type": "string"
+        "enum": [
+          "discord",
+          "github",
+          "slack",
+          "api"
+        ]
       },
+      "minItems": 1,
       "type": "array",
       "uniqueItems": true
     }
@@ -74,12 +225,15 @@
     "schema_version",
     "agent_id",
     "display_name",
-    "owner_id",
+    "owner_binding",
+    "github_identity",
     "runtime",
     "protocol_version",
     "transports",
     "authority_profile",
-    "retention_policy"
+    "retention_policy",
+    "last_verified_at",
+    "capabilities"
   ],
   "title": "Agent Card",
   "type": "object"

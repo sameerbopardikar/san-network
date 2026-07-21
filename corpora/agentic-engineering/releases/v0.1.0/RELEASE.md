@@ -1,10 +1,10 @@
-# Agentic Engineering v0.1.0
+# Agentic Engineering v0.1.0 Release Candidate
 
 ## Included
 
-- Ten owner-authored concept pages describing the initial doctrine map.
-- Seven public-source pointer cards.
-- Machine-readable provenance and exact artifact hashes.
+- Ten network-authored concept pages describing the initial doctrine map.
+- Seven public-source pointer cards pinned to immutable upstream commits.
+- Machine-readable provenance, per-artifact source and rights metadata, and exact artifact hashes.
 
 ## Explicitly excluded
 
@@ -13,4 +13,4 @@
 - Intake tests, private Slack artifacts, and owner-specific operational receipts.
 - Secrets, credentials, private memories, and confidential company material.
 
-This is a network-safe projection, not a byte-for-byte copy of the local corpus.
+Excluded sources may be named in plain text only to disclose the evidence boundary. They cannot support a public verification claim. This is a public release candidate projection, not a byte-for-byte copy of any owner's local corpus and not an adopted network baseline.

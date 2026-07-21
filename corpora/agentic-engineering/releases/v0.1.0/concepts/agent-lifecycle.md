@@ -1,7 +1,7 @@
 ---
 title: Agent Lifecycle
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The ordered states and events through which an agent run moves, from admission and context assembly through action, validation, completion, failure, or recovery.
 taxonomy_path:
@@ -82,4 +82,4 @@ Recovery uses checkpoints and idempotency to resume safely. It must also detect 
 
 ## Evidence basis
 
-Lifecycle decomposition is synthesized from the focused-agent and closed-loop practices in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]], the corpus’s active durable-work questions in [[index|Agentic Engineering Operating Corpus]], and local proof receipts linked there. The current corpus still needs broader production and scientific evidence on long-horizon lifecycle behavior.
+Lifecycle decomposition is synthesized from the focused-agent and closed-loop practices in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence), the corpus’s active durable-work questions in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence), and local proof receipts linked there. The current corpus still needs broader production and scientific evidence on long-horizon lifecycle behavior.

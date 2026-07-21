@@ -1,7 +1,7 @@
 ---
 title: Evaluation and Observability
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The measurement and inspection systems that reveal what agents did, whether the work was correct, how reliably the workflow performs, and when autonomy should expand or contract.
 taxonomy_path:
@@ -108,4 +108,4 @@ Raw token count, tool-call count, and agent count are activity measures, not suc
 
 ## Evidence basis
 
-Evaluation doctrine is synthesized from [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]] and the local proof/evaluation questions in [[index|Agentic Engineering Operating Corpus]]. Prompt-injection benchmark coverage is represented by [[sources/security-evaluation/agentdojo|AgentDojo]]. The self-expanding corpus’s own deterministic evaluation requirements provide an applied example of provenance, freshness, contradiction, retrieval, and lineage checks.
+Evaluation doctrine is synthesized from Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence) and the local proof/evaluation questions in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence). Prompt-injection benchmark coverage is represented by AgentDojo (excluded from this public release candidate and not public verification evidence). The self-expanding corpus’s own deterministic evaluation requirements provide an applied example of provenance, freshness, contradiction, retrieval, and lineage checks.

@@ -1,6 +1,95 @@
 {
   "$id": "https://san.local/schemas/capability-manifest.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "exact_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "git-commit",
+            "manifest-sha256",
+            "release",
+            "none"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "git-commit"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "manifest-sha256"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "release"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "const": "none"
+              }
+            }
+          }
+        }
+      ],
+      "type": "object"
+    }
+  },
   "additionalProperties": false,
   "properties": {
     "artifacts": {
@@ -8,6 +97,7 @@
         "additionalProperties": false,
         "properties": {
           "path": {
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
             "type": "string"
           },
           "sha256": {
@@ -42,11 +132,8 @@
         "derived-only"
       ]
     },
-    "dependencies": {
-      "items": {
-        "type": "string"
-      },
-      "type": "array"
+    "corpus_pin": {
+      "$ref": "#/$defs/exact_pin"
     },
     "description": {
       "minLength": 10,
@@ -62,6 +149,17 @@
         "outcome-calibrated"
       ]
     },
+    "explicit_non_claims": {
+      "items": {
+        "minLength": 3,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "kernel_pin": {
+      "$ref": "#/$defs/exact_pin"
+    },
     "rollback": {
       "minLength": 5,
       "type": "string"
@@ -69,8 +167,17 @@
     "schema_version": {
       "const": 1
     },
+    "status": {
+      "enum": [
+        "planned-not-released",
+        "released",
+        "deprecated",
+        "revoked"
+      ]
+    },
     "tests": {
       "items": {
+        "minLength": 1,
         "type": "string"
       },
       "minItems": 1,
@@ -85,12 +192,32 @@
     "schema_version",
     "capability_id",
     "version",
+    "status",
     "description",
     "confidentiality",
     "authority_band",
-    "artifacts",
+    "kernel_pin",
+    "corpus_pin",
+    "evidence_maturity",
     "tests",
-    "rollback"
+    "rollback",
+    "explicit_non_claims"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "released"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "artifacts"
+        ]
+      }
+    }
   ],
   "title": "Capability Manifest",
   "type": "object"

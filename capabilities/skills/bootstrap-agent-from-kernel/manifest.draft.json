@@ -2,21 +2,27 @@
   "authority_band": "A",
   "capability_id": "bootstrap-agent-from-kernel",
   "confidentiality": "public",
-  "dependencies": [
-    "network-kernel>=0.1.0",
-    "network-corpora/agentic-engineering>=0.1.0"
-  ],
-  "description": "Compile and test a destination-specific agent baseline from pinned network releases.",
+  "corpus_pin": {
+    "kind": "manifest-sha256",
+    "value": "dafb6aa8f41f47bcb4bd7facdcf7e8fac2af478c9e7d207b6e88e58ddf1a43d4"
+  },
+  "description": "Prepare a candidate network-ready agent substrate from exact-pinned public kernel and corpus inputs.",
+  "evidence_maturity": "declared",
   "explicit_non_claims": [
-    "not released",
     "not adopted",
-    "not task-proven"
+    "not released",
+    "not destination-tested",
+    "not frontier-proven"
   ],
-  "rollback": "Remove the staged package and restore the prior baseline pointer.",
+  "kernel_pin": {
+    "kind": "git-commit",
+    "value": "9c3317069be5332181e7ba61f02472303337346b"
+  },
+  "rollback": "Remove the draft manifest and retain the prior destination configuration unchanged.",
   "schema_version": 1,
   "status": "planned-not-released",
   "tests": [
-    "pending: clean-room conformance"
+    "python -m unittest discover -s capabilities/tests -v"
   ],
   "version": "0.1.0"
 }

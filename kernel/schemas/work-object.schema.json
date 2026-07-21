@@ -1,0 +1,319 @@
+{
+  "$id": "https://san.local/schemas/work-object.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "agent_id": {
+      "type": "string",
+      "pattern": "^agent:[a-z0-9][a-z0-9-]{1,62}$"
+    },
+    "sha40": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^(sha256:)?[a-f0-9]{64}$"
+    },
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "title": "SAN Work Object",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "work_id",
+    "repository",
+    "base_sha",
+    "subject_sha",
+    "branch",
+    "objective",
+    "scope",
+    "confidentiality",
+    "rights_basis",
+    "writer_lease",
+    "roles",
+    "golden_fixture",
+    "checks",
+    "rollback",
+    "maturity",
+    "evidence",
+    "findings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "san.work/v0.3"
+    },
+    "work_id": {
+      "type": "string",
+      "pattern": "^github:[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+#[1-9][0-9]*$"
+    },
+    "repository": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://github\\.com/"
+    },
+    "base_sha": {
+      "$ref": "#/$defs/sha40"
+    },
+    "subject_sha": {
+      "$ref": "#/$defs/sha40"
+    },
+    "branch": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._/-]+$"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 10
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["include", "exclude"],
+      "properties": {
+        "include": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "exclude": {
+          "$ref": "#/$defs/nonempty_strings"
+        }
+      }
+    },
+    "confidentiality": {
+      "enum": ["public", "network", "bilateral", "derived-only"]
+    },
+    "rights_basis": {
+      "type": "string",
+      "minLength": 3
+    },
+    "writer_lease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lease_id", "principal", "paths", "generation", "expires_at", "state"],
+      "properties": {
+        "lease_id": {
+          "type": "string",
+          "pattern": "^lease:[a-z0-9][a-z0-9-]{1,100}$"
+        },
+        "principal": {
+          "$ref": "#/$defs/agent_id"
+        },
+        "paths": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "enum": ["active", "released", "expired", "reassigned"]
+        }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coordinator", "executor", "reviewer", "verifier", "merger"],
+      "properties": {
+        "coordinator": {
+          "$ref": "#/$defs/agent_id"
+        },
+        "executor": {
+          "$ref": "#/$defs/agent_id"
+        },
+        "reviewer": {
+          "$ref": "#/$defs/agent_id"
+        },
+        "verifier": {
+          "$ref": "#/$defs/agent_id"
+        },
+        "merger": {
+          "type": "string",
+          "pattern": "^github:[A-Za-z0-9-]+$"
+        }
+      }
+    },
+    "golden_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "path",
+        "sha256",
+        "schema_version",
+        "environment_digest",
+        "seed",
+        "clock_policy",
+        "network_policy",
+        "normalization",
+        "expected_output_sha256"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "clock_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "network_policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_output_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["focused", "full", "secret_scan", "rights_scan", "rollback_test"],
+      "properties": {
+        "focused": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "full": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "secret_scan": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "rights_scan": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "rollback_test": {
+          "$ref": "#/$defs/nonempty_strings"
+        }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_sha", "procedure", "verified"],
+      "properties": {
+        "target_sha": {
+          "$ref": "#/$defs/sha40"
+        },
+        "procedure": {
+          "type": "string",
+          "minLength": 5
+        },
+        "verified": {
+          "type": "boolean"
+        }
+      }
+    },
+    "maturity": {
+      "enum": [
+        "specified",
+        "built",
+        "tested",
+        "independently-reviewed",
+        "destination-verified",
+        "adopted",
+        "monitored",
+        "rolled-back"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "subject_sha", "uri", "sha256", "actor", "timestamp", "environment_digest", "verdict"],
+        "properties": {
+          "kind": {
+            "enum": ["build", "test", "secret-scan", "rights-scan", "coderabbit-review", "independent-review", "destination-verification", "adoption", "monitoring", "rollback"]
+          },
+          "subject_sha": {
+            "$ref": "#/$defs/sha40"
+          },
+          "uri": {
+            "type": "string",
+            "format": "uri-reference",
+            "minLength": 1
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "actor": {
+            "type": "string",
+            "minLength": 3
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "environment_digest": {
+            "$ref": "#/$defs/sha256"
+          },
+          "verdict": {
+            "enum": ["pass", "fail", "abstain", "go", "no-go"]
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "source", "disposition", "evidence_uri"],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._:-]+$"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "disposition": {
+            "enum": ["fixed", "accepted-risk", "false-positive", "deferred-with-owner-and-gate"]
+          },
+          "evidence_uri": {
+            "type": "string",
+            "format": "uri-reference",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

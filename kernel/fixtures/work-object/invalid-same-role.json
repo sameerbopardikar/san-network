@@ -1,0 +1,123 @@
+{
+  "schema_version": "san.work/v0.3",
+  "work_id": "github:sameerbopardikar/san-network#999",
+  "repository": "https://github.com/sameerbopardikar/san-network",
+  "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "branch": "feat/example",
+  "objective": "Prove one bounded capability against a pinned fixture.",
+  "scope": {
+    "include": [
+      "capabilities/example/**"
+    ],
+    "exclude": [
+      "kernel/**",
+      "corpora/**",
+      "receipts/**"
+    ]
+  },
+  "confidentiality": "public",
+  "rights_basis": "original-work",
+  "writer_lease": {
+    "lease_id": "lease:example-001",
+    "principal": "agent:expert",
+    "paths": [
+      "capabilities/example/**"
+    ],
+    "generation": 1,
+    "expires_at": "2026-07-22T00:00:00Z",
+    "state": "active"
+  },
+  "roles": {
+    "coordinator": "agent:expert",
+    "executor": "agent:expert",
+    "reviewer": "agent:expert",
+    "verifier": "agent:nemertes",
+    "merger": "github:sameerbopardikar"
+  },
+  "golden_fixture": {
+    "required": true,
+    "path": "corpora/fixtures/example/v0.1.0/input.json",
+    "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "schema_version": "0.1.0",
+    "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "seed": 1,
+    "clock_policy": "frozen",
+    "network_policy": "disabled",
+    "normalization": "canonical-json-v1",
+    "expected_output_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "checks": {
+    "focused": [
+      "python -m unittest capabilities.tests.test_example"
+    ],
+    "full": [
+      "python scripts/validate_all.py"
+    ],
+    "secret_scan": [
+      "gitleaks detect --source . --no-git --redact"
+    ],
+    "rights_scan": [
+      "python corpora/scripts/verify_release.py"
+    ],
+    "rollback_test": [
+      "git diff --exit-code aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ]
+  },
+  "rollback": {
+    "target_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "procedure": "Revert the subject commit and rerun validation.",
+    "verified": false
+  },
+  "maturity": "independently-reviewed",
+  "evidence": [
+    {
+      "kind": "build",
+      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "uri": "receipts/example/build.json",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "actor": "agent:expert",
+      "timestamp": "2026-07-21T06:00:00Z",
+      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "verdict": "pass"
+    },
+    {
+      "kind": "test",
+      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "uri": "receipts/example/test.json",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "actor": "agent:expert",
+      "timestamp": "2026-07-21T06:05:00Z",
+      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "verdict": "pass"
+    },
+    {
+      "kind": "coderabbit-review",
+      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "uri": "https://github.com/sameerbopardikar/san-network/pull/999",
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "actor": "github:coderabbitai",
+      "timestamp": "2026-07-21T06:10:00Z",
+      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "verdict": "pass"
+    },
+    {
+      "kind": "independent-review",
+      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "uri": "receipts/example/gideon-review.json",
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+      "actor": "agent:gideon",
+      "timestamp": "2026-07-21T06:15:00Z",
+      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "verdict": "go"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "CR-001",
+      "source": "CodeRabbit",
+      "disposition": "fixed",
+      "evidence_uri": "receipts/example/finding-cr-001.json"
+    }
+  ]
+}

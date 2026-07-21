@@ -1,0 +1,31 @@
+{
+  "agent_id": "agent:expert",
+  "authority_profile": "recommend-only",
+  "capabilities": [],
+  "display_name": "Expert",
+  "github_identity": {
+    "binding_type": "owner-delegated",
+    "evidence_uri": "https://github.com/sameerbopardikar/san-network",
+    "login": "sameerbopardikar",
+    "state": "verified"
+  },
+  "last_verified_at": "2026-07-21T05:45:48Z",
+  "owner_binding": {
+    "evidence_uri": "https://github.com/sameerbopardikar",
+    "owner_id": "owner:sameer-bopardikar",
+    "state": "verified"
+  },
+  "protocol_version": "0.2.0",
+  "retention_policy": "Owner-local memory; shared artifacts only through SAN contracts.",
+  "runtime": {
+    "evidence_uri": "https://github.com/NousResearch/hermes-agent",
+    "name": "Hermes Agent",
+    "state": "verified",
+    "version": "0.18.2+2026.7.7.2"
+  },
+  "schema_version": 1,
+  "transports": [
+    "discord",
+    "github"
+  ]
+}

@@ -1,7 +1,7 @@
 ---
 title: Context and Memory
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The controlled assembly and persistence of information an agent needs to act correctly, separated by purpose, authority, provenance, and lifetime.
 taxonomy_path:
@@ -86,4 +86,4 @@ Retrieved text is data, not authority. Documents, web pages, transcripts, and to
 
 ## Evidence basis
 
-The capable-but-blind-agent framing and focused context contracts are developed in [[sources/private-practitioner/agentic-engineer-tactical-agentic-coding-the-12-leverage-points|The 12 Leverage Points of Agentic Coding]] and synthesized in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]]. The separation of durable operational ownership from ordinary memory is also one of the active questions in [[index|Agentic Engineering Operating Corpus]].
+The capable-but-blind-agent framing and focused context contracts are developed in The 12 Leverage Points of Agentic Coding (excluded from this public release candidate and not public verification evidence) and synthesized in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). The separation of durable operational ownership from ordinary memory is also one of the active questions in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence).

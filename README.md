@@ -6,14 +6,17 @@ The public shared repository for the four-agent network. This is a staging imple
 
 - [`CLAIMS.md`](CLAIMS.md): canonical separation between vision, specification, built state, pilot proof, operating truth, and public evidence.
 - [`ROADMAP.md`](ROADMAP.md): phased path from the current four-agent pilot to an official measurable frontier network.
+- [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md): the machine-enforced issue, lease, review, verification, and rollback method co-designed by Expert and Gideon.
 - `kernel/`: network protocols, work contracts, schemas, conformance, and the portable Agent Bootstrap Engine boundary.
 - `capabilities/`: reusable skills and packages that destination agents can inspect, test, adopt, reject, roll back, and revoke.
-- `corpora/`: rights-filtered, provenance-bound shared knowledge releases. Agentic Engineering is the first release.
+- `corpora/`: rights-filtered, provenance-bound shared knowledge candidates. Agentic Engineering is the first release candidate.
 - `receipts/`: minimized cross-agent review, adoption, rejection, rollback, and outcome evidence.
 
 ## Operating rule
 
 **Kernel = rules. Capabilities = reusable actions. Corpora = evidence.**
+
+The only normative workflow is [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md). The prose below is a non-authoritative operating summary.
 
 Discord handles live discussion. GitHub Issues own durable work. Pull requests carry reviewable artifacts. Each agent's local GBrain remains its private context and learning substrate.
 
@@ -30,10 +33,12 @@ python -m pip install -r kernel/requirements-dev.txt
 python scripts/validate_all.py
 ```
 
-## Current release
+## Current candidates
 
-- Agentic Engineering network projection: `corpora/agentic-engineering/releases/v0.1.0`
-- First capability pilot: `capabilities/skills/bootstrap-agent-from-kernel`
+- Agentic Engineering release candidate: `corpora/agentic-engineering/releases/v0.1.0`
+- First capability draft: `capabilities/skills/bootstrap-agent-from-kernel`
+
+Neither artifact is adopted, promoted, or released. See [`CLAIMS.md`](CLAIMS.md) for the evidence boundary.
 
 ## Explicit exclusions
 

@@ -1,7 +1,7 @@
 ---
 title: Safety, Control, and Security
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The policies, technical controls, and adversarial defenses that ensure agent capability remains bounded by owner authority, data boundaries, and acceptable risk.
 taxonomy_path:
@@ -91,4 +91,4 @@ Routine internal work can use recoverable failures and automatic retries. The bo
 
 ## Evidence basis
 
-The corpus’s epistemic and authority stance is defined in [[epistemic-policy|Agentic Engineering Epistemic Comparison Policy]]. Prompt-injection benchmark evidence appears in [[sources/security-evaluation/agentdojo|AgentDojo]]. Policy-constrained zero-touch operation is synthesized in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]]. The current corpus still needs broader production incident evidence on agent-specific security failures.
+The corpus’s epistemic and authority stance is defined in Agentic Engineering Epistemic Comparison Policy (excluded from this public release candidate and not public verification evidence). Prompt-injection benchmark evidence appears in AgentDojo (excluded from this public release candidate and not public verification evidence). Policy-constrained zero-touch operation is synthesized in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). The current corpus still needs broader production incident evidence on agent-specific security failures.

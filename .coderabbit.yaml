@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: en-US
+enable_free_tier: true
+tone_instructions: >-
+  Be direct, technical, and evidence-bound. Distinguish implementation,
+  integration, verification, adoption, and operation. Do not accept claims that
+  outrun immutable receipts or current-byte tests.
+
+reviews:
+  profile: assertive
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  commit_status: true
+  fail_commit_status: false
+  collapse_walkthrough: false
+  changed_files_summary: true
+  assess_linked_issues: true
+  poem: false
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 5
+    drafts: false
+    base_branches:
+      - main
+  path_instructions:
+    - path: "kernel/**"
+      instructions: >-
+        Treat this as the normative trust and governance plane. Check fail-closed
+        authority, exact pins, explicit privacy transitions, pairwise-distinct
+        executor/reviewer/verifier roles, rollback, revocation, and adversarial
+        schema tests. Reject rules that are merely prose when machine enforcement
+        is claimed.
+    - path: "capabilities/**"
+      instructions: >-
+        Check portability, exact dependency pins, destination-local authority,
+        sandbox and rollback contracts, positive and negative tests, and honest
+        maturity labels. A manifest or passing fixture is not adoption or proof.
+    - path: "corpora/**"
+      instructions: >-
+        Check per-artifact provenance, redistribution basis, exact source and
+        release pins, checksums, transform chains, resolved references, and the
+        exclusion of private or confidential source bodies.
+    - path: "receipts/**"
+      instructions: >-
+        Check that minimized receipts bind exact subjects and artifacts, roles
+        are pairwise distinct, evidence is reconstructable, and rollback or
+        rejection remains explicit. Fixtures must never be represented as live
+        operational receipts.
+    - path: "CLAIMS.md"
+      instructions: >-
+        Treat this as the public truth boundary. Every status must use the
+        canonical vocabulary and cite evidence strong enough for that status.
+    - path: ".github/**"
+      instructions: >-
+        Check least privilege, immutable action pins, PR-only change control,
+        required verification, and that automation never substitutes for an
+        independent reviewer or human authority gate.
+
+chat:
+  auto_reply: true

@@ -1,7 +1,7 @@
 ---
 title: Durable Execution
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The mechanisms that keep work identified, owned, recoverable, and safe across model turns, process exits, retries, crashes, and overlapping workers.
 taxonomy_path:
@@ -96,4 +96,4 @@ Those can support a durable system, but none is the source of operational truth.
 
 ## Evidence basis
 
-The corpus’s active durability questions are stated in [[index|Agentic Engineering Operating Corpus]]. Local implementations and replay probes are recorded in [[receipts/2026-07-14-local-proof-shadow-ledger-v1|Local Proof: Durable Shadow Portfolio Ledger v1]] and related receipts linked from the index. Practitioner treatment of closed loops and out-of-loop operation appears in [[sources/private-practitioner/agentic-engineer-tactical-agentic-coding-close-the-loops|Close the Loops]] and [[sources/private-practitioner/agentic-engineer-tactical-agentic-coding-afk-agents|AFK Agents]].
+The corpus’s active durability questions are stated in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence). Local implementations and replay probes are recorded in Local Proof: Durable Shadow Portfolio Ledger v1 (excluded from this public release candidate and not public verification evidence) and related receipts linked from the index. Practitioner treatment of closed loops and out-of-loop operation appears in Close the Loops (excluded from this public release candidate and not public verification evidence) and AFK Agents (excluded from this public release candidate and not public verification evidence).

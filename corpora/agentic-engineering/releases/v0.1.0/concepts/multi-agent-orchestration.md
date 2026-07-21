@@ -1,7 +1,7 @@
 ---
 title: Multi-Agent Orchestration
 type: concept
-article_status: canonical
+article_status: release-synthesis
 status: developing-doctrine
 summary: The decomposition, coordination, and integration of multiple focused agents or workers under explicit context, ownership, authority, and validation contracts.
 taxonomy_path:
@@ -100,4 +100,4 @@ Agent count is not a success metric.
 
 ## Evidence basis
 
-Focused-agent doctrine is developed in [[sources/private-practitioner/agentic-engineer-tactical-agentic-coding-let-your-agents-focus|Let Your Agents Focus]] and synthesized in [[synthesis/tactical-agentic-coding-operating-system|Tactical Agentic Coding: Operating-System Synthesis]]. Practitioner evolution toward orchestrated software factories appears in [[synthesis/indydevdan-youtube-operating-synthesis|IndyDevDan YouTube Corpus: Operating Synthesis]]. Production and scientific evidence on multi-agent advantage remains thinner than practitioner evidence in the current corpus.
+Focused-agent doctrine is developed in Let Your Agents Focus (excluded from this public release candidate and not public verification evidence) and synthesized in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). Practitioner evolution toward orchestrated software factories appears in IndyDevDan YouTube Corpus: Operating Synthesis (excluded from this public release candidate and not public verification evidence). Production and scientific evidence on multi-agent advantage remains thinner than practitioner evidence in the current corpus.
