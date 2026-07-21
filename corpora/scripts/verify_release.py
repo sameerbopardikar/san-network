@@ -5,6 +5,7 @@ import hashlib
 import json
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
@@ -81,15 +82,17 @@ def validate_source_bindings(data: dict, sources: dict[str, dict]) -> None:
     """Require every artifact source ID to resolve to one complete provenance row.
 
     When an artifact embeds ``source_cards``, each card must match the provenance
-    row field-for-field (url, revision, revision_kind, retrieved_at, rights_basis,
-    evidence_lane, included_raw_body). Artifacts that only list ``source_ids`` still
-    require known IDs against the complete provenance table loaded earlier.
+    row field-for-field (url, revision, revision_kind, revision_url, retrieved_at,
+    rights_basis, evidence_lane, included_raw_body) and its ``source_id`` must be
+    listed in that artifact's ``source_ids``. Artifacts that only list
+    ``source_ids`` still require known IDs against the complete provenance table.
     """
     known = set(sources)
     meta_fields = (
         "url",
         "revision",
         "revision_kind",
+        "revision_url",
         "retrieved_at",
         "rights_basis",
         "evidence_lane",
@@ -97,7 +100,8 @@ def validate_source_bindings(data: dict, sources: dict[str, dict]) -> None:
     )
     for artifact in data["artifacts"]:
         path = artifact["path"]
-        unknown = sorted(set(artifact["source_ids"]) - known)
+        declared = set(artifact["source_ids"])
+        unknown = sorted(declared - known)
         if unknown:
             raise ValueError(f"unknown source IDs for {path}: {unknown}")
         cards = artifact.get("source_cards") or []
@@ -105,6 +109,11 @@ def validate_source_bindings(data: dict, sources: dict[str, dict]) -> None:
             source_id = card.get("source_id")
             if source_id not in sources:
                 raise ValueError(f"unknown source card for {path}: {source_id}")
+            if source_id not in declared:
+                raise ValueError(
+                    f"source card not declared in artifact source_ids for {path}: "
+                    f"{source_id}"
+                )
             row = sources[source_id]
             for field in meta_fields:
                 if field not in card:
@@ -172,14 +181,26 @@ def _front_matter(text: str) -> dict:
 
 
 def _resolve_relation_target(target: str, artifact_paths: set[str]) -> bool:
-    """Return True when a relation target resolves inside the release."""
-    cleaned = target.strip().lstrip("./")
-    candidates = {
-        cleaned,
-        f"{cleaned}.md",
-        cleaned[len("concepts/") :] if cleaned.startswith("concepts/") else cleaned,
-    }
-    # also allow bare slug under concepts/
+    """Return True when a normalized same-directory relation target resolves.
+
+    Rejects absolute paths, parent-directory traversal, and the historical
+    ``concepts/`` stripping alias that allowed cross-directory matches. Bare
+    slugs may still resolve under ``concepts/``.
+    """
+    cleaned = target.strip()
+    if not cleaned or cleaned.startswith("/"):
+        return False
+    if chr(92) in cleaned:
+        return False
+    while cleaned.startswith("./"):
+        cleaned = cleaned[2:]
+    parts = Path(cleaned).parts
+    if any(part in {"..", ""} for part in parts):
+        return False
+    cleaned = Path(*parts).as_posix() if parts else ""
+    if not cleaned:
+        return False
+    candidates = {cleaned, f"{cleaned}.md"}
     if "/" not in cleaned:
         candidates.add(f"concepts/{cleaned}.md")
         candidates.add(f"concepts/{cleaned}")
@@ -216,6 +237,17 @@ def validate_links(release: Path, artifact_paths: set[str]) -> None:
                 )
 
 
+def _parse_iso_utc(value: str) -> datetime:
+    """Parse an ISO-8601 timestamp and normalize to aware UTC."""
+    text = value.strip()
+    if text.endswith("Z"):
+        text = text[:-1] + "+00:00"
+    dt = datetime.fromisoformat(text)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
 def validate_release(release: Path) -> tuple[str, str, int]:
     """Validate one release and return corpus ID, version, and artifact count."""
     release = release.resolve()
@@ -247,7 +279,17 @@ def validate_release(release: Path) -> tuple[str, str, int]:
     sources = load_provenance(release / "provenance.ndjson")
     latest_retrieval = max(row["retrieved_at"] for row in sources.values())
     released_at = data.get("released_at")
-    if not isinstance(released_at, str) or released_at <= latest_retrieval:
+    if not isinstance(released_at, str):
+        raise ValueError("released_at must be an ISO-8601 timestamp string")
+    try:
+        released_dt = _parse_iso_utc(released_at)
+        latest_dt = _parse_iso_utc(latest_retrieval)
+    except ValueError as exc:
+        raise ValueError(
+            f"released_at / provenance retrieved_at must be ISO-8601 "
+            f"(released_at={released_at!r} latest_retrieval={latest_retrieval!r}): {exc}"
+        ) from exc
+    if released_dt <= latest_dt:
         raise ValueError(
             f"released_at must be strictly after latest provenance retrieved_at "
             f"(released_at={released_at!r} latest_retrieval={latest_retrieval!r})"

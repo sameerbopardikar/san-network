@@ -87,6 +87,54 @@ class ReleaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "source card metadata mismatch"):
             MODULE.validate_source_bindings(data, sources)
 
+    def test_relation_parent_traversal_is_rejected(self):
+        self.assertFalse(
+            MODULE._resolve_relation_target("../provenance.ndjson", {"provenance.ndjson"})
+        )
+        self.assertFalse(
+            MODULE._resolve_relation_target(
+                "concepts/../sources/x.md", {"sources/x.md", "concepts/x.md"}
+            )
+        )
+
+    def test_source_card_must_be_in_artifact_source_ids(self):
+        data = copy.deepcopy(self.manifest)
+        sources = MODULE.load_provenance(RELEASE / "provenance.ndjson")
+        # force a known source off the artifact's declared list, then attach its card
+        declared = list(data["artifacts"][0]["source_ids"])
+        self.assertGreaterEqual(len(declared), 1)
+        other = declared[-1]
+        data["artifacts"][0]["source_ids"] = declared[:-1] or declared[:0]
+        if not data["artifacts"][0]["source_ids"]:
+            # keep schema/path valid: leave one declared id, use another source as card
+            data["artifacts"][0]["source_ids"] = declared[:1]
+            other = next(sid for sid in sources if sid != declared[0])
+        card = dict(sources[other])
+        data["artifacts"][0]["source_cards"] = [card]
+        with self.assertRaisesRegex(ValueError, "not declared in artifact source_ids"):
+            MODULE.validate_source_bindings(data, sources)
+
+    def test_source_card_revision_url_mismatch_is_rejected(self):
+        data = copy.deepcopy(self.manifest)
+        sources = MODULE.load_provenance(RELEASE / "provenance.ndjson")
+        sid = data["artifacts"][0]["source_ids"][0]
+        card = dict(sources[sid])
+        card["revision_url"] = "https://example.invalid/wrong-revision"
+        data["artifacts"][0]["source_cards"] = [card]
+        with self.assertRaisesRegex(ValueError, "source card metadata mismatch"):
+            MODULE.validate_source_bindings(data, sources)
+
+    def test_released_at_offset_comparison_uses_instants(self):
+        # 05:00-01:00 == 06:00Z; must not sort as strings
+        earlier = MODULE._parse_iso_utc("2026-07-21T05:00:00-01:00")
+        later = MODULE._parse_iso_utc("2026-07-21T06:00:00Z")
+        self.assertEqual(earlier, later)
+        self.assertLess(
+            MODULE._parse_iso_utc("2026-07-21T05:59:59Z"),
+            MODULE._parse_iso_utc("2026-07-21T06:00:00+00:00"),
+        )
+
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -20,6 +20,12 @@ ADVERSARIAL_EXPECTATIONS = {
     ),
     "malformed-json.json": lambda errs: bool(errs),
     "malformed-array.json": lambda errs: bool(errs),
+    "uri-only-evidence.json": lambda errs: any(
+        "structured" in e.lower() or "uri" in e.lower() for e in errs
+    ),
+    "mismatched-evidence-pin.json": lambda errs: any(
+        "subject_pin" in e for e in errs
+    ),
 }
 
 
@@ -40,6 +46,16 @@ class ReceiptTests(unittest.TestCase):
                         pred(errors),
                         msg=f"{path.name} failed for unexpected reasons: {errors}",
                     )
+
+    def test_structured_evidence_required(self):
+        path = ROOT / "receipts" / "fixtures" / "invalid" / "uri-only-evidence.json"
+        errors = MODULE.validation_errors(path)
+        self.assertTrue(any("structured" in error.lower() or "is not of type" in error for error in errors))
+
+    def test_evidence_subject_pin_must_match_receipt(self):
+        path = ROOT / "receipts" / "fixtures" / "invalid" / "mismatched-evidence-pin.json"
+        errors = MODULE.validation_errors(path)
+        self.assertTrue(any("subject_pin" in error for error in errors))
 
     def test_failed_benchmark_cannot_promote(self):
         path = ROOT / "receipts" / "fixtures" / "invalid" / "failed-promotion.json"

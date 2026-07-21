@@ -73,7 +73,7 @@
     {
       "kind": "build",
       "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "uri": "",
+      "uri": "receipts/example/build.json",
       "sha256": "not-a-sha",
       "actor": "agent:expert",
       "timestamp": "2026-07-21T06:00:00Z",

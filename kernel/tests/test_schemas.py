@@ -14,7 +14,7 @@ WORK_FIXTURE_DIR = ROOT / "fixtures" / "work-object"
 
 class SchemaTests(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         cls.schemas = {
             path.name: json.loads(path.read_text())
             for path in SCHEMA_DIR.glob("*.schema.json")
@@ -77,6 +77,14 @@ class SchemaTests(unittest.TestCase):
             work_object_errors(data, self.work_validator),
         )
 
+
+    def test_self_merge_is_rejected(self):
+        data = json.loads((WORK_FIXTURE_DIR / "invalid-self-merge.json").read_text())
+        self.assertIn(
+            "merger must not resolve to the executor identity",
+            work_object_errors(data, self.work_validator),
+        )
+
     def test_stale_head_evidence_is_rejected(self):
         data = json.loads(
             (WORK_FIXTURE_DIR / "invalid-stale-evidence.json").read_text()
@@ -129,7 +137,11 @@ class SchemaTests(unittest.TestCase):
             "rollback_target_pin": {"kind": "none", "value": "none"},
             "result": "accepted",
             "tested_at": "2026-07-21T10:00:00Z",
-            "evidence": ["receipts/example.json"],
+            "evidence": [{
+                "uri": "receipts/example.json",
+                "sha256": "7f227db1653b6b723b07c8f2f6eb488f1f09e2f083ca7a3f5e02bbb274f5ff2e",
+                "subject_pin": pin,
+            }],
             "evidence_maturity": "sandbox-tested",
             "rollback_verified": True,
             "claims": ["installed"],
@@ -166,7 +178,11 @@ class SchemaTests(unittest.TestCase):
             "rollback_target_pin": {"kind": "none", "value": "none"},
             "result": "rolled-back",
             "tested_at": "2026-07-21T10:00:00Z",
-            "evidence": ["receipts/example.json"],
+            "evidence": [{
+                "uri": "receipts/example.json",
+                "sha256": "7f227db1653b6b723b07c8f2f6eb488f1f09e2f083ca7a3f5e02bbb274f5ff2e",
+                "subject_pin": pin,
+            }],
             "evidence_maturity": "monitored",
             "rollback_verified": False,
             "claims": [],

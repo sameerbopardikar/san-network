@@ -2,6 +2,7 @@
 """Validate receipt fixtures and enforce semantic adoption invariants."""
 
 import json
+import re
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
@@ -54,6 +55,27 @@ def _semantic_errors(data: object) -> list[str]:
         errors.append("evidence maturity must be present in claims")
     if result == "accepted" and benchmark != "passed":
         errors.append("an accepted result requires a passed benchmark")
+
+    evidence = data.get("evidence")
+    if isinstance(evidence, list):
+        for index, item in enumerate(evidence):
+            if isinstance(item, str):
+                errors.append("evidence items must be structured objects, not URI strings")
+                continue
+            if not isinstance(item, dict):
+                errors.append(f"evidence[{index}] must be an object")
+                continue
+            digest = item.get("sha256")
+            if not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest or ""):
+                errors.append(f"evidence[{index}] requires an immutable sha256 digest")
+            uri = item.get("uri")
+            if not isinstance(uri, str) or not uri.strip():
+                errors.append(f"evidence[{index}] requires a non-empty uri")
+            item_pin = item.get("subject_pin")
+            if subject is not None and item_pin != subject:
+                errors.append(
+                    f"evidence[{index}] subject_pin must match the receipt subject_pin"
+                )
     return errors
 
 
