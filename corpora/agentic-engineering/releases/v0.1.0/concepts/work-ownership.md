@@ -87,4 +87,4 @@ This distinction prevents false green states where a system reports success beca
 
 ## Evidence basis
 
-Work ownership is a central question in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence). The strongest local evidence comes from the replayable portfolio and shadow-ledger receipts, including Local Proof: Replayable Portfolio Adapter v1 (excluded from this public release candidate and not public verification evidence) and Local Proof: Durable Shadow Portfolio Ledger v1 (excluded from this public release candidate and not public verification evidence). Practitioner material supplies the out-of-loop workflow framing, but durable ownership requires stronger distributed-systems and local-proof mechanisms than prompt practice alone.
+The work-ownership doctrine here is network-authored synthesis. Public corroboration is limited to the pinned Claude Code, Hermes Agent, and CloudEvents source cards. Excluded local portfolio or ledger references are not included and do not support public verification claims.

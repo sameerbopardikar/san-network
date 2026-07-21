@@ -50,10 +50,20 @@ class SchemaTests(unittest.TestCase):
         data["runtime"]["version"] = "latest"
         self.assertTrue(list(self.agent_validator.iter_errors(data)))
 
+    def test_bound_runtime_cannot_use_unbound_sentinel(self):
+        data = copy.deepcopy(json.loads((AGENT_DIR / "expert.json").read_text()))
+        data["runtime"]["version"] = "unbound"
+        self.assertTrue(list(self.agent_validator.iter_errors(data)))
+
     def test_pending_github_binding_requires_login(self):
         data = json.loads((AGENT_DIR / "gideon.json").read_text())
         data = copy.deepcopy(data)
         data["github_identity"]["login"] = None
+        self.assertTrue(list(self.agent_validator.iter_errors(data)))
+
+    def test_bound_github_identity_cannot_use_unbound_binding_type(self):
+        data = copy.deepcopy(json.loads((AGENT_DIR / "gideon.json").read_text()))
+        data["github_identity"]["binding_type"] = "unbound"
         self.assertTrue(list(self.agent_validator.iter_errors(data)))
 
     def test_valid_work_object_passes_cross_field_validation(self):
@@ -84,6 +94,12 @@ class SchemaTests(unittest.TestCase):
         ]
         errors = work_object_errors(data, self.work_validator)
         self.assertTrue(any("missing evidence kinds" in error for error in errors))
+
+    def test_semantic_adversarial_work_objects_are_rejected(self):
+        for path in sorted(WORK_FIXTURE_DIR.glob("invalid-*.json")):
+            with self.subTest(path=path.name):
+                data = json.loads(path.read_text())
+                self.assertTrue(work_object_errors(data, self.work_validator))
 
 
 if __name__ == "__main__":

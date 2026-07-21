@@ -82,4 +82,4 @@ Recovery uses checkpoints and idempotency to resume safely. It must also detect 
 
 ## Evidence basis
 
-Lifecycle decomposition is synthesized from the focused-agent and closed-loop practices in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence), the corpus’s active durable-work questions in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence), and local proof receipts linked there. The current corpus still needs broader production and scientific evidence on long-horizon lifecycle behavior.
+This release candidate proposes the lifecycle decomposition as network-authored doctrine. Public corroboration is limited to the pinned Hermes Agent, Claude Code, and CloudEvents source cards in this release. No excluded local receipt or private practitioner source supports a public verification claim.

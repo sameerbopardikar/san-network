@@ -100,4 +100,4 @@ The objective is not merely self-correction within one run. It is compounding re
 
 ## Evidence basis
 
-The practitioner doctrine is developed in Close the Loops: More Compute, More Confidence (excluded from this public release candidate and not public verification evidence) and synthesized in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). Local receipts linked from Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence) provide bounded implementation evidence for replay and validation contracts.
+The feedback-loop doctrine here is network-authored synthesis. Public corroboration is limited to the pinned OpenTelemetry, AgentDojo, and tau2-bench source cards. Excluded private implementation references are disclosed as absent and do not support public verification claims.

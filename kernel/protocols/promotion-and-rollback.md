@@ -18,7 +18,7 @@ A capability may become a baseline only when one machine-valid receipt records:
 8. the resulting baseline exact pin; and
 9. an exact rollback target.
 
-Promotion fails closed when any required field, test, independent role, or evidence pointer is missing. Popularity, prose review, or source-agent success alone cannot promote a capability.
+Promotion fails closed when the fixed benchmark does not pass or when any required field, test, independent role, current-head evidence pointer, maturity proof, or rollback preflight is missing. The subject and resulting baseline pins must equal the candidate pin. Popularity, prose review, or source-agent success alone cannot promote a capability.
 
 ## Demotion
 
@@ -26,7 +26,7 @@ A current baseline is demoted when monitored evidence invalidates a required cla
 
 ## Rollback
 
-Rollback restores the receipt's exact rollback target, re-runs destination verification, and emits a rollback receipt. A rollback is not complete until `rollback_verified` is true. If restoration fails, the resulting baseline is explicit `none`; no coordinator may silently preserve the failed candidate.
+Rollback restores the receipt's exact rollback target, re-runs destination verification, and emits a rollback receipt. A rollback is not complete until `rollback_verified` is true and the resulting baseline equals the rollback target. If restoration fails, emit `rollback-failed` with `rollback_verified: false` and an explicit `none` baseline; no coordinator may silently preserve the failed candidate. Permanent invalidation emits the distinct `revoke` event with a reason and explicit `none` baseline.
 
 ## Separation of duties
 

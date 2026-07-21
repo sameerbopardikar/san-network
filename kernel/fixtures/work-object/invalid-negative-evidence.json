@@ -30,7 +30,7 @@
   "roles": {
     "coordinator": "agent:expert",
     "executor": "agent:expert",
-    "reviewer": "agent:expert",
+    "reviewer": "agent:gideon",
     "verifier": "agent:nemertes",
     "merger": "github:aakashsrinivasan"
   },
@@ -78,7 +78,7 @@
       "actor": "agent:expert",
       "timestamp": "2026-07-21T06:00:00Z",
       "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "pass"
+      "verdict": "fail"
     },
     {
       "kind": "test",

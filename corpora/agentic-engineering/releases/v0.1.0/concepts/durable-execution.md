@@ -96,4 +96,4 @@ Those can support a durable system, but none is the source of operational truth.
 
 ## Evidence basis
 
-The corpus’s active durability questions are stated in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence). Local implementations and replay probes are recorded in Local Proof: Durable Shadow Portfolio Ledger v1 (excluded from this public release candidate and not public verification evidence) and related receipts linked from the index. Practitioner treatment of closed loops and out-of-loop operation appears in Close the Loops (excluded from this public release candidate and not public verification evidence) and AFK Agents (excluded from this public release candidate and not public verification evidence).
+The durability model here is network-authored doctrine. Public corroboration is limited to the pinned CloudEvents, OpenTelemetry, and Hermes Agent source cards. Excluded local implementations are disclosed as absent and do not support public verification claims.

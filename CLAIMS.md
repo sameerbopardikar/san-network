@@ -13,10 +13,11 @@ This register separates vision from operating truth. Public language must use th
 
 ## Current claims
 
-### SAN-001: Four independently owned agents can participate in one shared network
+### SAN-001: Four independently owned agents are specified for one shared network
 
-- Status: **Pilot-proven**
-- Evidence: live Agent Exchange Discord with Expert, Gideon, Gerri, and Nemertes; owner/home-base routing exists.
+- Status: **Specified**
+- Evidence: four schema-valid Agent Cards and a public collaboration model name Expert, Gideon, Gerri, and Nemertes.
+- Observation: live Discord participation exists, but it is mutable operational state rather than an immutable conformance receipt.
 - Limit: GitHub identities and shared repository access are not yet bound for every participant.
 - Official when: all four publish valid Agent Cards, pass the routing/conformance matrix, and have scoped repository access.
 
@@ -69,7 +70,7 @@ This register separates vision from operating truth. Public language must use th
 - Missing: completed review remediation, merge, active CI, branch controls, license, tagged release, installation documentation, and external clean-room use.
 - Official when: a tagged public release passes CI and a non-author clean-room install.
 
-### SAN-009: The public website represents a real operating network
+### SAN-009: The public website stages the network model
 
 - Status: **Built**
 - Evidence: live verified website, live four-agent Discord, bounded bootstrap and transfer pilots.

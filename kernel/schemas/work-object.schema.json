@@ -36,7 +36,9 @@
     "branch",
     "objective",
     "scope",
-    "confidentiality",
+    "audience",
+    "handling_constraints",
+    "changed_paths",
     "rights_basis",
     "writer_lease",
     "roles",
@@ -78,7 +80,10 @@
     "scope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["include", "exclude"],
+      "required": [
+        "include",
+        "exclude"
+      ],
       "properties": {
         "include": {
           "$ref": "#/$defs/nonempty_strings"
@@ -88,9 +93,6 @@
         }
       }
     },
-    "confidentiality": {
-      "enum": ["public", "network", "bilateral", "derived-only"]
-    },
     "rights_basis": {
       "type": "string",
       "minLength": 3
@@ -98,7 +100,14 @@
     "writer_lease": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["lease_id", "principal", "paths", "generation", "expires_at", "state"],
+      "required": [
+        "lease_id",
+        "principal",
+        "paths",
+        "generation",
+        "expires_at",
+        "state"
+      ],
       "properties": {
         "lease_id": {
           "type": "string",
@@ -119,14 +128,25 @@
           "format": "date-time"
         },
         "state": {
-          "enum": ["active", "released", "expired", "reassigned"]
+          "enum": [
+            "active",
+            "released",
+            "expired",
+            "reassigned"
+          ]
         }
       }
     },
     "roles": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["coordinator", "executor", "reviewer", "verifier", "merger"],
+      "required": [
+        "coordinator",
+        "executor",
+        "reviewer",
+        "verifier",
+        "merger"
+      ],
       "properties": {
         "coordinator": {
           "$ref": "#/$defs/agent_id"
@@ -203,7 +223,13 @@
     "checks": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["focused", "full", "secret_scan", "rights_scan", "rollback_test"],
+      "required": [
+        "focused",
+        "full",
+        "secret_scan",
+        "rights_scan",
+        "rollback_test"
+      ],
       "properties": {
         "focused": {
           "$ref": "#/$defs/nonempty_strings"
@@ -225,7 +251,11 @@
     "rollback": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["target_sha", "procedure", "verified"],
+      "required": [
+        "target_sha",
+        "procedure",
+        "verified"
+      ],
       "properties": {
         "target_sha": {
           "$ref": "#/$defs/sha40"
@@ -256,10 +286,31 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["kind", "subject_sha", "uri", "sha256", "actor", "timestamp", "environment_digest", "verdict"],
+        "required": [
+          "kind",
+          "subject_sha",
+          "uri",
+          "sha256",
+          "actor",
+          "timestamp",
+          "environment_digest",
+          "verdict"
+        ],
         "properties": {
           "kind": {
-            "enum": ["build", "test", "secret-scan", "rights-scan", "coderabbit-review", "independent-review", "destination-verification", "adoption", "monitoring", "rollback"]
+            "enum": [
+              "build",
+              "test",
+              "secret-scan",
+              "rights-scan",
+              "rollback-test",
+              "coderabbit-review",
+              "independent-review",
+              "destination-verification",
+              "adoption",
+              "monitoring",
+              "rollback"
+            ]
           },
           "subject_sha": {
             "$ref": "#/$defs/sha40"
@@ -284,7 +335,13 @@
             "$ref": "#/$defs/sha256"
           },
           "verdict": {
-            "enum": ["pass", "fail", "abstain", "go", "no-go"]
+            "enum": [
+              "pass",
+              "fail",
+              "abstain",
+              "go",
+              "no-go"
+            ]
           }
         }
       }
@@ -294,7 +351,12 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["finding_id", "source", "disposition", "evidence_uri"],
+        "required": [
+          "finding_id",
+          "source",
+          "disposition",
+          "evidence_uri"
+        ],
         "properties": {
           "finding_id": {
             "type": "string",
@@ -305,7 +367,12 @@
             "minLength": 1
           },
           "disposition": {
-            "enum": ["fixed", "accepted-risk", "false-positive", "deferred-with-owner-and-gate"]
+            "enum": [
+              "fixed",
+              "accepted-risk",
+              "false-positive",
+              "deferred-with-owner-and-gate"
+            ]
           },
           "evidence_uri": {
             "type": "string",
@@ -314,6 +381,34 @@
           }
         }
       }
+    },
+    "audience": {
+      "enum": [
+        "public",
+        "network",
+        "bilateral",
+        "owner-private"
+      ]
+    },
+    "handling_constraints": {
+      "items": {
+        "enum": [
+          "derived-only",
+          "confidential-source",
+          "secret"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "changed_paths": {
+      "items": {
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
     }
   }
 }

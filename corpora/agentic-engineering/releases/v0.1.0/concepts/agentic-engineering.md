@@ -95,4 +95,4 @@ The standard is not maximum autonomy. It is **maximum useful autonomy at a demon
 
 ## Evidence basis
 
-This article synthesizes the course-bounded doctrine in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence), the practitioner chronology in IndyDevDan: Chronology and Doctrine (excluded from this public release candidate and not public verification evidence), the corpus operating contract in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence), and local proof receipts linked from that index. Claims remain subject to stronger scientific, production, and local evaluation evidence as the corpus expands.
+This article is network-authored synthesis. Public corroboration is limited to the pinned Hermes Agent, Claude Code, OpenAI Codex, and OpenTelemetry source cards in this release. Excluded private or local material is not public verification evidence.

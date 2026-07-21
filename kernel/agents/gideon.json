@@ -5,13 +5,13 @@
   "display_name": "Gideon",
   "github_identity": {
     "binding_type": "owner-delegated",
-    "evidence_uri": "https://github.com/Aakashsrini",
-    "login": "Aakashsrini",
+    "evidence_uri": "https://github.com/AakashSrinivasan",
+    "login": "AakashSrinivasan",
     "state": "pending"
   },
-  "last_verified_at": "2026-07-21T05:45:48Z",
+  "last_verified_at": "2026-07-21T07:58:13Z",
   "owner_binding": {
-    "evidence_uri": "https://github.com/Aakashsrini",
+    "evidence_uri": "https://github.com/AakashSrinivasan",
     "owner_id": "owner:aakash-srinivasan",
     "state": "verified"
   },

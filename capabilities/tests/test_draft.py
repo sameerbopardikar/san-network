@@ -42,6 +42,27 @@ class DraftTests(unittest.TestCase):
         data.pop("artifacts", None)
         self.assertTrue(self.errors(data))
 
+    def test_released_manifest_rejects_missing_kernel_and_forged_maturity(self):
+        data = copy.deepcopy(self.manifest)
+        data["status"] = "released"
+        data["kernel_pin"] = {"kind": "none", "value": "none"}
+        data["evidence_maturity"] = "outcome-calibrated"
+        data["artifacts"] = [{"path": "payload.txt", "sha256": "0" * 64}]
+        data["evidence"] = []
+        self.assertTrue(self.errors(data))
+
+    def test_evidence_maturity_requires_matching_evidence_kind(self):
+        data = copy.deepcopy(self.manifest)
+        data["evidence_maturity"] = "task-proven"
+        data["evidence"] = [
+            {
+                "kind": "installed",
+                "uri": "receipts/install.json",
+                "sha256": "1" * 64,
+            }
+        ]
+        self.assertTrue(self.errors(data))
+
     def test_cross_plane_artifact_path_is_rejected(self):
         data = copy.deepcopy(self.manifest)
         data["status"] = "released"

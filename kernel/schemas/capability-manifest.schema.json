@@ -125,13 +125,6 @@
       "pattern": "^[a-z0-9][a-z0-9-]{1,80}$",
       "type": "string"
     },
-    "confidentiality": {
-      "enum": [
-        "public",
-        "network",
-        "derived-only"
-      ]
-    },
     "corpus_pin": {
       "$ref": "#/$defs/exact_pin"
     },
@@ -186,6 +179,57 @@
     "version": {
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
       "type": "string"
+    },
+    "audience": {
+      "enum": [
+        "public",
+        "network",
+        "bilateral",
+        "owner-private"
+      ]
+    },
+    "handling_constraints": {
+      "items": {
+        "enum": [
+          "derived-only",
+          "confidential-source",
+          "secret"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "installed",
+              "sandbox-tested",
+              "task-proven",
+              "monitored",
+              "outcome-calibrated"
+            ]
+          },
+          "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "uri": {
+            "format": "uri-reference",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "uri",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
     }
   },
   "required": [
@@ -194,7 +238,8 @@
     "version",
     "status",
     "description",
-    "confidentiality",
+    "audience",
+    "handling_constraints",
     "authority_band",
     "kernel_pin",
     "corpus_pin",
@@ -213,8 +258,166 @@
         }
       },
       "then": {
+        "properties": {
+          "kernel_pin": {
+            "properties": {
+              "kind": {
+                "const": "git-commit"
+              }
+            }
+          },
+          "evidence": {
+            "minItems": 1
+          }
+        },
         "required": [
-          "artifacts"
+          "artifacts",
+          "evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "const": "installed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "installed"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "const": "sandbox-tested"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "sandbox-tested"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "const": "task-proven"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "task-proven"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "const": "monitored"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "monitored"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "const": "outcome-calibrated"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {
+                "kind": {
+                  "const": "outcome-calibrated"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "minContains": 1
+          }
+        },
+        "required": [
+          "evidence"
         ]
       }
     }

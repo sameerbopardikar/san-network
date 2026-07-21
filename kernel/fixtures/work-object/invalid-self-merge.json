@@ -30,9 +30,9 @@
   "roles": {
     "coordinator": "agent:expert",
     "executor": "agent:expert",
-    "reviewer": "agent:expert",
+    "reviewer": "agent:gideon",
     "verifier": "agent:nemertes",
-    "merger": "github:aakashsrinivasan"
+    "merger": "github:sameerbopardikar"
   },
   "golden_fixture": {
     "required": true,

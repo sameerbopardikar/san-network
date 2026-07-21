@@ -108,4 +108,4 @@ Raw token count, tool-call count, and agent count are activity measures, not suc
 
 ## Evidence basis
 
-Evaluation doctrine is synthesized from Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence) and the local proof/evaluation questions in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence). Prompt-injection benchmark coverage is represented by AgentDojo (excluded from this public release candidate and not public verification evidence). The self-expanding corpus’s own deterministic evaluation requirements provide an applied example of provenance, freshness, contradiction, retrieval, and lineage checks.
+The evaluation doctrine here is network-authored synthesis. Public benchmark and observability pointers are the pinned AgentDojo, tau2-bench, and OpenTelemetry source cards included in this release. Raw benchmark bodies and excluded local receipts are not included or claimed as reproduced evidence.

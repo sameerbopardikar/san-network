@@ -142,7 +142,9 @@
         "reject",
         "promote",
         "demote",
-        "rollback"
+        "rollback",
+        "rollback-failed",
+        "revoke"
       ]
     },
     "evidence": {
@@ -182,7 +184,8 @@
       "enum": [
         "accepted",
         "rejected",
-        "rolled-back"
+        "rolled-back",
+        "revoked"
       ]
     },
     "resulting_baseline_pin": {
@@ -217,6 +220,14 @@
     },
     "verifier_agent_id": {
       "$ref": "#/$defs/agent_id"
+    },
+    "demotion_reason": {
+      "minLength": 3,
+      "type": "string"
+    },
+    "revocation_reason": {
+      "minLength": 3,
+      "type": "string"
     }
   },
   "required": [
@@ -247,5 +258,147 @@
     "deviations"
   ],
   "title": "Adoption and Promotion Receipt",
-  "type": "object"
+  "type": "object",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "enum": [
+              "adopt",
+              "promote"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "benchmark_result": {
+            "const": "passed"
+          },
+          "result": {
+            "const": "accepted"
+          },
+          "rollback_verified": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "reject"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "const": "rejected"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "rollback"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "const": "rolled-back"
+          },
+          "rollback_verified": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "rollback-failed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "const": "rejected"
+          },
+          "rollback_verified": {
+            "const": false
+          },
+          "resulting_baseline_pin": {
+            "properties": {
+              "kind": {
+                "const": "none"
+              },
+              "value": {
+                "const": "none"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "demote"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "const": "rolled-back"
+          },
+          "rollback_verified": {
+            "const": true
+          }
+        },
+        "required": [
+          "demotion_reason"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "revoke"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "const": "revoked"
+          },
+          "resulting_baseline_pin": {
+            "properties": {
+              "kind": {
+                "const": "none"
+              },
+              "value": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        "required": [
+          "revocation_reason"
+        ]
+      }
+    }
+  ]
 }

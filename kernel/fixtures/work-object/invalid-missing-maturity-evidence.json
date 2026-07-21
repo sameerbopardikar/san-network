@@ -30,7 +30,7 @@
   "roles": {
     "coordinator": "agent:expert",
     "executor": "agent:expert",
-    "reviewer": "agent:expert",
+    "reviewer": "agent:gideon",
     "verifier": "agent:nemertes",
     "merger": "github:aakashsrinivasan"
   },
@@ -97,16 +97,6 @@
       "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
       "actor": "github:coderabbitai",
       "timestamp": "2026-07-21T06:10:00Z",
-      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "go"
-    },
-    {
-      "kind": "independent-review",
-      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "uri": "receipts/example/gideon-review.json",
-      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
-      "actor": "agent:gideon",
-      "timestamp": "2026-07-21T06:15:00Z",
       "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
       "verdict": "go"
     },

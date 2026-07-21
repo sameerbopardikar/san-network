@@ -88,4 +88,4 @@ If the answers exist only in the memory of the human operator or a previous chat
 
 ## Evidence basis
 
-The term and its practitioner formulation are developed in The Agentic Layer (excluded from this public release candidate and not public verification evidence) and synthesized across eight course modules in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). The broader evolution from coding tools toward owned harnesses and software factories is documented in IndyDevDan YouTube Corpus: Operating Synthesis (excluded from this public release candidate and not public verification evidence).
+The agentic-layer formulation here is network-authored doctrine. Public corroboration is limited to the pinned Hermes Agent, Claude Code, and OpenAI Codex source cards. Excluded practitioner material is not public verification evidence.

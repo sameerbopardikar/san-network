@@ -14,7 +14,8 @@ Any byte change invalidates prior CodeRabbit, independent-review, verifier, and 
 
 - Included paths:
 - Excluded paths:
-- Confidentiality: `public`
+- Audience: `public`
+- Handling constraints:
 - Rights basis:
 - Pre-disclosure secret/rights scan:
 

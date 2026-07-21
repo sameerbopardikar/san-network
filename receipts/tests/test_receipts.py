@@ -16,13 +16,16 @@ class ReceiptTests(unittest.TestCase):
         path = ROOT / "receipts" / "fixtures" / "valid" / "promotion.json"
         self.assertEqual(MODULE.validation_errors(path), [])
 
-    def test_same_role_fixture_fails(self):
-        path = ROOT / "receipts" / "fixtures" / "invalid" / "same-role.json"
+    def test_all_adversarial_fixtures_fail(self):
+        invalid_dir = ROOT / "receipts" / "fixtures" / "invalid"
+        for path in sorted(invalid_dir.glob("*.json")):
+            with self.subTest(path=path.name):
+                self.assertTrue(MODULE.validation_errors(path))
+
+    def test_failed_benchmark_cannot_promote(self):
+        path = ROOT / "receipts" / "fixtures" / "invalid" / "failed-promotion.json"
         errors = MODULE.validation_errors(path)
-        self.assertIn(
-            "executor, reviewer, and verifier must be pairwise distinct",
-            errors,
-        )
+        self.assertTrue(any("passed benchmark" in error for error in errors))
 
 
 if __name__ == "__main__":

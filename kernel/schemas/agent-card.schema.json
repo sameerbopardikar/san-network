@@ -89,6 +89,12 @@
               "login": {
                 "pattern": "^[A-Za-z0-9-]{1,39}$",
                 "type": "string"
+              },
+              "binding_type": {
+                "enum": [
+                  "agent-account",
+                  "owner-delegated"
+                ]
               }
             }
           }
@@ -144,7 +150,45 @@
         "state",
         "evidence_uri"
       ],
-      "type": "object"
+      "type": "object",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "verified",
+                  "pending"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence_uri": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unbound"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence_uri": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
     },
     "protocol_version": {
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
@@ -186,17 +230,41 @@
           "if": {
             "properties": {
               "state": {
+                "enum": [
+                  "verified",
+                  "pending"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "version": {
+                "type": "string",
+                "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[+.][0-9A-Za-z.-]+)?$"
+              },
+              "evidence_uri": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
                 "const": "unbound"
               }
             }
           },
           "then": {
             "properties": {
-              "evidence_uri": {
-                "const": null
-              },
               "version": {
                 "const": "unbound"
+              },
+              "evidence_uri": {
+                "const": null
               }
             }
           }

@@ -13,7 +13,8 @@
     "exclude": [
       "kernel/**",
       "corpora/**",
-      "receipts/**"
+      "receipts/**",
+      "capabilities/example/private/**"
     ]
   },
   "rights_basis": "original-work",
@@ -30,7 +31,7 @@
   "roles": {
     "coordinator": "agent:expert",
     "executor": "agent:expert",
-    "reviewer": "agent:expert",
+    "reviewer": "agent:gideon",
     "verifier": "agent:nemertes",
     "merger": "github:aakashsrinivasan"
   },

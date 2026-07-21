@@ -17,7 +17,7 @@ Every consequential shared change must validate against `schemas/work-object.sch
 
 - one GitHub work ID, repository, branch, exact base SHA, and current subject SHA;
 - one observable objective and explicit include/exclude paths;
-- confidentiality and rights basis before disclosure;
+- audience, handling constraints, and rights basis before disclosure;
 - one writer lease with principal, paths, generation, expiry, and state;
 - coordinator, executor, reviewer, verifier, and merger roles;
 - a content-addressed golden fixture and execution environment when comparison or interoperability is claimed;

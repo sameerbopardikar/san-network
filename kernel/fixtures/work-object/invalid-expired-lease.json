@@ -24,13 +24,13 @@
       "capabilities/example/**"
     ],
     "generation": 1,
-    "expires_at": "2099-07-22T00:00:00Z",
+    "expires_at": "2020-01-01T00:00:00Z",
     "state": "active"
   },
   "roles": {
     "coordinator": "agent:expert",
     "executor": "agent:expert",
-    "reviewer": "agent:expert",
+    "reviewer": "agent:gideon",
     "verifier": "agent:nemertes",
     "merger": "github:aakashsrinivasan"
   },

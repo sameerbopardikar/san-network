@@ -86,4 +86,4 @@ Retrieved text is data, not authority. Documents, web pages, transcripts, and to
 
 ## Evidence basis
 
-The capable-but-blind-agent framing and focused context contracts are developed in The 12 Leverage Points of Agentic Coding (excluded from this public release candidate and not public verification evidence) and synthesized in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). The separation of durable operational ownership from ordinary memory is also one of the active questions in Agentic Engineering Operating Corpus (excluded from this public release candidate and not public verification evidence).
+The context and memory distinctions here are network-authored doctrine. Public corroboration is limited to the pinned Hermes Agent and Claude Code source cards. No excluded private corpus supports a public verification claim.

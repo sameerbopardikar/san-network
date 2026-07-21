@@ -14,7 +14,7 @@ A pull request must state:
 
 - canonical issue;
 - executor, reviewer, verifier, merger, and writer lease;
-- confidentiality and rights basis;
+- audience, handling constraints, and rights basis;
 - validation commands and exact results;
 - CodeRabbit and independent-review evidence bound to the current full SHA;
 - finding dispositions;

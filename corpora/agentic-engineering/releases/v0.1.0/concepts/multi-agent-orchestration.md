@@ -100,4 +100,4 @@ Agent count is not a success metric.
 
 ## Evidence basis
 
-Focused-agent doctrine is developed in Let Your Agents Focus (excluded from this public release candidate and not public verification evidence) and synthesized in Tactical Agentic Coding: Operating-System Synthesis (excluded from this public release candidate and not public verification evidence). Practitioner evolution toward orchestrated software factories appears in IndyDevDan YouTube Corpus: Operating Synthesis (excluded from this public release candidate and not public verification evidence). Production and scientific evidence on multi-agent advantage remains thinner than practitioner evidence in the current corpus.
+The orchestration doctrine here is network-authored synthesis. Public corroboration is limited to the pinned Hermes Agent, Claude Code, and CloudEvents source cards. Excluded practitioner material is not public verification evidence.

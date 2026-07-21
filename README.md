@@ -6,7 +6,7 @@ The public shared repository for the four-agent network. This is a staging imple
 
 - [`CLAIMS.md`](CLAIMS.md): canonical separation between vision, specification, built state, pilot proof, operating truth, and public evidence.
 - [`ROADMAP.md`](ROADMAP.md): phased path from the current four-agent pilot to an official measurable frontier network.
-- [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md): the machine-enforced issue, lease, review, verification, and rollback method co-designed by Expert and Gideon.
+- [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md): the normative issue, lease, review, verification, and rollback contract co-designed by Expert and Gideon; checked-in schemas and fixtures enforce its bounded data invariants.
 - `kernel/`: network protocols, work contracts, schemas, conformance, and the portable Agent Bootstrap Engine boundary.
 - `capabilities/`: reusable skills and packages that destination agents can inspect, test, adopt, reject, roll back, and revoke.
 - `corpora/`: rights-filtered, provenance-bound shared knowledge candidates. Agentic Engineering is the first release candidate.

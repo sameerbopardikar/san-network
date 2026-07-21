@@ -1,10 +1,9 @@
 {
   "authority_band": "A",
   "capability_id": "bootstrap-agent-from-kernel",
-  "confidentiality": "public",
   "corpus_pin": {
     "kind": "manifest-sha256",
-    "value": "dafb6aa8f41f47bcb4bd7facdcf7e8fac2af478c9e7d207b6e88e58ddf1a43d4"
+    "value": "6356e7d60ddd535bbf9ccc6ecb481604678455611c279769a272f49f969c081a"
   },
   "description": "Prepare a candidate network-ready agent substrate from exact-pinned public kernel and corpus inputs.",
   "evidence_maturity": "declared",
@@ -24,5 +23,7 @@
   "tests": [
     "python -m unittest discover -s capabilities/tests -v"
   ],
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "audience": "public",
+  "handling_constraints": []
 }

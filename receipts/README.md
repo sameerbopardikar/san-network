@@ -4,7 +4,7 @@
 
 It does not contain doctrine, private memories, raw confidential traces, credentials, or reusable capabilities. Normative requirements live in `kernel/protocols/` and `kernel/schemas/`.
 
-Every committed receipt must:
+Every operational receipt outside `fixtures/` must:
 
 - validate against `kernel/schemas/adoption-receipt.schema.json`;
 - name an immutable subject pin and benchmark version;
