@@ -82,6 +82,34 @@ def _parse_time(value: str) -> datetime:
     return parsed.astimezone(timezone.utc)
 
 
+
+
+def adoption_receipt_errors(
+    data: dict,
+    validator: Draft202012Validator,
+) -> list[str]:
+    """Return schema and separation-of-duties errors for one adoption receipt."""
+    errors = [error.message for error in validator.iter_errors(data)]
+    if errors:
+        return errors
+    roles = [
+        data.get("executor_agent_id"),
+        data.get("reviewer_agent_id"),
+        data.get("verifier_agent_id"),
+    ]
+    if any(role is None for role in roles):
+        return errors
+    if len(set(roles)) != 3:
+        errors.append("executor, reviewer, and verifier must be pairwise distinct")
+    if data.get("event_type") in {"adopt", "promote"}:
+        if data.get("subject_pin") != data.get("candidate_pin"):
+            errors.append("subject_pin must equal candidate_pin for adopt/promote")
+        if data.get("resulting_baseline_pin") != data.get("candidate_pin"):
+            errors.append(
+                "resulting_baseline_pin must equal candidate_pin for adopt/promote"
+            )
+    return errors
+
 def work_object_errors(
     data: dict,
     validator: Draft202012Validator,

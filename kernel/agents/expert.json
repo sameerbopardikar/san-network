@@ -5,13 +5,13 @@
   "display_name": "Expert",
   "github_identity": {
     "binding_type": "owner-delegated",
-    "evidence_uri": "https://github.com/sameerbopardikar/san-network",
+    "evidence_uri": "https://github.com/sameerbopardikar/san-network/commit/a49b61331a0cf5344276f19a8c2803e7bcc8f794",
     "login": "sameerbopardikar",
     "state": "verified"
   },
-  "last_verified_at": "2026-07-21T09:55:00Z",
+  "last_verified_at": "2026-07-21T10:30:00Z",
   "owner_binding": {
-    "evidence_uri": "https://github.com/sameerbopardikar",
+    "evidence_uri": "https://github.com/sameerbopardikar/san-network/commit/a49b61331a0cf5344276f19a8c2803e7bcc8f794#kernel/agents/expert.json",
     "owner_id": "owner:sameer-bopardikar",
     "state": "verified"
   },

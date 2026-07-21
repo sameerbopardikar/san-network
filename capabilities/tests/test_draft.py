@@ -39,8 +39,9 @@ class DraftTests(unittest.TestCase):
 
     def test_latest_kernel_pin_is_rejected(self):
         data = copy.deepcopy(self.manifest)
-        data["kernel_pin"] = {"kind": "release", "value": "latest"}
-        self.assertTrue(self.errors(data))
+        # valid pin kind; floating value "latest" must fail value pattern
+        data["kernel_pin"] = {"kind": "git-commit", "value": "latest"}
+        self.assert_error_mentions(data, "does not match")
 
     def test_released_manifest_requires_artifacts(self):
         data = copy.deepcopy(self.manifest)
@@ -66,6 +67,9 @@ class DraftTests(unittest.TestCase):
                 "kind": "installed",
                 "uri": "receipts/install.json",
                 "sha256": "1" * 64,
+                "actor": "agent:expert",
+                "timestamp": "2026-07-21T10:00:00Z",
+                "verdict": "pass",
             }
         ]
         # mismatched evidence kind is rejected by contains-items schema

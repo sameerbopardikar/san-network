@@ -102,5 +102,79 @@ class SchemaTests(unittest.TestCase):
                 self.assertTrue(work_object_errors(data, self.work_validator))
 
 
+    def test_adoption_roles_must_be_pairwise_distinct(self):
+        from scripts.validate import adoption_receipt_errors
+
+        schema = self.schemas["adoption-receipt.schema.json"]
+        validator = Draft202012Validator(schema, format_checker=FormatChecker())
+        pin = {"kind": "git-commit", "value": "a" * 40}
+        base = {
+            "schema_version": 1,
+            "receipt_id": "receipt:test-adopt",
+            "event_type": "adopt",
+            "subject_id": "bootstrap-agent-from-kernel",
+            "subject_pin": pin,
+            "destination_agent_id": "agent:gideon",
+            "executor_agent_id": "agent:expert",
+            "reviewer_agent_id": "agent:expert",
+            "verifier_agent_id": "agent:nemertes",
+            "benchmark_id": "bench-a",
+            "benchmark_version": "1.0.0",
+            "benchmark_result": "passed",
+            "threshold": "all green",
+            "observed_result": "all green",
+            "previous_baseline_pin": {"kind": "none", "value": "none"},
+            "candidate_pin": pin,
+            "resulting_baseline_pin": pin,
+            "rollback_target_pin": {"kind": "none", "value": "none"},
+            "result": "accepted",
+            "tested_at": "2026-07-21T10:00:00Z",
+            "evidence": ["receipts/example.json"],
+            "evidence_maturity": "sandbox-tested",
+            "rollback_verified": True,
+            "claims": ["installed"],
+            "deviations": [],
+        }
+        errors = adoption_receipt_errors(base, validator)
+        self.assertIn(
+            "executor, reviewer, and verifier must be pairwise distinct",
+            errors,
+        )
+
+    def test_demote_allows_explicit_none_baseline(self):
+        schema = self.schemas["adoption-receipt.schema.json"]
+        validator = Draft202012Validator(schema, format_checker=FormatChecker())
+        pin = {"kind": "git-commit", "value": "b" * 40}
+        data = {
+            "schema_version": 1,
+            "receipt_id": "receipt:test-demote",
+            "event_type": "demote",
+            "subject_id": "bootstrap-agent-from-kernel",
+            "subject_pin": pin,
+            "destination_agent_id": "agent:gideon",
+            "executor_agent_id": "agent:expert",
+            "reviewer_agent_id": "agent:gideon",
+            "verifier_agent_id": "agent:nemertes",
+            "benchmark_id": "bench-a",
+            "benchmark_version": "1.0.0",
+            "benchmark_result": "failed",
+            "threshold": "all green",
+            "observed_result": "regressed",
+            "previous_baseline_pin": pin,
+            "candidate_pin": pin,
+            "resulting_baseline_pin": {"kind": "none", "value": "none"},
+            "rollback_target_pin": {"kind": "none", "value": "none"},
+            "result": "rolled-back",
+            "tested_at": "2026-07-21T10:00:00Z",
+            "evidence": ["receipts/example.json"],
+            "evidence_maturity": "monitored",
+            "rollback_verified": False,
+            "claims": [],
+            "deviations": [],
+            "demotion_reason": "monitored evidence invalidated required claim",
+        }
+        self.assertEqual(list(validator.iter_errors(data)), [])
+
+
 if __name__ == "__main__":
     unittest.main()

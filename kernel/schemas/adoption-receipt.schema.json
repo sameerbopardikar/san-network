@@ -358,16 +358,56 @@
         }
       },
       "then": {
-        "properties": {
-          "result": {
-            "const": "rolled-back"
-          },
-          "rollback_verified": {
-            "const": true
-          }
-        },
         "required": [
           "demotion_reason"
+        ],
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "result": {
+                "const": "rolled-back"
+              },
+              "rollback_verified": {
+                "const": true
+              }
+            },
+            "required": [
+              "result",
+              "rollback_verified"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "result": {
+                "const": "rolled-back"
+              },
+              "rollback_verified": {
+                "const": false
+              },
+              "resulting_baseline_pin": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "none"
+                  },
+                  "value": {
+                    "const": "none"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ]
+              }
+            },
+            "required": [
+              "result",
+              "rollback_verified",
+              "resulting_baseline_pin"
+            ]
+          }
         ]
       }
     },

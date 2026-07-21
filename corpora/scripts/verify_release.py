@@ -7,6 +7,7 @@ import re
 import sys
 from pathlib import Path
 
+import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 
 SCRIPT_ROOT = Path(__file__).resolve().parents[1]
@@ -78,28 +79,105 @@ def validate_manifest(data: dict, schema: dict) -> None:
 
 
 def validate_source_bindings(data: dict, sources: dict[str, dict]) -> None:
-    """Require every artifact source ID to resolve to one provenance row."""
+    """Require every artifact source ID to resolve to one complete provenance row.
+
+    When an artifact embeds ``source_cards``, each card must match the provenance
+    row field-for-field (url, revision, revision_kind, retrieved_at, rights_basis,
+    evidence_lane, included_raw_body). Artifacts that only list ``source_ids`` still
+    require known IDs against the complete provenance table loaded earlier.
+    """
     known = set(sources)
+    meta_fields = (
+        "url",
+        "revision",
+        "revision_kind",
+        "retrieved_at",
+        "rights_basis",
+        "evidence_lane",
+        "included_raw_body",
+    )
     for artifact in data["artifacts"]:
+        path = artifact["path"]
         unknown = sorted(set(artifact["source_ids"]) - known)
         if unknown:
-            raise ValueError(f"unknown source IDs for {artifact['path']}: {unknown}")
+            raise ValueError(f"unknown source IDs for {path}: {unknown}")
+        cards = artifact.get("source_cards") or []
+        for card in cards:
+            source_id = card.get("source_id")
+            if source_id not in sources:
+                raise ValueError(f"unknown source card for {path}: {source_id}")
+            row = sources[source_id]
+            for field in meta_fields:
+                if field not in card:
+                    raise ValueError(
+                        f"source card missing {field} for {path}: {source_id}"
+                    )
+                if card[field] != row[field]:
+                    raise ValueError(
+                        f"source card metadata mismatch for {path}: "
+                        f"{source_id}.{field}"
+                    )
+
+
+def _front_matter(text: str) -> dict:
+    """Parse optional YAML front matter; return {} when absent or invalid."""
+    if not text.startswith("---"):
+        return {}
+    parts = text.split("---", 2)
+    if len(parts) < 3:
+        return {}
+    try:
+        loaded = yaml.safe_load(parts[1]) or {}
+    except yaml.YAMLError as error:
+        raise ValueError(f"invalid front matter: {error}") from error
+    if not isinstance(loaded, dict):
+        raise ValueError("front matter must be a mapping")
+    return loaded
+
+
+def _resolve_relation_target(target: str, artifact_paths: set[str]) -> bool:
+    """Return True when a relation target resolves inside the release."""
+    cleaned = target.strip().lstrip("./")
+    candidates = {
+        cleaned,
+        f"{cleaned}.md",
+        cleaned[len("concepts/") :] if cleaned.startswith("concepts/") else cleaned,
+    }
+    # also allow bare slug under concepts/
+    if "/" not in cleaned:
+        candidates.add(f"concepts/{cleaned}.md")
+        candidates.add(f"concepts/{cleaned}")
+    return bool(candidates & artifact_paths)
 
 
 def validate_links(release: Path, artifact_paths: set[str]) -> None:
-    """Reject unresolved release-local wiki links and excluded private paths."""
+    """Reject unresolved release-local wiki links, relation targets, and private paths."""
     for relative in sorted(artifact_paths):
         path = release / relative
         if path.suffix != ".md":
             continue
-        text = path.read_text()
+        body = path.read_text()
         for marker in BLOCKED_REFERENCE_MARKERS:
-            if marker in text:
+            if marker in body:
                 raise ValueError(f"excluded reference marker in {relative}: {marker}")
-        for target in WIKILINK.findall(text):
+        for target in WIKILINK.findall(body):
             candidates = {target, f"{target}.md"}
             if not candidates & artifact_paths:
                 raise ValueError(f"unresolved wikilink in {relative}: {target}")
+        meta = _front_matter(body)
+        relations = meta.get("relations") or []
+        if relations and not isinstance(relations, list):
+            raise ValueError(f"relations must be a list in {relative}")
+        for index, relation in enumerate(relations):
+            if not isinstance(relation, dict) or "target" not in relation:
+                raise ValueError(f"relation[{index}] missing target in {relative}")
+            target = relation["target"]
+            if not isinstance(target, str) or not target.strip():
+                raise ValueError(f"relation[{index}] empty target in {relative}")
+            if not _resolve_relation_target(target, artifact_paths):
+                raise ValueError(
+                    f"unresolved relation target in {relative}: {target}"
+                )
 
 
 def validate_release(release: Path) -> tuple[str, str, int]:

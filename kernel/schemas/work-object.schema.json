@@ -324,8 +324,15 @@
             "$ref": "#/$defs/sha256"
           },
           "actor": {
-            "type": "string",
-            "minLength": 3
+            "oneOf": [
+              {
+                "$ref": "#/$defs/agent_id"
+              },
+              {
+                "type": "string",
+                "pattern": "^github:[A-Za-z0-9-]{1,39}$"
+              }
+            ]
           },
           "timestamp": {
             "type": "string",
