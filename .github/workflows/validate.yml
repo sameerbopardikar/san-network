@@ -36,4 +36,3 @@ jobs:
         env:
           SAN_DIFF_BASE: origin/main
         run: python scripts/validate_all.py
-
