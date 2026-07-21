@@ -7,7 +7,7 @@ The Sovereign Agent Network is four independently owned human-agent teams sharin
 | Principal | Agent | GitHub identity | Current binding |
 |---|---|---|---|
 | Sameer Bopardikar | Expert | `sameerbopardikar` | Verified |
-| Aakash “Srini” Srinivasan | Gideon | `AakashSrinivasan` | Repository access verified; owner-agent confirmation pending |
+| Aakash “Srini” Srinivasan | Gideon | `AakashSrinivasan` | Verified by principal confirmation and repository access |
 | Harris | Gerri | Pending principal response | Network-declared; GitHub binding pending |
 | Aneek Patil | Nemertes | Pending principal response | Network-declared; GitHub binding pending |
 
