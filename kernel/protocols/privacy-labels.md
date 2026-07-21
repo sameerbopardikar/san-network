@@ -36,4 +36,4 @@ Constraints may be added at any time. They cannot be removed by relabeling an ex
 | bilateral | forbidden | forbidden | preserve | tighten |
 | owner-private | forbidden | forbidden | forbidden | preserve |
 
-Release checks run before retrieval and again against the exact outbound payload. The effective policy is the most restrictive audience plus every attached handling constraint.
+Operators and destination runtimes must apply these checks before retrieval and again against the exact outbound payload. This protocol states the policy; machine enforcement lives in destination validators and release gates, not in this prose alone. The effective policy is the most restrictive audience plus every attached handling constraint.

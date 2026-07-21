@@ -120,10 +120,15 @@ class DraftTests(unittest.TestCase):
         data["handling_constraints"] = [
             c for c in data.get("handling_constraints", []) if c != "no-raw-owner-memory"
         ]
-        # Draft remains free-form; released manifests should retain the constraint when present.
-        # Schema still accepts other enums; this test documents the intended vocabulary entry.
-        self.assertIn("no-raw-owner-memory", self.schema["properties"]["handling_constraints"]["items"]["enum"])
+        self.assertIn(
+            "no-raw-owner-memory",
+            self.schema["properties"]["handling_constraints"]["items"]["enum"],
+        )
         self.assertNotIn("no-raw-owner-memory", data["handling_constraints"])
+        self.assertTrue(
+            self.errors(data),
+            msg="released manifest without no-raw-owner-memory must be rejected",
+        )
 
 
 if __name__ == "__main__":

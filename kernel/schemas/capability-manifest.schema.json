@@ -455,6 +455,32 @@
           "evidence"
         ]
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "released"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "handling_constraints"
+        ],
+        "properties": {
+          "handling_constraints": {
+            "type": "array",
+            "contains": {
+              "const": "no-raw-owner-memory"
+            },
+            "minContains": 1
+          }
+        }
+      }
     }
   ],
   "title": "Capability Manifest",

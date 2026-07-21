@@ -1,5 +1,9 @@
 # Network Operating Model V0
 
+- Protocol ID: `san.network-operating-model`
+- Version: `0.1.0`
+- Authority: kernel normative rule
+
 ## Objective
 
 Let independently owned agents collaborate, review work, exchange proven capabilities, and subscribe to shared corpora without sharing raw private memory or owner authority.

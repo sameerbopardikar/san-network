@@ -51,11 +51,11 @@ This register separates vision from operating truth. Public language must use th
 
 ### SAN-006: The network has a shared corpus commons
 
-- Status: **Built**
-- Evidence boundary: Built scaffold/process evidence only; no immutable conformance receipt yet. Do not treat as operating proof.
-- Evidence: Agentic Engineering release candidate v0.1.0 has provenance and 20 hash-bound artifacts in PR #1 (mutable PR tip; not a tagged release digest).
-- Rollback state: N/A — no promoted network baseline; delete unmerged PR branch to discard.
-- Missing: merge, participant access, local subscription by a second agent, retrieval evaluation, update/delta lifecycle, and measured answer improvement.
+- Status: **Specified**
+- Evidence boundary: Release-candidate scaffold and hash-bound artifacts exist on a mutable PR branch only; no immutable tagged release or second-agent subscription receipt yet.
+- Evidence: Agentic Engineering release candidate v0.1.0 with provenance and hash-bound artifacts in PR #1 (branch tip is mutable).
+- Rollback state: N/A — no promoted network baseline; delete or revert the unmerged PR branch to discard.
+- Missing: merge, immutable release pin, participant access, local subscription by a second agent, retrieval evaluation, update/delta lifecycle, and measured answer improvement.
 - Official when: two independently owned agents consume the pinned release, pass citation/decoy tests, and demonstrate a measured task or answer improvement.
 
 ### SAN-007: Discover -> Test -> Adopt -> Prove -> Expand is an operating loop
@@ -67,18 +67,18 @@ This register separates vision from operating truth. Public language must use th
 
 ### SAN-008: The network has an open-source portable kernel
 
-- Status: **Built**
-- Evidence boundary: Public monorepo and CI on a PR branch are process evidence; tagged release/clean-room install receipts are missing.
+- Status: **Specified**
+- Evidence boundary: Public monorepo and CI on a PR branch are process evidence only; no tagged release or clean-room install receipt yet.
 - Evidence: public monorepo PR #1 with schemas, protocols, validators, capability draft, corpus projection, and CodeRabbit review (branch tip is mutable; pin exact SHA only when citing).
 - Rollback state: N/A — no tagged release; revert/close PR to discard.
-- Missing: completed review remediation, merge, active CI, branch controls, license, tagged release, installation documentation, and external clean-room use.
+- Missing: completed review remediation, merge, branch controls, license, tagged release, installation documentation, and external clean-room use.
 - Official when: a tagged public release passes CI and a non-author clean-room install.
 
 ### SAN-009: The public website stages the network model
 
-- Status: **Built**
-- Evidence boundary: Live website is deployment evidence for staging content only; not an immutable operating-network receipt. Live Discord is mutable state, not pilot proof.
-- Evidence: live verified website staging content; no content-addressed site receipt bound in this monorepo yet.
+- Status: **Specified**
+- Evidence boundary: Live website deployment is outside this monorepo and is not bound here by an immutable content-addressed receipt. Live Discord is mutable state, not pilot proof.
+- Evidence: public staging site exists operationally; this repository only records the staging wording rule and non-claims.
 - Rollback state: site deployment is outside this PR; monorepo claims do not assert site rollback proof.
 - Limit: the frontier, public registry, intake, and compounding baseline are not yet operating products.
 - Public wording rule: describe these as the model and roadmap until the corresponding claims above become official.

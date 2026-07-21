@@ -219,7 +219,7 @@ def validate_links(release: Path, artifact_paths: set[str]) -> None:
 def validate_release(release: Path) -> tuple[str, str, int]:
     """Validate one release and return corpus ID, version, and artifact count."""
     release = release.resolve()
-    repo_root = release.parents[3]
+    repo_root = SCRIPT_ROOT.parent
     manifest_path = release / "manifest.json"
     schema_path = repo_root / "kernel" / "schemas" / "corpus-release.schema.json"
     data = json.loads(manifest_path.read_text())
@@ -245,6 +245,13 @@ def validate_release(release: Path) -> tuple[str, str, int]:
         )
 
     sources = load_provenance(release / "provenance.ndjson")
+    latest_retrieval = max(row["retrieved_at"] for row in sources.values())
+    released_at = data.get("released_at")
+    if not isinstance(released_at, str) or released_at <= latest_retrieval:
+        raise ValueError(
+            f"released_at must be strictly after latest provenance retrieved_at "
+            f"(released_at={released_at!r} latest_retrieval={latest_retrieval!r})"
+        )
     if len(sources) != data["source_count"]:
         raise ValueError("source_count does not match provenance rows")
     validate_source_bindings(data, sources)

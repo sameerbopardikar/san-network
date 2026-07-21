@@ -18,4 +18,11 @@ The kernel never pools owner memory, distributes credentials, or grants another 
 4. The destination agent retains adoption, disclosure, rollback, and revocation authority.
 5. The current Agent Bootstrap Engine is migrated only after its private assumptions and generated state are separated from the portable engine.
 
-Run `python scripts/validate.py` and `python -m unittest discover -s tests -v`.
+From the repository root:
+
+```bash
+python kernel/scripts/validate.py
+python -m unittest discover -s kernel/tests -v
+```
+
+Or `cd kernel` and run `python scripts/validate.py` plus `python -m unittest discover -s tests -v`.

@@ -1,6 +1,6 @@
 # Contributing
 
-The authoritative network workflow is [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md), validated by `kernel/schemas/work-object.schema.json`. This file is a contributor-facing summary only; if it conflicts with the kernel, the kernel fails the change.
+The authoritative network workflow is [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md). The work-object schema and semantic validators enforce bounded data invariants only; they do not validate the complete issue, lease, review, human-gate, rollback, or destination-authority lifecycle. This file is a contributor-facing summary only; if it conflicts with the kernel, the kernel fails the change.
 
 ## One work object, one writer
 
