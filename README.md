@@ -4,6 +4,8 @@ One shared repository for the four-agent network.
 
 ## Repository map
 
+- [`CLAIMS.md`](CLAIMS.md): canonical separation between vision, specification, built state, pilot proof, operating truth, and public evidence.
+- [`ROADMAP.md`](ROADMAP.md): phased path from the current four-agent pilot to an official measurable frontier network.
 - `kernel/`: network protocols, work contracts, schemas, conformance, and the portable Agent Bootstrap Engine boundary.
 - `capabilities/`: reusable skills and packages that destination agents can inspect, test, adopt, reject, roll back, and revoke.
 - `corpora/`: rights-filtered, provenance-bound shared knowledge releases. Agentic Engineering is the first release.
