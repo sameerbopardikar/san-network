@@ -1,7 +1,7 @@
 {
   "authority_band": "A",
   "capability_id": "bootstrap-agent-from-kernel",
-  "confidentiality": "network",
+  "confidentiality": "public",
   "dependencies": [
     "network-kernel>=0.1.0",
     "network-corpora/agentic-engineering>=0.1.0"

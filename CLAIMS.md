@@ -64,9 +64,9 @@ This register separates vision from operating truth. Public language must use th
 
 ### SAN-008: The network has an open-source portable kernel
 
-- Status: **built privately, not released**
-- Evidence: private monorepo PR #1 with schemas, protocols, validators, capability draft, and corpus projection.
-- Missing: review, merge, active CI, CodeRabbit, branch controls, license, public release, installation documentation, and external clean-room use.
+- Status: **public staging implementation, not released**
+- Evidence: public monorepo PR #1 with schemas, protocols, validators, capability draft, corpus projection, and CodeRabbit review.
+- Missing: completed review remediation, merge, active CI, branch controls, license, tagged release, installation documentation, and external clean-room use.
 - Official when: a tagged public release passes CI and a non-author clean-room install.
 
 ### SAN-009: The public website represents a real operating network

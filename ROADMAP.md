@@ -250,10 +250,9 @@ For each frontier run, assign one executor, one reviewer, and one verifier. No a
 
 # Genuine gates
 
-- participant GitHub collaborator identities;
-- direct private PR review;
+- participant GitHub write identities;
+- direct independent PR review;
 - active CI and required checks;
-- CodeRabbit installation if it removes review burden;
 - branch protection or rulesets;
 - merges and integrations requiring repository admin.
 

@@ -1,6 +1,6 @@
 # Sovereign Agent Network
 
-One shared repository for the four-agent network.
+The public shared repository for the four-agent network. This is a staging implementation until the claims and acceptance gates in [`CLAIMS.md`](CLAIMS.md) and [`ROADMAP.md`](ROADMAP.md) are satisfied.
 
 ## Repository map
 

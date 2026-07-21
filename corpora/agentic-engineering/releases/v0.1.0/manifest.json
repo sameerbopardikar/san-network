@@ -101,7 +101,7 @@
       "sha256": "155cbebe69c9c09a5a65d8846e4207a604642962e288b721111c2584ca50e613"
     }
   ],
-  "confidentiality": "network",
+  "confidentiality": "public",
   "corpus_id": "agentic-engineering",
   "exclusions": [
     "private course bodies and transcripts",
