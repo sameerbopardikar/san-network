@@ -1,7 +1,7 @@
 # Gate1 CodeRabbit dispositions
 
 - Reviewed base commit (immutable): `5bc5452328bf322698867d8373c29a6b0037beb7`
-- This disposition commit (immutable): `3091c64dd8b272a4e294f0ffd72e85ac9a4a48ee`
+- This disposition commit (immutable): `3906505b121bb18878741d0df800699fb27b0421`
 - PR: https://github.com/sameerbopardikar/san-network/pull/1
 - Executor: Expert SAN controller (origin idle; single-writer). Not a merge.
 - Gideon independent review still required on post-push HEAD.
