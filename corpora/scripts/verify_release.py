@@ -7,7 +7,6 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 
 SCRIPT_ROOT = Path(__file__).resolve().parents[1]
@@ -120,19 +119,56 @@ def validate_source_bindings(data: dict, sources: dict[str, dict]) -> None:
 
 
 def _front_matter(text: str) -> dict:
-    """Parse optional YAML front matter; return {} when absent or invalid."""
+    """Parse optional YAML front matter without external YAML deps.
+
+    Only extracts the relations list shape used by release concepts.
+    Other front-matter keys are ignored.
+    """
     if not text.startswith("---"):
         return {}
     parts = text.split("---", 2)
     if len(parts) < 3:
         return {}
-    try:
-        loaded = yaml.safe_load(parts[1]) or {}
-    except yaml.YAMLError as error:
-        raise ValueError(f"invalid front matter: {error}") from error
-    if not isinstance(loaded, dict):
-        raise ValueError("front matter must be a mapping")
-    return loaded
+    block = parts[1]
+    relations: list[dict] = []
+    in_relations = False
+    current: dict | None = None
+
+    def _clean_value(value: str) -> str:
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            return value[1:-1]
+        return value
+
+    for raw in block.splitlines():
+        if not raw.strip():
+            continue
+        indent = len(raw) - len(raw.lstrip(" \t"))
+        stripped = raw.strip()
+        if indent == 0 and stripped.endswith(":") and not stripped.startswith("-"):
+            key = stripped[:-1].strip()
+            in_relations = key == "relations"
+            if current is not None:
+                relations.append(current)
+                current = None
+            continue
+        if not in_relations:
+            continue
+        if stripped.startswith("- "):
+            if current is not None:
+                relations.append(current)
+            current = {}
+            rest = stripped[2:].strip()
+            if rest and ":" in rest:
+                key, _, value = rest.partition(":")
+                current[key.strip()] = _clean_value(value)
+            continue
+        if current is not None and ":" in stripped:
+            key, _, value = stripped.partition(":")
+            current[key.strip()] = _clean_value(value)
+    if current is not None:
+        relations.append(current)
+    return {"relations": relations} if relations else {}
 
 
 def _resolve_relation_target(target: str, artifact_paths: set[str]) -> bool:
