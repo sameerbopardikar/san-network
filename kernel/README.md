@@ -13,7 +13,7 @@ The kernel never pools owner memory, distributes credentials, or grants another 
 ## V0 finish line
 
 1. Every participant can publish a valid Agent Card.
-2. Every cross-agent task has one work contract, one executor, one independent reviewer, and explicit acceptance evidence.
+2. Every cross-agent task has one work contract, one executor, one independent reviewer, one independent verifier, and explicit acceptance evidence. Executor, reviewer, and verifier must be pairwise distinct.
 3. Capabilities and corpora use versioned manifests.
 4. The destination agent retains adoption, disclosure, rollback, and revocation authority.
 5. The current Agent Bootstrap Engine is migrated only after its private assumptions and generated state are separated from the portable engine.

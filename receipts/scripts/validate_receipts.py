@@ -67,8 +67,20 @@ def validation_errors(path: Path) -> list[str]:
     return sorted(set(errors))
 
 
+def _operational_receipts() -> list[Path]:
+    """Return committed non-fixture receipt JSON under receipts/."""
+    skip_parts = {"fixtures", "scripts", "tests", ".pytest_cache"}
+    found = []
+    root = ROOT / "receipts"
+    for path in sorted(root.rglob("*.json")):
+        if any(part in skip_parts for part in path.parts):
+            continue
+        found.append(path)
+    return found
+
+
 def main() -> int:
-    """Validate positive fixtures and prove every adversarial fixture is rejected."""
+    """Validate positive fixtures, adversarial fixtures, and operational receipts."""
     failed = False
     for path in sorted(VALID_DIR.glob("*.json")):
         errors = validation_errors(path)
@@ -85,6 +97,14 @@ def main() -> int:
             failed = True
         else:
             print(f"rejected adversarial receipt: {path.relative_to(ROOT)}")
+
+    for path in _operational_receipts():
+        errors = validation_errors(path)
+        if errors:
+            print(f"invalid operational receipt {path}: {errors}")
+            failed = True
+        else:
+            print(f"valid operational receipt: {path.relative_to(ROOT)}")
     return 1 if failed else 0
 
 

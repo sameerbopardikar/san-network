@@ -49,6 +49,8 @@ def load_provenance(path: Path) -> dict[str, dict]:
         source_id = row["source_id"]
         if source_id in rows:
             raise ValueError(f"duplicate provenance source_id: {source_id}")
+        if row["included_raw_body"] is not False:
+            raise ValueError(f"raw source bodies are prohibited for {source_id}")
         if row["revision_kind"] != "git-commit":
             raise ValueError(f"unsupported revision kind for {source_id}")
         if not re.fullmatch(r"[a-f0-9]{40}", row["revision"]):

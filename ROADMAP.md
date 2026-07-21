@@ -41,13 +41,13 @@ Create only enough common structure for four agents to collaborate without autho
 
 ## Acceptance tests
 
-1. No normative rule exists outside `kernel/`.
+1. No network/protocol normative rule exists outside `kernel/`. Repository governance docs (`README.md`, `CONTRIBUTING.md`, `ROADMAP.md`, `CLAIMS.md`) may summarize policy but are not alternate law.
 2. No capability, receipt, or corpus object depends on `latest` or an unpinned identity.
 3. Executor, reviewer, and verifier are distinct machine-readable fields.
 4. Corpus inclusion is auditable per artifact.
 5. Whole-repository and plane-specific verification pass locally.
 6. README, claims, and launch issue do not imply adoption, frontier status, or transfer that has not occurred.
-7. Work-object fixtures prove pairwise role separation, current-head evidence binding, and maturity evidence requirements.
+7. Work-object fixtures prove pairwise role separation, current-head evidence binding, and maturity evidence requirements (`kernel/fixtures/work-object/invalid-missing-maturity-evidence.json`).
 
 **Pass condition:** the repository is safe and truthful enough to run one real frontier experiment.
 

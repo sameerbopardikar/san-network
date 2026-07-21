@@ -3,7 +3,7 @@
   "capability_id": "bootstrap-agent-from-kernel",
   "corpus_pin": {
     "kind": "manifest-sha256",
-    "value": "6356e7d60ddd535bbf9ccc6ecb481604678455611c279769a272f49f969c081a"
+    "value": "e09eb432aa9d35004638f66d0874afc10bea286c84917c33de7a7cf7b3c509e7"
   },
   "description": "Prepare a candidate network-ready agent substrate from exact-pinned public kernel and corpus inputs.",
   "evidence_maturity": "declared",

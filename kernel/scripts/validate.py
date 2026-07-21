@@ -98,8 +98,11 @@ def work_object_errors(
     if len(set(execution_roles)) != 3:
         errors.append("executor, reviewer, and verifier must be pairwise distinct")
 
-    executor_principal = _identity_registry().get(roles["executor"])
-    if executor_principal and executor_principal == roles["merger"].lower():
+    registry = _identity_registry()
+    executor_principal = registry.get(roles["executor"])
+    if executor_principal is None:
+        errors.append("executor must resolve to a verified agent identity before merger checks")
+    elif executor_principal == roles["merger"].lower():
         errors.append("merger must not resolve to the executor identity")
 
     included = data["scope"]["include"]

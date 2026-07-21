@@ -26,6 +26,12 @@ class DraftTests(unittest.TestCase):
     def errors(self, data):
         return list(self.validator.iter_errors(data))
 
+    def assert_error_mentions(self, data, *needles: str):
+        messages = " | ".join(error.message for error in self.errors(data)).lower()
+        self.assertTrue(self.errors(data), msg="expected schema errors")
+        for needle in needles:
+            self.assertIn(needle.lower(), messages)
+
     def test_checked_in_draft_matches_schema(self):
         self.assertEqual(self.errors(self.manifest), [])
         self.assertEqual(self.manifest["status"], "planned-not-released")
@@ -49,7 +55,8 @@ class DraftTests(unittest.TestCase):
         data["evidence_maturity"] = "outcome-calibrated"
         data["artifacts"] = [{"path": "payload.txt", "sha256": "0" * 64}]
         data["evidence"] = []
-        self.assertTrue(self.errors(data))
+        # forged maturity + missing kernel pin produce concrete schema messages
+        self.assert_error_mentions(data, "git-commit", "non-empty")
 
     def test_evidence_maturity_requires_matching_evidence_kind(self):
         data = copy.deepcopy(self.manifest)
@@ -61,7 +68,8 @@ class DraftTests(unittest.TestCase):
                 "sha256": "1" * 64,
             }
         ]
-        self.assertTrue(self.errors(data))
+        # mismatched evidence kind is rejected by contains-items schema
+        self.assert_error_mentions(data, "does not contain items matching")
 
     def test_cross_plane_artifact_path_is_rejected(self):
         data = copy.deepcopy(self.manifest)

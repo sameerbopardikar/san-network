@@ -2,6 +2,7 @@ import copy
 import importlib.util
 import json
 import subprocess
+import tempfile
 import sys
 import unittest
 from pathlib import Path
@@ -32,7 +33,8 @@ class ReleaseTests(unittest.TestCase):
         return list(validator.iter_errors(data))
 
     def test_agentic_engineering_v010(self):
-        subprocess.run([sys.executable, str(SCRIPT)], cwd="/tmp", check=True)
+        with tempfile.TemporaryDirectory() as cwd:
+            subprocess.run([sys.executable, str(SCRIPT)], cwd=cwd, check=True)
 
     def test_missing_artifact_rights_is_rejected(self):
         data = copy.deepcopy(self.manifest)
