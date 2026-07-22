@@ -1,5 +1,5 @@
-name: SAN work object
-description: Canonical fail-closed contract for one public cross-agent change
+name: Consequential SAN change
+description: Full fail-closed contract for code, protocol, capability, or release changes
 body:
   - type: markdown
     attributes:

@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+"""Validate SAN issue forms and keep routine intake fail-safe."""
+
+from pathlib import Path
+
+import yaml
+
+
+ROOT = Path(__file__).resolve().parents[1]
+TEMPLATE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
+ROUTINE_TEMPLATE = TEMPLATE_DIR / "task.yml"
+ALLOWED_ROUTINE_STATUS = "status:intake"
+PREAUTHORIZED_LABEL_PREFIXES = ("authority:",)
+
+
+class _DuplicateKeyRejectingLoader(yaml.SafeLoader):
+    """SafeLoader variant that fails closed on duplicate mapping keys.
+
+    PyYAML's default construct_mapping silently keeps the *last* value for a
+    repeated key (e.g. two ``labels:`` entries in one form). That is a real
+    trust-boundary risk here: a form could carry an innocuous-looking first
+    ``labels:`` block plus a second one that smuggles a forbidden
+    ``status:`` or ``authority:`` label past a human reviewer skimming the
+    diff. Reject the file outright instead of silently picking a winner.
+    """
+
+
+def _construct_mapping_no_duplicates(loader: yaml.SafeLoader, node: yaml.MappingNode):
+    seen: set = set()
+    mapping: dict = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=True)
+        if key in seen:
+            raise ValueError(f"duplicate mapping key {key!r} is not allowed")
+        seen.add(key)
+        mapping[key] = loader.construct_object(value_node, deep=True)
+    return mapping
+
+
+_DuplicateKeyRejectingLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+    _construct_mapping_no_duplicates,
+)
+
+
+def _display_path(path: Path) -> str:
+    """Best-effort relative display path; falls back to the raw path for
+    files outside ROOT (e.g. test fixtures in a temp directory)."""
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def load_form(path: Path) -> dict:
+    """Load one GitHub issue form as a mapping, rejecting duplicate keys."""
+    with path.open(encoding="utf-8") as handle:
+        try:
+            form = yaml.load(handle, Loader=_DuplicateKeyRejectingLoader)
+        except ValueError as exc:
+            raise ValueError(f"{_display_path(path)}: {exc}") from exc
+    if not isinstance(form, dict):
+        raise ValueError(f"{_display_path(path)} must contain a mapping")
+    return form
+
+
+def labels_for(form: dict, path: Path) -> list[str]:
+    """Return normalized labels from a GitHub issue form."""
+    labels = form.get("labels", [])
+    if isinstance(labels, str):
+        labels = [labels]
+    if not isinstance(labels, list) or not all(isinstance(label, str) for label in labels):
+        raise ValueError(f"{path.relative_to(ROOT)} labels must be a string or list of strings")
+    return labels
+
+
+def validate_routine_intake(form: dict) -> None:
+    """Require exactly one intake status and reject automatic authority."""
+    labels = labels_for(form, ROUTINE_TEMPLATE)
+    status_labels = [label for label in labels if label.startswith("status:")]
+    forbidden = [
+        label
+        for label in labels
+        if label.startswith(PREAUTHORIZED_LABEL_PREFIXES)
+        or (label.startswith("status:") and label != ALLOWED_ROUTINE_STATUS)
+    ]
+    if forbidden:
+        raise ValueError(
+            "routine task intake must remain proposal-only; forbidden automatic labels: "
+            + ", ".join(forbidden)
+        )
+    if status_labels != [ALLOWED_ROUTINE_STATUS]:
+        raise ValueError(
+            f"routine task intake must apply exactly one {ALLOWED_ROUTINE_STATUS} label"
+        )
+
+
+def main() -> int:
+    """Parse all forms and enforce the routine-intake trust boundary."""
+    forms = {path: load_form(path) for path in sorted(TEMPLATE_DIR.glob("*.yml"))}
+    if ROUTINE_TEMPLATE not in forms:
+        raise ValueError("routine task template is missing")
+    validate_routine_intake(forms[ROUTINE_TEMPLATE])
+    print(f"Issue forms valid: {len(forms)}; routine intake is proposal-only")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
