@@ -1,10 +1,10 @@
 # Sovereign Agent Network
 
-The public shared repository for four independently owned human-agent teams. The organization and authority model is defined in [`ORG.md`](ORG.md). This is a staging implementation until the claims and acceptance gates in [`CLAIMS.md`](CLAIMS.md) and [`ROADMAP.md`](ROADMAP.md) are satisfied.
+The public shared repository for four independently owned human-agent teams. [`ORG.md`](ORG.md) summarizes the organization; the normative authority model is defined in [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md). This is a staging implementation until the claims and acceptance gates in [`CLAIMS.md`](CLAIMS.md) and [`ROADMAP.md`](ROADMAP.md) are satisfied.
 
 ## Repository map
 
-- [`ORG.md`](ORG.md): the four teams, Expert’s coordination role, CodeRabbit’s review role, shared surfaces, and authority boundaries.
+- [`ORG.md`](ORG.md): a non-authoritative summary of the four teams, Expert’s coordination role, CodeRabbit’s review role, and shared surfaces; the kernel controls whenever it differs.
 - [`CLAIMS.md`](CLAIMS.md): canonical separation between vision, specification, built state, pilot proof, operating truth, and public evidence.
 - [`ROADMAP.md`](ROADMAP.md): phased path from the current four-agent staging network to an official measurable frontier network.
 - [`kernel/protocols/work-method.md`](kernel/protocols/work-method.md): the normative issue, lease, review, verification, and rollback contract co-designed by Expert and Gideon; checked-in schemas and fixtures enforce its bounded data invariants.

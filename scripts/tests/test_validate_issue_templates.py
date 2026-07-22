@@ -13,6 +13,50 @@ from validate_issue_templates import (  # noqa: E402
 )
 
 
+class DuplicateKeyRejectionTests(unittest.TestCase):
+    """Hostile fixture: a duplicate mapping key must fail closed, not silently
+    resolve to the last value. This is the exact class of trust-boundary bug
+    CodeRabbit flagged: yaml.safe_load() previously accepted repeated
+    ``labels:`` keys, which could let a hidden second block smuggle a
+    forbidden status/authority label past a reviewer skimming the diff."""
+
+    def _write(self, tmp_path: Path, text: str) -> Path:
+        target = tmp_path / "hostile.yml"
+        target.write_text(text, encoding="utf-8")
+        return target
+
+    def test_duplicate_top_level_key_is_rejected(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._write(
+                Path(tmp),
+                "name: Task\n"
+                "labels: [status:intake]\n"
+                "labels: [status:intake, authority:A]\n",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate mapping key"):
+                load_form(path)
+
+    def test_non_duplicate_form_still_loads(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._write(
+                Path(tmp), "name: Task\nlabels: [status:intake]\n"
+            )
+            form = load_form(path)
+            self.assertEqual(form["labels"], ["status:intake"])
+
+    def test_checked_in_forms_have_no_duplicate_keys(self):
+        # Regression guard: every real template in the repo must still load
+        # cleanly under the stricter loader (no false positives).
+        template_dir = ROUTINE_TEMPLATE.parent
+        for path in sorted(template_dir.glob("*.yml")):
+            with self.subTest(path=path.name):
+                load_form(path)
+
+
 class RoutineIntakeTests(unittest.TestCase):
     def setUp(self):
         self.form = load_form(ROUTINE_TEMPLATE)

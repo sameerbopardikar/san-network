@@ -13,12 +13,54 @@ ALLOWED_ROUTINE_STATUS = "status:intake"
 PREAUTHORIZED_LABEL_PREFIXES = ("authority:",)
 
 
+class _DuplicateKeyRejectingLoader(yaml.SafeLoader):
+    """SafeLoader variant that fails closed on duplicate mapping keys.
+
+    PyYAML's default construct_mapping silently keeps the *last* value for a
+    repeated key (e.g. two ``labels:`` entries in one form). That is a real
+    trust-boundary risk here: a form could carry an innocuous-looking first
+    ``labels:`` block plus a second one that smuggles a forbidden
+    ``status:`` or ``authority:`` label past a human reviewer skimming the
+    diff. Reject the file outright instead of silently picking a winner.
+    """
+
+
+def _construct_mapping_no_duplicates(loader: yaml.SafeLoader, node: yaml.MappingNode):
+    seen: set = set()
+    mapping: dict = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=True)
+        if key in seen:
+            raise ValueError(f"duplicate mapping key {key!r} is not allowed")
+        seen.add(key)
+        mapping[key] = loader.construct_object(value_node, deep=True)
+    return mapping
+
+
+_DuplicateKeyRejectingLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+    _construct_mapping_no_duplicates,
+)
+
+
+def _display_path(path: Path) -> str:
+    """Best-effort relative display path; falls back to the raw path for
+    files outside ROOT (e.g. test fixtures in a temp directory)."""
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def load_form(path: Path) -> dict:
-    """Load one GitHub issue form as a mapping."""
+    """Load one GitHub issue form as a mapping, rejecting duplicate keys."""
     with path.open(encoding="utf-8") as handle:
-        form = yaml.safe_load(handle)
+        try:
+            form = yaml.load(handle, Loader=_DuplicateKeyRejectingLoader)
+        except ValueError as exc:
+            raise ValueError(f"{_display_path(path)}: {exc}") from exc
     if not isinstance(form, dict):
-        raise ValueError(f"{path.relative_to(ROOT)} must contain a mapping")
+        raise ValueError(f"{_display_path(path)} must contain a mapping")
     return form
 
 
