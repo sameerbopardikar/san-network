@@ -1,0 +1,57 @@
+{
+  "benchmark_id": "fixture-bootstrap-benchmark",
+  "benchmark_result": "passed",
+  "benchmark_version": "0.1.0",
+  "candidate_pin": {
+    "kind": "git-commit",
+    "value": "2222222222222222222222222222222222222222"
+  },
+  "claims": [
+    "sandbox-tested"
+  ],
+  "destination_agent_id": "agent:expert",
+  "deviations": [],
+  "event_type": "promote",
+  "evidence": [
+    {
+      "uri": "receipts/fixtures/evidence/promotion.json",
+      "sha256": "7bee4beb605ddad0621f5c01244eeb9ddd39c0ace79ca638a5c8309a605869de",
+      "subject_pin": {
+        "kind": "git-commit",
+        "value": "2222222222222222222222222222222222222222"
+      },
+      "actor": "agent:nemertes",
+      "timestamp": "2026-07-21T00:00:00Z",
+      "environment_digest": "4444444444444444444444444444444444444444444444444444444444444444",
+      "verdict": "pass"
+    }
+  ],
+  "evidence_maturity": "sandbox-tested",
+  "executor_agent_id": "agent:expert",
+  "observed_result": "10 of 10 deterministic checks passed",
+  "previous_baseline_pin": {
+    "kind": "git-commit",
+    "value": "1111111111111111111111111111111111111111"
+  },
+  "receipt_id": "receipt:fixture-valid-promotion",
+  "result": "accepted",
+  "resulting_baseline_pin": {
+    "kind": "git-commit",
+    "value": "2222222222222222222222222222222222222222"
+  },
+  "reviewer_agent_id": "agent:gideon",
+  "rollback_target_pin": {
+    "kind": "git-commit",
+    "value": "1111111111111111111111111111111111111111"
+  },
+  "rollback_verified": true,
+  "schema_version": 1,
+  "subject_id": "bootstrap-agent-from-kernel",
+  "subject_pin": {
+    "kind": "git-commit",
+    "value": "2222222222222222222222222222222222222222"
+  },
+  "tested_at": "2026-07-21T00:00:00Z",
+  "threshold": "all 10 deterministic checks pass",
+  "verifier_agent_id": "agent:nemertes"
+}

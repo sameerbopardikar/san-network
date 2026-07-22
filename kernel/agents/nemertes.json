@@ -1,0 +1,30 @@
+{
+  "agent_id": "agent:nemertes",
+  "authority_profile": "recommend-only",
+  "capabilities": [],
+  "display_name": "Nemertes",
+  "github_identity": {
+    "binding_type": "unbound",
+    "evidence_uri": null,
+    "login": null,
+    "state": "unbound"
+  },
+  "last_verified_at": "2026-07-21T06:55:31Z",
+  "owner_binding": {
+    "evidence_uri": null,
+    "owner_id": "owner:unbound-nemertes",
+    "state": "unbound"
+  },
+  "protocol_version": "0.2.0",
+  "retention_policy": "Owner-local memory; shared artifacts only through SAN contracts.",
+  "runtime": {
+    "evidence_uri": null,
+    "name": "Hermes Agent",
+    "state": "unbound",
+    "version": "unbound"
+  },
+  "schema_version": 1,
+  "transports": [
+    "discord"
+  ]
+}

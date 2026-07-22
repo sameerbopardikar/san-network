@@ -1,0 +1,38 @@
+{
+  "audience": "public",
+  "authority_band": "A",
+  "capability_id": "bootstrap-agent-from-kernel",
+  "corpus_pin": {
+    "kind": "manifest-sha256",
+    "value": "a12ce0d6d9cf5c19cadfa16b1414563d893e720a9a3b659767da74049db6cfd3"
+  },
+  "description": "Prepare a candidate network-ready agent substrate from exact-pinned public kernel and corpus inputs.",
+  "evidence_maturity": "declared",
+  "explicit_non_claims": [
+    "not adopted",
+    "not released",
+    "not destination-tested",
+    "not frontier-proven"
+  ],
+  "handling_constraints": [
+    "no-raw-owner-memory"
+  ],
+  "kernel_pin": {
+    "kind": "git-commit",
+    "value": "9c3317069be5332181e7ba61f02472303337346b"
+  },
+  "rollback": {
+    "target_pin": {
+      "kind": "none",
+      "value": "none"
+    },
+    "verified": false,
+    "procedure": "No destination mutation is permitted while status is planned-not-released."
+  },
+  "schema_version": 1,
+  "status": "planned-not-released",
+  "tests": [
+    "python -m unittest discover -s capabilities/tests -v"
+  ],
+  "version": "0.1.0"
+}

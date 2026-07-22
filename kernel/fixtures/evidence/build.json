@@ -1,0 +1,13 @@
+{
+  "schema_version": "san.evidence/v1",
+  "kind": "work-object",
+  "event": "build",
+  "subject_pin": {
+    "kind": "git-commit",
+    "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "author_principal": "github:test-executor",
+  "timestamp": "2026-07-21T06:00:00Z",
+  "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "verdict": "pass"
+}

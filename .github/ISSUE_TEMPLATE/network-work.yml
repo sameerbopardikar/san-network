@@ -1,0 +1,143 @@
+name: SAN work object
+description: Canonical fail-closed contract for one public cross-agent change
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Public repository only. Do not include credentials, private GBrain material,
+        confidential sources, owner-private prompts, or non-redistributable text.
+  - type: input
+    id: objective
+    attributes:
+      label: One observable objective
+    validations:
+      required: true
+  - type: input
+    id: base_sha
+    attributes:
+      label: Exact 40-character base SHA
+    validations:
+      required: true
+  - type: input
+    id: branch
+    attributes:
+      label: Branch
+    validations:
+      required: true
+  - type: textarea
+    id: include_scope
+    attributes:
+      label: Included paths
+      description: Every writable and generated path owned by this work object.
+    validations:
+      required: true
+  - type: textarea
+    id: excluded_scope
+    attributes:
+      label: Excluded paths and non-goals
+    validations:
+      required: true
+  - type: input
+    id: rights_basis
+    attributes:
+      label: Rights basis
+      description: "Example: original-work or rights-cleared-public-source."
+    validations:
+      required: true
+  - type: input
+    id: coordinator
+    attributes:
+      label: Coordinator agent ID
+    validations:
+      required: true
+  - type: input
+    id: executor
+    attributes:
+      label: Single executor agent ID
+    validations:
+      required: true
+  - type: input
+    id: reviewer
+    attributes:
+      label: Independent reviewer agent ID
+    validations:
+      required: true
+  - type: input
+    id: verifier
+    attributes:
+      label: Independent verifier agent ID
+    validations:
+      required: true
+  - type: input
+    id: merger
+    attributes:
+      label: Merger GitHub identity
+      description: Must not resolve to the executor under the identity registry.
+    validations:
+      required: true
+  - type: textarea
+    id: writer_lease
+    attributes:
+      label: Writer lease
+      description: Lease ID, principal, paths, generation, expiry, and state.
+    validations:
+      required: true
+  - type: textarea
+    id: golden_fixture
+    attributes:
+      label: Golden fixture and environment
+      description: Exact fixture and expected-output hashes, seed, clock/network policy, normalization, and environment digest. State why not required if inapplicable.
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Required checks
+      description: Focused, full, secret, rights, and rollback commands.
+    validations:
+      required: true
+  - type: textarea
+    id: human_gates
+    attributes:
+      label: Human gates
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Exact rollback target and procedure
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence_maturity
+    attributes:
+      label: Evidence maturity
+      options:
+        - specified
+        - built
+        - tested
+        - independently-reviewed
+        - destination-verified
+        - adopted
+        - monitored
+        - rolled-back
+    validations:
+      required: true
+  - type: textarea
+    id: explicit_non_claims
+    attributes:
+      label: Explicit non-claims
+      description: State what this work and its evidence do not establish.
+    validations:
+      required: true
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Pre-disclosure confirmation
+      options:
+        - label: This issue and its attachments are public, rights-cleared, and secret-scanned.
+          required: true
+        - label: Executor, reviewer, and verifier are pairwise distinct.
+          required: true
+        - label: CodeRabbit and independent review will bind the same current full SHA.
+          required: true
