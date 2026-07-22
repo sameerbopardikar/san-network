@@ -10,6 +10,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 COMMANDS = [
     ([sys.executable, "scripts/validate_issue_templates.py"], ROOT),
+    (
+        [
+            sys.executable,
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "scripts/tests",
+            "-v",
+        ],
+        ROOT,
+    ),
     ([sys.executable, "scripts/validate.py"], ROOT / "kernel"),
     (
         [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"],

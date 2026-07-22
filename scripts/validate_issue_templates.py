@@ -9,8 +9,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_DIR = ROOT / ".github" / "ISSUE_TEMPLATE"
 ROUTINE_TEMPLATE = TEMPLATE_DIR / "task.yml"
+ALLOWED_ROUTINE_STATUS = "status:intake"
 PREAUTHORIZED_LABEL_PREFIXES = ("authority:",)
-PREAUTHORIZED_LABELS = {"status:ready"}
 
 
 def load_form(path: Path) -> dict:
@@ -33,21 +33,24 @@ def labels_for(form: dict, path: Path) -> list[str]:
 
 
 def validate_routine_intake(form: dict) -> None:
-    """Reject routine intake that grants ready state or authority at creation."""
+    """Require exactly one intake status and reject automatic authority."""
     labels = labels_for(form, ROUTINE_TEMPLATE)
+    status_labels = [label for label in labels if label.startswith("status:")]
     forbidden = [
         label
         for label in labels
-        if label in PREAUTHORIZED_LABELS
-        or label.startswith(PREAUTHORIZED_LABEL_PREFIXES)
+        if label.startswith(PREAUTHORIZED_LABEL_PREFIXES)
+        or (label.startswith("status:") and label != ALLOWED_ROUTINE_STATUS)
     ]
     if forbidden:
         raise ValueError(
             "routine task intake must remain proposal-only; forbidden automatic labels: "
             + ", ".join(forbidden)
         )
-    if "status:intake" not in labels:
-        raise ValueError("routine task intake must apply status:intake")
+    if status_labels != [ALLOWED_ROUTINE_STATUS]:
+        raise ValueError(
+            f"routine task intake must apply exactly one {ALLOWED_ROUTINE_STATUS} label"
+        )
 
 
 def main() -> int:
