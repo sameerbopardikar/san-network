@@ -71,7 +71,7 @@
     "branch": {
       "type": "string",
       "minLength": 1,
-      "pattern": "^[A-Za-z0-9._/-]+$"
+      "pattern": "^(?![-./])(?!.*(?:^|/)\\.)(?!.*\\.\\.)(?!.*//)(?!.*(?:\\.lock|[/.])$)[A-Za-z0-9._/-]+$"
     },
     "objective": {
       "type": "string",
@@ -435,7 +435,8 @@
         "enum": [
           "derived-only",
           "confidential-source",
-          "secret"
+          "secret",
+          "no-raw-owner-memory"
         ]
       },
       "type": "array",

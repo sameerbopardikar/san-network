@@ -10,10 +10,21 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 
+try:
+    from scripts.evidence import evidence_envelope_errors
+except ModuleNotFoundError:
+    from evidence import evidence_envelope_errors
+
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = ROOT.parent
 SCHEMA_DIR = ROOT / "schemas"
 AGENT_DIR = ROOT / "agents"
 WORK_FIXTURE_DIR = ROOT / "fixtures" / "work-object"
+TEST_IDENTITY_REGISTRY = {
+    "agent:expert": "github:test-executor",
+    "agent:gideon": "github:test-reviewer",
+    "agent:nemertes": "github:test-verifier",
+}
 EXPECTED_AGENTS = {
     "agent:expert",
     "agent:gideon",
@@ -59,6 +70,11 @@ def _identity_registry() -> dict[str, str]:
     return registry
 
 
+def _registered_agents() -> set[str]:
+    """Return every agent ID with a checked-in Agent Card."""
+    return {json.loads(path.read_text())["agent_id"] for path in AGENT_DIR.glob("*.json")}
+
+
 def _canonical_identity(value: str) -> str:
     """Fold an identity string for case/whitespace-insensitive comparison."""
     return value.strip().casefold()
@@ -98,27 +114,55 @@ def _parse_time(value: str) -> datetime:
 def adoption_receipt_errors(
     data: dict,
     validator: Draft202012Validator,
+    *,
+    identity_registry: dict[str, str] | None = None,
+    fixture_evidence: bool = False,
 ) -> list[str]:
-    """Return schema and separation-of-duties errors for one adoption receipt."""
+    """Return schema, identity, evidence, and separation-of-duties errors."""
     errors = [error.message for error in validator.iter_errors(data)]
     if errors:
         return errors
-    roles = [
-        data.get("executor_agent_id"),
-        data.get("reviewer_agent_id"),
-        data.get("verifier_agent_id"),
-    ]
-    if any(role is None for role in roles):
-        return errors
+    roles = [data["executor_agent_id"], data["reviewer_agent_id"], data["verifier_agent_id"]]
     if len(set(roles)) != 3:
         errors.append("executor, reviewer, and verifier must be pairwise distinct")
-    if data.get("event_type") in {"adopt", "promote"}:
-        if data.get("subject_pin") != data.get("candidate_pin"):
+    registered = _registered_agents()
+    for field in ("executor_agent_id", "reviewer_agent_id", "verifier_agent_id"):
+        if data[field] not in registered:
+            errors.append(f"{field.removesuffix('_agent_id')} must resolve to a registered Agent Card")
+    registry = identity_registry if identity_registry is not None else _identity_registry()
+    if data["event_type"] in {"adopt", "promote"} and data["result"] == "accepted":
+        principals = []
+        for field, role in zip(("executor", "reviewer", "verifier"), roles):
+            principal = registry.get(role)
+            if principal is None:
+                errors.append(f"{field} must resolve to a verified identity")
+            principals.append(principal)
+        if None not in principals and len(set(principals)) != 3:
+            errors.append("executor, reviewer, and verifier must resolve to distinct principals")
+        if data["subject_pin"] != data["candidate_pin"]:
             errors.append("subject_pin must equal candidate_pin for adopt/promote")
-        if data.get("resulting_baseline_pin") != data.get("candidate_pin"):
-            errors.append(
-                "resulting_baseline_pin must equal candidate_pin for adopt/promote"
-            )
+        if data["resulting_baseline_pin"] != data["candidate_pin"]:
+            errors.append("resulting_baseline_pin must equal candidate_pin for adopt/promote")
+    if data["event_type"] == "rollback" and data["resulting_baseline_pin"] != data["rollback_target_pin"]:
+        errors.append("resulting_baseline_pin must equal rollback_target_pin for rollback")
+    roots = [REPO_ROOT / "evidence"]
+    if fixture_evidence:
+        roots.append(REPO_ROOT / "receipts" / "fixtures" / "evidence")
+    author = registry.get(data["verifier_agent_id"], "github:unverified")
+    for index, item in enumerate(data["evidence"]):
+        errors.extend(evidence_envelope_errors(
+            item,
+            index=index,
+            repo_root=REPO_ROOT,
+            allowed_roots=tuple(roots),
+            kind="adoption-receipt",
+            event=data["event_type"],
+            subject_pin=data["subject_pin"],
+            author_principal=author,
+            timestamp=data["tested_at"],
+            environment_digest=item.get("environment_digest"),
+            verdict="pass" if data["result"] == "accepted" else "fail",
+        ))
     return errors
 
 def work_object_errors(
@@ -126,6 +170,8 @@ def work_object_errors(
     validator: Draft202012Validator,
     *,
     now: datetime | None = None,
+    identity_registry: dict[str, str] | None = None,
+    fixture_evidence: bool = False,
 ) -> list[str]:
     """Return schema and semantic cross-field errors for one SAN work object."""
     errors = [error.message for error in validator.iter_errors(data)]
@@ -133,6 +179,7 @@ def work_object_errors(
         return errors
 
     roles = data["roles"]
+    execution_roles = [roles["executor"], roles["reviewer"], roles["verifier"]]
     # BK-15: canonicalize (strip+casefold) all four coordination identities
     # before checking pairwise separation, so case/alias variation such as
     # "agent:expert" vs "AGENT:EXPERT" cannot bypass the distinctness gate.
@@ -166,7 +213,17 @@ def work_object_errors(
                 f"(case/whitespace-insensitive): collisions {collided}"
             )
 
-    registry = _identity_registry()
+    registry = identity_registry if identity_registry is not None else _identity_registry()
+    registered = _registered_agents()
+    for field in ("coordinator", "executor", "reviewer", "verifier"):
+        if roles[field] not in registered:
+            errors.append(f"{field} must resolve to a registered Agent Card")
+    execution_principals = [registry.get(role) for role in execution_roles]
+    for field, principal in zip(("executor", "reviewer", "verifier"), execution_principals):
+        if principal is None:
+            errors.append(f"{field} must resolve to a verified identity")
+    if None not in execution_principals and len(set(execution_principals)) != 3:
+        errors.append("executor, reviewer, and verifier must resolve to distinct principals")
     executor_principal = registry.get(roles["executor"])
     if executor_principal is None:
         errors.append("executor must resolve to a verified agent identity before merger checks")
@@ -251,13 +308,34 @@ def work_object_errors(
         "monitoring": (roles["verifier"], "pass"),
         "rollback": (roles["verifier"], "pass"),
     }
-    for item in evidence:
+    for index, item in enumerate(evidence):
         expected = expected_actor_verdict[item["kind"]]
         if (item["actor"], item["verdict"]) != expected:
             errors.append(
                 f"{item['kind']} evidence requires actor/verdict {expected}, "
                 f"got {(item['actor'], item['verdict'])}"
             )
+        if item["actor"].startswith("agent:") and item["actor"] not in registry:
+            errors.append(
+                f"{item['kind']} evidence actor must resolve to a verified agent identity"
+            )
+        actor_principal = registry.get(item["actor"]) or item["actor"].lower()
+        roots = [REPO_ROOT / "evidence"]
+        if fixture_evidence:
+            roots.append(ROOT / "fixtures" / "evidence")
+        errors.extend(evidence_envelope_errors(
+            item,
+            index=index,
+            repo_root=REPO_ROOT,
+            allowed_roots=tuple(roots),
+            kind="work-object",
+            event=item["kind"],
+            subject_pin={"kind": "git-commit", "value": item["subject_sha"]},
+            author_principal=actor_principal,
+            timestamp=item["timestamp"],
+            environment_digest=item["environment_digest"],
+            verdict=item["verdict"],
+        ))
         if (
             data["golden_fixture"]["required"]
             and _norm_digest(item["environment_digest"])
@@ -314,7 +392,12 @@ def main() -> int:
         schemas["work-object.schema.json"], format_checker=FormatChecker()
     )
     valid_fixture = json.loads((WORK_FIXTURE_DIR / "valid.json").read_text())
-    valid_errors = work_object_errors(valid_fixture, work_validator)
+    valid_errors = work_object_errors(
+        valid_fixture,
+        work_validator,
+        identity_registry=TEST_IDENTITY_REGISTRY,
+        fixture_evidence=True,
+    )
     if valid_errors:
         raise SystemExit(f"invalid work-object fixture: {'; '.join(valid_errors)}")
     print("valid work-object fixture: fixtures/work-object/valid.json")

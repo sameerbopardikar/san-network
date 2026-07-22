@@ -154,8 +154,25 @@
       "$ref": "#/$defs/exact_pin"
     },
     "rollback": {
-      "minLength": 5,
-      "type": "string"
+      "additionalProperties": false,
+      "properties": {
+        "target_pin": {
+          "$ref": "#/$defs/exact_pin"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "procedure": {
+          "minLength": 5,
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_pin",
+        "verified",
+        "procedure"
+      ],
+      "type": "object"
     },
     "schema_version": {
       "const": 1
@@ -454,6 +471,104 @@
         "required": [
           "evidence"
         ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "enum": ["sandbox-tested", "task-proven", "monitored", "outcome-calibrated"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {"kind": {"const": "installed"}},
+              "required": ["kind"]
+            }
+          }
+        },
+        "required": ["evidence"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "enum": ["task-proven", "monitored", "outcome-calibrated"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {"kind": {"const": "sandbox-tested"}},
+              "required": ["kind"]
+            }
+          }
+        },
+        "required": ["evidence"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {
+            "enum": ["monitored", "outcome-calibrated"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {"kind": {"const": "task-proven"}},
+              "required": ["kind"]
+            }
+          }
+        },
+        "required": ["evidence"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evidence_maturity": {"const": "outcome-calibrated"}
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "contains": {
+              "properties": {"kind": {"const": "monitored"}},
+              "required": ["kind"]
+            }
+          }
+        },
+        "required": ["evidence"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"enum": ["released", "deprecated", "revoked"]}
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "rollback": {
+            "properties": {
+              "verified": {"const": true},
+              "target_pin": {
+                "properties": {"kind": {"not": {"const": "none"}}}
+              }
+            }
+          }
+        }
       }
     },
     {

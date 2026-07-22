@@ -14,6 +14,7 @@ COMMANDS = [
         [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"],
         ROOT / "kernel",
     ),
+    ([sys.executable, "scripts/validate_manifests.py"], ROOT / "capabilities"),
     (
         [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"],
         ROOT / "capabilities",

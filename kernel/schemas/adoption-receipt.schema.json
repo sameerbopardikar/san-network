@@ -156,7 +156,11 @@
         "required": [
           "uri",
           "sha256",
-          "subject_pin"
+          "subject_pin",
+          "actor",
+          "timestamp",
+          "environment_digest",
+          "verdict"
         ],
         "properties": {
           "uri": {
@@ -170,6 +174,20 @@
           },
           "subject_pin": {
             "$ref": "#/$defs/exact_pin"
+          },
+          "actor": {
+            "$ref": "#/$defs/agent_id"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "environment_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "verdict": {
+            "enum": ["pass", "fail"]
           }
         }
       }

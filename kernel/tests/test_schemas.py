@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
-from scripts.validate import work_object_errors
+from scripts.validate import adoption_receipt_errors, work_object_errors
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_DIR = ROOT / "schemas"
@@ -13,6 +13,12 @@ WORK_FIXTURE_DIR = ROOT / "fixtures" / "work-object"
 
 
 class SchemaTests(unittest.TestCase):
+    TEST_REGISTRY = {
+        "agent:expert": "github:test-executor",
+        "agent:gideon": "github:test-reviewer",
+        "agent:nemertes": "github:test-verifier",
+    }
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.schemas = {
@@ -68,7 +74,21 @@ class SchemaTests(unittest.TestCase):
 
     def test_valid_work_object_passes_cross_field_validation(self):
         data = json.loads((WORK_FIXTURE_DIR / "valid.json").read_text())
-        self.assertEqual(work_object_errors(data, self.work_validator), [])
+        self.assertEqual(
+            work_object_errors(
+                data,
+                self.work_validator,
+                identity_registry=self.TEST_REGISTRY,
+                fixture_evidence=True,
+            ),
+            [],
+        )
+
+    def test_pending_and_unbound_roles_are_not_operationally_valid(self):
+        data = json.loads((WORK_FIXTURE_DIR / "valid.json").read_text())
+        errors = work_object_errors(data, self.work_validator, fixture_evidence=True)
+        self.assertTrue(any("reviewer" in e and "verified identity" in e for e in errors))
+        self.assertTrue(any("verifier" in e and "verified identity" in e for e in errors))
 
     def test_same_role_work_object_is_rejected(self):
         data = json.loads((WORK_FIXTURE_DIR / "invalid-same-role.json").read_text())
@@ -98,11 +118,58 @@ class SchemaTests(unittest.TestCase):
     def test_maturity_cannot_advance_without_required_evidence(self):
         data = json.loads((WORK_FIXTURE_DIR / "valid.json").read_text())
         data = copy.deepcopy(data)
-        data["evidence"] = [
-            item for item in data["evidence"] if item["kind"] != "independent-review"
-        ]
+        data["evidence"] = []
         errors = work_object_errors(data, self.work_validator)
         self.assertTrue(any("missing evidence kinds" in error for error in errors))
+
+    def test_unregistered_roles_cannot_satisfy_work_object(self):
+        data = copy.deepcopy(json.loads((WORK_FIXTURE_DIR / "valid.json").read_text()))
+        data["roles"]["reviewer"] = "agent:invented-reviewer"
+        self.assertTrue(
+            any("reviewer must resolve" in error for error in work_object_errors(data, self.work_validator))
+        )
+
+    def test_unbound_identity_cannot_author_evidence(self):
+        data = copy.deepcopy(json.loads((WORK_FIXTURE_DIR / "valid.json").read_text()))
+        data["evidence"][0]["actor"] = "agent:nemertes"
+        self.assertTrue(
+            any("verified agent identity" in error for error in work_object_errors(data, self.work_validator))
+        )
+
+    def test_nonexistent_or_digest_mismatched_evidence_is_rejected(self):
+        data = copy.deepcopy(json.loads((WORK_FIXTURE_DIR / "valid.json").read_text()))
+        data["evidence"][0]["uri"] = "conversation"
+        data["evidence"][0]["sha256"] = "0" * 64
+        self.assertTrue(
+            any("dedicated evidence root" in error for error in work_object_errors(data, self.work_validator))
+        )
+
+    def test_readme_and_uri_suffixes_cannot_be_work_evidence(self):
+        base = json.loads((WORK_FIXTURE_DIR / "valid.json").read_text())
+        for uri in (
+            "README.md",
+            "kernel/fixtures/evidence/build.json?x=1",
+            "kernel/fixtures/evidence/build.json#x",
+        ):
+            with self.subTest(uri=uri):
+                data = copy.deepcopy(base)
+                data["evidence"][0]["uri"] = uri
+                self.assertTrue(
+                    work_object_errors(
+                        data,
+                        self.work_validator,
+                        identity_registry=self.TEST_REGISTRY,
+                        fixture_evidence=True,
+                    )
+                )
+
+    def test_invalid_git_branch_is_rejected(self):
+        base = json.loads((WORK_FIXTURE_DIR / "valid.json").read_text())
+        for branch in ("../main", "-bad", "foo.lock", "foo/.bar", "foo/bar.", "foo//bar", "foo..bar"):
+            with self.subTest(branch=branch):
+                data = copy.deepcopy(base)
+                data["branch"] = branch
+                self.assertTrue(list(self.work_validator.iter_errors(data)))
 
     def test_semantic_adversarial_work_objects_are_rejected(self):
         for path in sorted(WORK_FIXTURE_DIR.glob("invalid-*.json")):
@@ -170,19 +237,18 @@ class SchemaTests(unittest.TestCase):
         self.assertTrue(errors)
 
     def test_impossible_branch_ref_is_rejected(self):
-        """A schema-valid but Git-impossible branch (e.g. '../main') must be rejected."""
+        """A Git-impossible branch such as '../main' must fail closed."""
         data = json.loads((WORK_FIXTURE_DIR / "invalid-branch-ref.json").read_text())
-        # confirm the schema alone would have accepted it (the semantic gap the
-        # reviewer found), then confirm work_object_errors rejects it.
         schema_only_errors = list(self.work_validator.iter_errors(data))
-        self.assertEqual(schema_only_errors, [])
         errors = work_object_errors(data, self.work_validator)
-        self.assertTrue(any("not a valid Git ref" in error for error in errors), errors)
+        self.assertTrue(errors)
+        self.assertTrue(
+            schema_only_errors or any("not a valid Git ref" in error for error in errors),
+            errors,
+        )
 
 
     def test_adoption_roles_must_be_pairwise_distinct(self):
-        from scripts.validate import adoption_receipt_errors
-
         schema = self.schemas["adoption-receipt.schema.json"]
         validator = Draft202012Validator(schema, format_checker=FormatChecker())
         pin = {"kind": "git-commit", "value": "a" * 40}
@@ -211,6 +277,10 @@ class SchemaTests(unittest.TestCase):
                 "uri": "receipts/example.json",
                 "sha256": "7f227db1653b6b723b07c8f2f6eb488f1f09e2f083ca7a3f5e02bbb274f5ff2e",
                 "subject_pin": pin,
+                "actor": "agent:nemertes",
+                "timestamp": "2026-07-21T10:00:00Z",
+                "environment_digest": "2" * 64,
+                "verdict": "pass",
             }],
             "evidence_maturity": "sandbox-tested",
             "rollback_verified": True,
@@ -252,6 +322,10 @@ class SchemaTests(unittest.TestCase):
                 "uri": "receipts/example.json",
                 "sha256": "7f227db1653b6b723b07c8f2f6eb488f1f09e2f083ca7a3f5e02bbb274f5ff2e",
                 "subject_pin": pin,
+                "actor": "agent:nemertes",
+                "timestamp": "2026-07-21T10:00:00Z",
+                "environment_digest": "2" * 64,
+                "verdict": "pass",
             }],
             "evidence_maturity": "monitored",
             "rollback_verified": False,
@@ -260,6 +334,70 @@ class SchemaTests(unittest.TestCase):
             "demotion_reason": "monitored evidence invalidated required claim",
         }
         self.assertEqual(list(validator.iter_errors(data)), [])
+
+    def test_adoption_receipt_rejects_unregistered_roles(self):
+        validator = Draft202012Validator(
+            self.schemas["adoption-receipt.schema.json"], format_checker=FormatChecker()
+        )
+        data = json.loads(
+            (ROOT.parent / "receipts" / "fixtures" / "valid" / "promotion.json").read_text()
+        )
+        data["reviewer_agent_id"] = "agent:invented-reviewer"
+        self.assertTrue(
+            any("reviewer must resolve" in error for error in adoption_receipt_errors(data, validator))
+        )
+
+    def test_adoption_receipt_evidence_must_resolve_and_match_digest(self):
+        validator = Draft202012Validator(
+            self.schemas["adoption-receipt.schema.json"], format_checker=FormatChecker()
+        )
+        data = json.loads(
+            (ROOT.parent / "receipts" / "fixtures" / "valid" / "promotion.json").read_text()
+        )
+        data["evidence"][0]["uri"] = "receipts/fixtures/evidence/missing.json"
+        data["evidence"][0]["sha256"] = "0" * 64
+        self.assertTrue(
+            any(
+                "does not exist" in error
+                for error in adoption_receipt_errors(
+                    data,
+                    validator,
+                    identity_registry=self.TEST_REGISTRY,
+                    fixture_evidence=True,
+                )
+            )
+        )
+
+    def test_rollback_receipt_requires_resulting_target_match(self):
+        validator = Draft202012Validator(
+            self.schemas["adoption-receipt.schema.json"], format_checker=FormatChecker()
+        )
+        data = json.loads(
+            (ROOT.parent / "receipts" / "fixtures" / "valid" / "promotion.json").read_text()
+        )
+        data["event_type"] = "rollback"
+        data["result"] = "rolled-back"
+        data["resulting_baseline_pin"] = data["rollback_target_pin"]
+        matching_errors = adoption_receipt_errors(
+            data,
+            validator,
+            identity_registry=self.TEST_REGISTRY,
+            fixture_evidence=True,
+        )
+        self.assertNotIn(
+            "resulting_baseline_pin must equal rollback_target_pin for rollback",
+            matching_errors,
+        )
+        data["resulting_baseline_pin"] = data["candidate_pin"]
+        self.assertIn(
+            "resulting_baseline_pin must equal rollback_target_pin for rollback",
+            adoption_receipt_errors(
+                data,
+                validator,
+                identity_registry=self.TEST_REGISTRY,
+                fixture_evidence=True,
+            ),
+        )
 
     def test_golden_fixture_required_false_needs_only_reason(self):
         data = copy.deepcopy(json.loads((WORK_FIXTURE_DIR / "valid.json").read_text()))
@@ -273,6 +411,12 @@ class SchemaTests(unittest.TestCase):
 
     def test_corpus_release_handling_constraints_include_no_raw_owner_memory(self):
         enum = self.schemas["corpus-release.schema.json"]["properties"][
+            "handling_constraints"
+        ]["items"]["enum"]
+        self.assertIn("no-raw-owner-memory", enum)
+
+    def test_work_object_handling_constraints_include_no_raw_owner_memory(self):
+        enum = self.schemas["work-object.schema.json"]["properties"][
             "handling_constraints"
         ]["items"]["enum"]
         self.assertIn("no-raw-owner-memory", enum)

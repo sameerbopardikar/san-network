@@ -108,6 +108,28 @@ body:
       label: Exact rollback target and procedure
     validations:
       required: true
+  - type: dropdown
+    id: evidence_maturity
+    attributes:
+      label: Evidence maturity
+      options:
+        - specified
+        - built
+        - tested
+        - independently-reviewed
+        - destination-verified
+        - adopted
+        - monitored
+        - rolled-back
+    validations:
+      required: true
+  - type: textarea
+    id: explicit_non_claims
+    attributes:
+      label: Explicit non-claims
+      description: State what this work and its evidence do not establish.
+    validations:
+      required: true
   - type: checkboxes
     id: disclosure
     attributes:

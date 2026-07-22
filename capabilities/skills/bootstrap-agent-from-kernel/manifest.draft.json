@@ -21,7 +21,14 @@
     "kind": "git-commit",
     "value": "9c3317069be5332181e7ba61f02472303337346b"
   },
-  "rollback": "No destination mutation is permitted while status is planned-not-released; released adoption must use a destination-local rollback procedure with verification evidence.",
+  "rollback": {
+    "target_pin": {
+      "kind": "none",
+      "value": "none"
+    },
+    "verified": false,
+    "procedure": "No destination mutation is permitted while status is planned-not-released."
+  },
   "schema_version": 1,
   "status": "planned-not-released",
   "tests": [

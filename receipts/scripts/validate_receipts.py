@@ -3,18 +3,48 @@
 
 import json
 import re
+import sys
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "kernel" / "scripts"))
+from evidence import evidence_envelope_errors  # noqa: E402
 SCHEMA_PATH = ROOT / "kernel" / "schemas" / "adoption-receipt.schema.json"
 VALID_DIR = ROOT / "receipts" / "fixtures" / "valid"
 INVALID_DIR = ROOT / "receipts" / "fixtures" / "invalid"
 ROLE_FIELDS = ("executor_agent_id", "reviewer_agent_id", "verifier_agent_id")
+TEST_IDENTITY_REGISTRY = {
+    "agent:expert": "github:test-executor",
+    "agent:gideon": "github:test-reviewer",
+    "agent:nemertes": "github:test-verifier",
+}
 
 
-def _semantic_errors(data: object) -> list[str]:
+def _registered_agents() -> set[str]:
+    """Return every agent ID with a checked-in Agent Card."""
+    agent_dir = ROOT / "kernel" / "agents"
+    return {json.loads(path.read_text())["agent_id"] for path in agent_dir.glob("*.json")}
+
+
+def _verified_identity_registry() -> dict[str, str]:
+    """Map verified agent IDs to canonical GitHub principals."""
+    registry = {}
+    for path in (ROOT / "kernel" / "agents").glob("*.json"):
+        card = json.loads(path.read_text())
+        identity = card["github_identity"]
+        if identity["state"] == "verified" and identity["login"]:
+            registry[card["agent_id"]] = f"github:{identity['login'].lower()}"
+    return registry
+
+
+def _semantic_errors(
+    data: object,
+    *,
+    identity_registry: dict[str, str] | None = None,
+    fixture_evidence: bool = False,
+) -> list[str]:
     """Return cross-field errors without assuming a schema-valid mapping."""
     if not isinstance(data, dict):
         return []
@@ -22,9 +52,26 @@ def _semantic_errors(data: object) -> list[str]:
     roles = [data.get(field) for field in ROLE_FIELDS]
     if all(isinstance(role, str) for role in roles) and len(set(roles)) != len(roles):
         errors.append("executor, reviewer, and verifier must be pairwise distinct")
+    registered = _registered_agents()
+    for field in ROLE_FIELDS:
+        role = data.get(field)
+        if isinstance(role, str) and role not in registered:
+            errors.append(
+                f"{field.removesuffix('_agent_id')} must resolve to a registered Agent Card"
+            )
 
     event = data.get("event_type")
     result = data.get("result")
+    registry = identity_registry if identity_registry is not None else _verified_identity_registry()
+    if event in {"adopt", "promote"} and result == "accepted":
+        principals = []
+        for field, role in zip(("executor", "reviewer", "verifier"), roles):
+            principal = registry.get(role) if isinstance(role, str) else None
+            if principal is None:
+                errors.append(f"{field} must resolve to a verified identity")
+            principals.append(principal)
+        if None not in principals and len(set(principals)) != 3:
+            errors.append("executor, reviewer, and verifier must resolve to distinct principals")
     benchmark = data.get("benchmark_result")
     previous = data.get("previous_baseline_pin")
     candidate = data.get("candidate_pin")
@@ -76,10 +123,33 @@ def _semantic_errors(data: object) -> list[str]:
                 errors.append(
                     f"evidence[{index}] subject_pin must match the receipt subject_pin"
                 )
+            roots = [ROOT / "evidence"]
+            if fixture_evidence:
+                roots.append(ROOT / "receipts" / "fixtures" / "evidence")
+            actor = str(item.get("actor", data.get("verifier_agent_id", "")))
+            author = registry.get(actor, "github:unverified")
+            errors.extend(evidence_envelope_errors(
+                item,
+                index=index,
+                repo_root=ROOT,
+                allowed_roots=tuple(roots),
+                kind="adoption-receipt",
+                event=str(event),
+                subject_pin=subject,
+                author_principal=author,
+                timestamp=item.get("timestamp", data.get("tested_at")),
+                environment_digest=item.get("environment_digest"),
+                verdict=item.get("verdict", "pass" if result == "accepted" else "fail"),
+            ))
     return errors
 
 
-def validation_errors(path: Path) -> list[str]:
+def validation_errors(
+    path: Path,
+    *,
+    identity_registry: dict[str, str] | None = None,
+    fixture_evidence: bool = False,
+) -> list[str]:
     """Return schema and semantic errors for one receipt file."""
     try:
         schema = json.loads(SCHEMA_PATH.read_text())
@@ -88,7 +158,11 @@ def validation_errors(path: Path) -> list[str]:
         return [f"malformed JSON: {exc.msg} (line {exc.lineno} column {exc.colno})"]
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors = [error.message for error in validator.iter_errors(data)]
-    errors.extend(_semantic_errors(data))
+    errors.extend(_semantic_errors(
+        data,
+        identity_registry=identity_registry,
+        fixture_evidence=fixture_evidence,
+    ))
     return sorted(set(errors))
 
 
@@ -127,12 +201,16 @@ def main() -> int:
     """Validate positive fixtures, adversarial fixtures, and operational receipts."""
     failed = False
     for path in sorted(VALID_DIR.glob("*.json")):
-        errors = validation_errors(path)
+        errors = validation_errors(
+            path,
+            identity_registry=TEST_IDENTITY_REGISTRY,
+            fixture_evidence=True,
+        )
         if errors:
             print(f"invalid expected-valid receipt {path}: {errors}")
             failed = True
         else:
-            print(f"valid receipt: {path.relative_to(ROOT)}")
+            print(f"valid fixture receipt: {path.relative_to(ROOT)}")
 
     for path in sorted(INVALID_DIR.glob("*.json")):
         errors = validation_errors(path)

@@ -1,4 +1,5 @@
 import copy
+import importlib.util
 import json
 import unittest
 from pathlib import Path
@@ -11,6 +12,11 @@ SCHEMA_PATH = ROOT / "kernel" / "schemas" / "capability-manifest.schema.json"
 MANIFEST_PATH = (
     CAPABILITY_ROOT / "skills" / "bootstrap-agent-from-kernel" / "manifest.draft.json"
 )
+SCRIPT = CAPABILITY_ROOT / "scripts" / "validate_manifests.py"
+SPEC = importlib.util.spec_from_file_location("validate_manifests", SCRIPT)
+assert SPEC is not None and SPEC.loader is not None
+SEMANTIC = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(SEMANTIC)
 
 
 class DraftTests(unittest.TestCase):
@@ -79,6 +85,77 @@ class DraftTests(unittest.TestCase):
         ]
         # mismatched evidence kind is rejected by contains-items schema
         self.assert_error_mentions(data, "does not contain items matching")
+
+    def test_evidence_maturity_requires_every_prior_tier(self):
+        data = copy.deepcopy(self.manifest)
+        data["evidence_maturity"] = "outcome-calibrated"
+        data["evidence"] = [
+            {
+                "kind": "outcome-calibrated",
+                "uri": "receipts/outcome.json",
+                "sha256": "1" * 64,
+                "actor": "agent:expert",
+                "timestamp": "2026-07-21T10:00:00Z",
+                "environment_digest": "2" * 64,
+                "verdict": "pass",
+            }
+        ]
+        self.assert_error_mentions(data, "does not contain items matching")
+
+    def test_deprecated_manifest_requires_verified_rollback(self):
+        data = copy.deepcopy(self.manifest)
+        data["status"] = "deprecated"
+        data["rollback"]["verified"] = False
+        self.assert_error_mentions(data, "true")
+
+    def test_released_manifest_requires_verified_non_none_rollback(self):
+        data = copy.deepcopy(self.manifest)
+        data["status"] = "released"
+        data["artifacts"] = [{"path": "payload.txt", "sha256": "0" * 64}]
+        data["evidence"] = [{
+            "kind": "installed",
+            "uri": "capabilities/fixtures/evidence/installed.json",
+            "sha256": "0" * 64,
+            "actor": "agent:expert",
+            "timestamp": "2026-07-21T10:00:00Z",
+            "environment_digest": "2" * 64,
+            "verdict": "pass",
+        }]
+        self.assert_error_mentions(data, "true", "none")
+
+    def test_forged_outcome_calibrated_evidence_is_semantically_rejected(self):
+        data = copy.deepcopy(self.manifest)
+        data["evidence_maturity"] = "outcome-calibrated"
+        data["evidence"] = [
+            {
+                "kind": kind,
+                "uri": "README.md",
+                "sha256": "0" * 64,
+                "actor": "agent:invented-reviewer",
+                "timestamp": "2026-07-21T10:00:00Z",
+                "environment_digest": "2" * 64,
+                "verdict": "pass",
+            }
+            for kind in ("installed", "sandbox-tested", "task-proven", "monitored", "outcome-calibrated")
+        ]
+        errors = SEMANTIC.capability_manifest_errors(data)
+        self.assertTrue(any("verified actor" in e for e in errors))
+        self.assertTrue(any("dedicated evidence root" in e for e in errors))
+
+    def test_capability_evidence_rejects_query_and_fragment(self):
+        data = copy.deepcopy(self.manifest)
+        data["evidence_maturity"] = "installed"
+        for suffix in ("?x=1", "#x"):
+            data["evidence"] = [{
+                "kind": "installed",
+                "uri": "capabilities/fixtures/evidence/installed.json" + suffix,
+                "sha256": "0" * 64,
+                "actor": "agent:expert",
+                "timestamp": "2026-07-21T10:00:00Z",
+                "environment_digest": "2" * 64,
+                "verdict": "pass",
+            }]
+            self.assertTrue(any("query or fragment" in e for e in SEMANTIC.capability_manifest_errors(data, fixture_evidence=True)))
 
     def test_evidence_requires_environment_digest(self):
         data = copy.deepcopy(self.manifest)

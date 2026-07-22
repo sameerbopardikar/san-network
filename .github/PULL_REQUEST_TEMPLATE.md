@@ -74,3 +74,6 @@ Allowed dispositions: `fixed`, `accepted-risk`, `false-positive`, `deferred-with
 - Verified:
 
 ## Evidence maturity and explicit non-claims
+
+- Evidence maturity:
+- Explicit non-claims:

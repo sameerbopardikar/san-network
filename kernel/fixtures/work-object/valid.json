@@ -68,77 +68,17 @@
     "procedure": "Revert the subject commit and rerun validation.",
     "verified": true
   },
-  "maturity": "independently-reviewed",
+  "maturity": "built",
   "evidence": [
     {
       "kind": "build",
       "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "uri": "receipts/example/build.json",
-      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "uri": "kernel/fixtures/evidence/build.json",
+      "sha256": "05cdcd83e8465d8eb43d7468541e33583788f17229531d4d65eb62615bd5a8da",
       "actor": "agent:expert",
       "timestamp": "2026-07-21T06:00:00Z",
       "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
       "verdict": "pass"
-    },
-    {
-      "kind": "test",
-      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "uri": "receipts/example/test.json",
-      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
-      "actor": "agent:nemertes",
-      "timestamp": "2026-07-21T06:05:00Z",
-      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "pass"
-    },
-    {
-      "kind": "coderabbit-review",
-      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "uri": "https://github.com/sameerbopardikar/san-network/pull/999",
-      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
-      "actor": "github:coderabbitai",
-      "timestamp": "2026-07-21T06:10:00Z",
-      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "go"
-    },
-    {
-      "kind": "independent-review",
-      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "uri": "receipts/example/gideon-review.json",
-      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
-      "actor": "agent:gideon",
-      "timestamp": "2026-07-21T06:15:00Z",
-      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "go"
-    },
-    {
-      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "timestamp": "2026-07-21T06:12:00Z",
-      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "pass",
-      "actor": "agent:nemertes",
-      "kind": "secret-scan",
-      "uri": "receipts/example/secret-scan.json",
-      "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
-    },
-    {
-      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "timestamp": "2026-07-21T06:12:00Z",
-      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "pass",
-      "actor": "agent:nemertes",
-      "kind": "rights-scan",
-      "uri": "receipts/example/rights-scan.json",
-      "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
-    },
-    {
-      "subject_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-      "timestamp": "2026-07-21T06:12:00Z",
-      "environment_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
-      "verdict": "pass",
-      "actor": "agent:nemertes",
-      "kind": "rollback-test",
-      "uri": "receipts/example/rollback-test.json",
-      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     }
   ],
   "findings": [

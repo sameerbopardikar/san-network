@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -30,9 +31,32 @@ ADVERSARIAL_EXPECTATIONS = {
 
 
 class ReceiptTests(unittest.TestCase):
+    TEST_REGISTRY = {
+        "agent:expert": "github:test-executor",
+        "agent:gideon": "github:test-reviewer",
+        "agent:nemertes": "github:test-verifier",
+    }
+
     def test_valid_fixture_passes(self):
         path = ROOT / "receipts" / "fixtures" / "valid" / "promotion.json"
-        self.assertEqual(MODULE.validation_errors(path), [])
+        self.assertEqual(
+            MODULE.validation_errors(
+                path, identity_registry=self.TEST_REGISTRY, fixture_evidence=True
+            ),
+            [],
+        )
+
+    def test_checked_in_promotion_is_not_operationally_valid(self):
+        path = ROOT / "receipts" / "fixtures" / "valid" / "promotion.json"
+        errors = MODULE.validation_errors(path, fixture_evidence=True)
+        self.assertTrue(any("verified identity" in error for error in errors))
+
+    def test_pending_and_unbound_roles_cannot_accept_promotion(self):
+        path = ROOT / "receipts" / "fixtures" / "valid" / "promotion.json"
+        data = json.loads(path.read_text())
+        errors = MODULE._semantic_errors(data, fixture_evidence=True)
+        self.assertTrue(any("reviewer" in e and "verified identity" in e for e in errors))
+        self.assertTrue(any("verifier" in e and "verified identity" in e for e in errors))
 
     def test_all_adversarial_fixtures_fail(self):
         invalid_dir = ROOT / "receipts" / "fixtures" / "invalid"
@@ -61,6 +85,42 @@ class ReceiptTests(unittest.TestCase):
         path = ROOT / "receipts" / "fixtures" / "invalid" / "failed-promotion.json"
         errors = MODULE.validation_errors(path)
         self.assertTrue(any("passed benchmark" in error for error in errors))
+
+    def test_unregistered_receipt_role_is_rejected(self):
+        path = ROOT / "receipts" / "fixtures" / "valid" / "promotion.json"
+        data = json.loads(path.read_text())
+        data["reviewer_agent_id"] = "agent:invented-reviewer"
+        self.assertTrue(
+            any("reviewer must resolve" in error for error in MODULE._semantic_errors(data))
+        )
+
+    def test_receipt_evidence_pointer_must_exist_and_match_digest(self):
+        path = ROOT / "receipts" / "fixtures" / "valid" / "promotion.json"
+        data = json.loads(path.read_text())
+        data["evidence"][0]["uri"] = "conversation"
+        data["evidence"][0]["sha256"] = "0" * 64
+        self.assertTrue(
+            any("dedicated evidence root" in error for error in MODULE._semantic_errors(data))
+        )
+
+    def test_readme_and_uri_suffixes_cannot_be_evidence(self):
+        path = ROOT / "receipts" / "fixtures" / "valid" / "promotion.json"
+        base = json.loads(path.read_text())
+        for uri in (
+            "README.md",
+            "receipts/fixtures/evidence/promotion.json?x=1",
+            "receipts/fixtures/evidence/promotion.json#x",
+        ):
+            with self.subTest(uri=uri):
+                data = json.loads(json.dumps(base))
+                data["evidence"][0]["uri"] = uri
+                self.assertTrue(
+                    MODULE._semantic_errors(
+                        data,
+                        identity_registry=self.TEST_REGISTRY,
+                        fixture_evidence=True,
+                    )
+                )
 
     def test_non_json_operational_artifact_fails_closed(self):
         with tempfile.TemporaryDirectory() as td:

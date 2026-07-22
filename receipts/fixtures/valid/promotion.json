@@ -9,21 +9,25 @@
   "claims": [
     "sandbox-tested"
   ],
-  "destination_agent_id": "agent:fixture-destination",
+  "destination_agent_id": "agent:expert",
   "deviations": [],
   "event_type": "promote",
   "evidence": [
     {
-      "uri": "receipts/example/fixture-evidence.json",
-      "sha256": "7f227db1653b6b723b07c8f2f6eb488f1f09e2f083ca7a3f5e02bbb274f5ff2e",
+      "uri": "receipts/fixtures/evidence/promotion.json",
+      "sha256": "7bee4beb605ddad0621f5c01244eeb9ddd39c0ace79ca638a5c8309a605869de",
       "subject_pin": {
         "kind": "git-commit",
         "value": "2222222222222222222222222222222222222222"
-      }
+      },
+      "actor": "agent:nemertes",
+      "timestamp": "2026-07-21T00:00:00Z",
+      "environment_digest": "4444444444444444444444444444444444444444444444444444444444444444",
+      "verdict": "pass"
     }
   ],
   "evidence_maturity": "sandbox-tested",
-  "executor_agent_id": "agent:fixture-executor",
+  "executor_agent_id": "agent:expert",
   "observed_result": "10 of 10 deterministic checks passed",
   "previous_baseline_pin": {
     "kind": "git-commit",
@@ -35,7 +39,7 @@
     "kind": "git-commit",
     "value": "2222222222222222222222222222222222222222"
   },
-  "reviewer_agent_id": "agent:fixture-reviewer",
+  "reviewer_agent_id": "agent:gideon",
   "rollback_target_pin": {
     "kind": "git-commit",
     "value": "1111111111111111111111111111111111111111"
@@ -49,5 +53,5 @@
   },
   "tested_at": "2026-07-21T00:00:00Z",
   "threshold": "all 10 deterministic checks pass",
-  "verifier_agent_id": "agent:fixture-verifier"
+  "verifier_agent_id": "agent:nemertes"
 }
