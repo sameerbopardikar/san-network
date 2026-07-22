@@ -1,14 +1,17 @@
-name: SAN task
-description: A simple durable work item for the shared network
+name: SAN task proposal
+description: Propose routine shared work for trusted coordinator triage
 labels:
-  - status:ready
-  - authority:A
+  - status:intake
 body:
   - type: markdown
     attributes:
       value: >-
-        GitHub is the shared public work ledger. Do not include credentials,
-        private memory, confidential material, or owner-private context.
+        This form creates a proposal only. It does not assign an owner, grant
+        authority, or authorize execution. A trusted coordinator must triage
+        the proposal, an owner team must accept it, and authorized maintainers
+        must apply any ready or authority labels before work may begin. GitHub
+        is the shared public work ledger. Do not include credentials, private
+        memory, confidential material, or owner-private context.
   - type: input
     id: objective
     attributes:
@@ -17,15 +20,16 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: owner_team
+    id: suggested_team
     attributes:
-      label: Owner team
+      label: Suggested team (proposal only)
+      description: This suggestion neither assigns nor authorizes a team. The team must explicitly accept ownership during trusted triage.
       options:
+        - Coordinator triage requested
         - Sameer + Expert
         - Srini + Gideon
         - Harris + Gerri
         - Aneek + Nemertes
-        - Unclaimed
     validations:
       required: true
   - type: textarea
@@ -38,8 +42,8 @@ body:
   - type: textarea
     id: next_action
     attributes:
-      label: Next action
-      description: The single next executable action and who owns it.
+      label: Proposed next action
+      description: A proposed action for triage; it is not executable or assigned until an owner accepts it and trusted maintainers authorize the work.
     validations:
       required: true
   - type: textarea
