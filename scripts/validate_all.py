@@ -49,15 +49,28 @@ def main() -> int:
     run(diff_command, ROOT)
 
     gitleaks = shutil.which("gitleaks")
+    if not gitleaks:
+        local_bin = Path(os.environ.get("GITLEAKS_INSTALL_DIR", str(Path.home() / ".local" / "bin")))
+        candidate = local_bin / "gitleaks"
+        if candidate.exists():
+            gitleaks = str(candidate)
     if gitleaks:
         run(
             [gitleaks, "detect", "--source", str(ROOT), "--no-git", "--redact", "--no-banner"],
             ROOT,
         )
     elif os.environ.get("SAN_REQUIRE_GITLEAKS") == "1":
-        raise SystemExit("gitleaks is required but not installed")
+        raise SystemExit(
+            "gitleaks is required (SAN_REQUIRE_GITLEAKS=1) but not installed. "
+            "Run scripts/install_gitleaks_8.30.1.sh first."
+        )
     else:
-        print("==> secrets: gitleaks unavailable; local secret scan skipped")
+        print(
+            "==> secrets: gitleaks unavailable and SAN_REQUIRE_GITLEAKS is not set to 1; "
+            "local secret scan skipped. This is a soft-fail path only when the caller "
+            "explicitly did not require the scanner -- CI must set SAN_REQUIRE_GITLEAKS=1 "
+            "so this branch cannot silently pass a secret gate."
+        )
 
     print("SAN validation passed", flush=True)
     return 0

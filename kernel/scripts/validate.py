@@ -4,6 +4,7 @@
 import fnmatch
 import json
 import re
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -56,6 +57,11 @@ def _identity_registry() -> dict[str, str]:
         if github["state"] == "verified" and github["login"]:
             registry[card["agent_id"]] = f"github:{github['login'].lower()}"
     return registry
+
+
+def _canonical_identity(value: str) -> str:
+    """Fold an identity string for case/whitespace-insensitive comparison."""
+    return value.strip().casefold()
 
 
 def _static_prefix(pattern: str) -> str:
@@ -127,15 +133,44 @@ def work_object_errors(
         return errors
 
     roles = data["roles"]
-    execution_roles = [roles["executor"], roles["reviewer"], roles["verifier"]]
-    if len(set(execution_roles)) != 3:
-        errors.append("executor, reviewer, and verifier must be pairwise distinct")
+    # BK-15: canonicalize (strip+casefold) all four coordination identities
+    # before checking pairwise separation, so case/alias variation such as
+    # "agent:expert" vs "AGENT:EXPERT" cannot bypass the distinctness gate.
+    # All four (executor/reviewer/verifier/merger) must be present and
+    # pairwise distinct; the merger is a github: principal string, the other
+    # three are agent: identities, but any reuse across any of the four
+    # (not merely executor vs the other two) is a separation-of-duties defect.
+    identity_fields = {
+        "executor": roles.get("executor"),
+        "reviewer": roles.get("reviewer"),
+        "verifier": roles.get("verifier"),
+        "merger": roles.get("merger"),
+    }
+    missing_identities = [name for name, value in identity_fields.items() if not value]
+    if missing_identities:
+        errors.append(
+            "roles.executor, roles.reviewer, roles.verifier, and roles.merger "
+            f"must all be present: missing {sorted(missing_identities)}"
+        )
+    else:
+        canonical = {
+            name: _canonical_identity(value) for name, value in identity_fields.items()
+        }
+        seen: dict[str, list[str]] = {}
+        for name, value in canonical.items():
+            seen.setdefault(value, []).append(name)
+        collided = {value: names for value, names in seen.items() if len(names) > 1}
+        if collided:
+            errors.append(
+                "executor, reviewer, verifier, and merger must be pairwise distinct "
+                f"(case/whitespace-insensitive): collisions {collided}"
+            )
 
     registry = _identity_registry()
     executor_principal = registry.get(roles["executor"])
     if executor_principal is None:
         errors.append("executor must resolve to a verified agent identity before merger checks")
-    elif executor_principal == roles["merger"].lower():
+    elif executor_principal == _canonical_identity(roles["merger"]):
         errors.append("merger must not resolve to the executor identity")
 
     included = data["scope"]["include"]
@@ -144,11 +179,52 @@ def work_object_errors(
         errors.append("scope include and exclude paths overlap")
     if not set(data["writer_lease"]["paths"]).issubset(set(included)):
         errors.append("writer lease paths must be declared in scope.include")
-    for changed in data["changed_paths"]:
+
+    # BK-16: reject scope.exclude entries that are malformed (non-string,
+    # empty, absolute, home-relative, or containing a ".."/"." traversal
+    # segment) instead of silently dropping them from the overlap check, and
+    # require changed_paths to be present and non-empty before evaluating it
+    # against scope.
+    def _malformed_path_entry(value: object) -> str | None:
+        if not isinstance(value, str) or not value.strip():
+            return "non-string or empty path entry"
+        if value.startswith("/") or value.startswith("~"):
+            return f"absolute or home-relative path not allowed: {value}"
+        segments = re.split(r"/+", value)
+        if any(segment in (".", "..") for segment in segments):
+            return f"path traversal segment not allowed: {value}"
+        return None
+
+    for label, collection in (("scope.include", included), ("scope.exclude", excluded)):
+        for entry in collection:
+            reason = _malformed_path_entry(entry)
+            if reason:
+                errors.append(f"{label} contains a malformed entry: {reason}")
+
+    changed_paths = data.get("changed_paths") or []
+    if not changed_paths:
+        errors.append("changed_paths must be present and non-empty")
+    for changed in changed_paths:
+        reason = _malformed_path_entry(changed)
+        if reason:
+            errors.append(f"changed_paths contains a malformed entry: {reason}")
+            continue
         if not any(fnmatch.fnmatchcase(changed, pattern) for pattern in included):
             errors.append(f"changed path is outside scope.include: {changed}")
         if any(fnmatch.fnmatchcase(changed, pattern) for pattern in excluded):
             errors.append(f"changed path intersects scope.exclude: {changed}")
+
+    # Reject a schema-valid but Git-impossible branch name (e.g. "../main")
+    # by checking it against Git's own ref-format rules rather than relying
+    # solely on the regex pattern in the JSON Schema.
+    branch = data.get("branch", "")
+    ref_check = subprocess.run(
+        ["git", "check-ref-format", "--branch", branch],
+        capture_output=True,
+        text=True,
+    )
+    if ref_check.returncode != 0:
+        errors.append(f"branch is not a valid Git ref: {branch!r}")
 
     lease = data["writer_lease"]
     if lease["state"] != "active":

@@ -72,9 +72,10 @@ class SchemaTests(unittest.TestCase):
 
     def test_same_role_work_object_is_rejected(self):
         data = json.loads((WORK_FIXTURE_DIR / "invalid-same-role.json").read_text())
-        self.assertIn(
-            "executor, reviewer, and verifier must be pairwise distinct",
-            work_object_errors(data, self.work_validator),
+        errors = work_object_errors(data, self.work_validator)
+        self.assertTrue(
+            any("must be pairwise distinct" in error for error in errors),
+            errors,
         )
 
 
@@ -108,6 +109,75 @@ class SchemaTests(unittest.TestCase):
             with self.subTest(path=path.name):
                 data = json.loads(path.read_text())
                 self.assertTrue(work_object_errors(data, self.work_validator))
+
+    def test_case_alias_role_collision_is_rejected(self):
+        """BK-15: an uppercase merger alias of the executor's login must not
+        bypass the merger/executor separation check."""
+        data = json.loads(
+            (WORK_FIXTURE_DIR / "invalid-merger-case-alias-self-merge.json").read_text()
+        )
+        errors = work_object_errors(data, self.work_validator)
+        self.assertTrue(errors)
+
+    def test_reviewer_verifier_role_reuse_via_case_is_rejected(self):
+        """BK-15: canonicalize before comparing so 'agent:X' vs 'AGENT:X' collides.
+
+        The merger schema pattern allows mixed case, so an uppercase alias of
+        the executor's resolved GitHub login is schema-valid but must still be
+        rejected once identities are canonicalized -- this is the exact
+        case/alias bypass the reviewer reproduced.
+        """
+        data = json.loads(
+            (WORK_FIXTURE_DIR / "invalid-merger-case-alias-self-merge.json").read_text()
+        )
+        schema_only_errors = list(self.work_validator.iter_errors(data))
+        self.assertEqual(schema_only_errors, [])
+        errors = work_object_errors(data, self.work_validator)
+        self.assertIn("merger must not resolve to the executor identity", errors)
+
+    def test_omitted_role_identity_is_rejected(self):
+        """BK-15: all four identities (incl. merger) must be present, not just executor."""
+        data = copy.deepcopy(json.loads((WORK_FIXTURE_DIR / "valid.json").read_text()))
+        data["roles"]["merger"] = ""
+        errors = [e.message for e in self.work_validator.iter_errors(data)]
+        # schema requires merger to match a github: pattern; empty string fails schema
+        self.assertTrue(errors)
+
+    def test_scope_exclude_traversal_is_rejected(self):
+        """BK-16: scope.exclude entries must be normalized, not silently dropped."""
+        data = json.loads(
+            (WORK_FIXTURE_DIR / "invalid-malformed-excluded-path.json").read_text()
+        )
+        errors = work_object_errors(data, self.work_validator)
+        self.assertTrue(
+            any("malformed entry" in error for error in errors), errors
+        )
+
+    def test_empty_changed_paths_is_rejected(self):
+        """BK-16: changed_paths must be present and non-empty."""
+        data = json.loads(
+            (WORK_FIXTURE_DIR / "invalid-empty-changed-paths.json").read_text()
+        )
+        errors = work_object_errors(data, self.work_validator)
+        self.assertTrue(errors)
+
+    def test_changed_path_traversal_is_rejected(self):
+        """BK-16: a '..' traversal segment in changed_paths must not validate."""
+        data = json.loads(
+            (WORK_FIXTURE_DIR / "invalid-changed-path-traversal.json").read_text()
+        )
+        errors = work_object_errors(data, self.work_validator)
+        self.assertTrue(errors)
+
+    def test_impossible_branch_ref_is_rejected(self):
+        """A schema-valid but Git-impossible branch (e.g. '../main') must be rejected."""
+        data = json.loads((WORK_FIXTURE_DIR / "invalid-branch-ref.json").read_text())
+        # confirm the schema alone would have accepted it (the semantic gap the
+        # reviewer found), then confirm work_object_errors rejects it.
+        schema_only_errors = list(self.work_validator.iter_errors(data))
+        self.assertEqual(schema_only_errors, [])
+        errors = work_object_errors(data, self.work_validator)
+        self.assertTrue(any("not a valid Git ref" in error for error in errors), errors)
 
 
     def test_adoption_roles_must_be_pairwise_distinct(self):
