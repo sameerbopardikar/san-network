@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "athlete": "Aneek Patil",
+  "coach": "Sameer Bopardikar",
+  "integrator_agent": "Expert",
+  "athlete_agent": "Arvy",
+  "visibility": "bilateral-combat-training",
+  "updated_at": "2026-08-01T00:00:00Z",
+  "current_block": {
+    "name": "First 12-week boxing/MMA block",
+    "week": 1,
+    "session": "A",
+    "theme": "Defensive hands and immediate counters",
+    "status": "ready_to_run"
+  },
+  "known_context": {
+    "coached_sessions_per_week": 3,
+    "session_order_fixed_weekdays_flexible": true,
+    "core_session_minutes": 60,
+    "boxing_is_technical_anchor": true,
+    "competition_is_possible_not_primary": true,
+    "near_zero_cost_constraint": true,
+    "available_equipment": [
+      "boxing gloves",
+      "mitts",
+      "mouthguard",
+      "headgear",
+      "open or grassy space"
+    ],
+    "limiting_factor": "lower-body flexibility",
+    "mats_required_for_uncontrolled_takedown_finishes_or_ground_rounds": true
+  },
+  "lifting_schedule": {
+    "monday": "back and biceps",
+    "tuesday": "shoulders and core plus incline chest",
+    "wednesday": "rest",
+    "thursday": "legs",
+    "friday": "chest and triceps with 8-6-4-2 bench",
+    "saturday": "rest",
+    "sunday": "heavy squat"
+  },
+  "technique_frontier": [
+    {
+      "technique": "stance and directional footwork",
+      "states": ["introduced"],
+      "evidence": "Sameer coach report from prior sessions",
+      "open_test": "retention under pressure and fatigue"
+    },
+    {
+      "technique": "jab, cross, and 1-2",
+      "states": ["introduced"],
+      "evidence": "Sameer coach report from first MMA coaching session",
+      "open_test": "timing and recovery under live movement"
+    },
+    {
+      "technique": "left and right loaded slips",
+      "states": ["clean_isolated_drilling"],
+      "evidence": "2026-07-30 coach report: diagonal down-and-back load with planted rear-foot glute connection",
+      "open_test": "retention under combinations, fatigue, and defense-to-counter timing"
+    },
+    {
+      "technique": "lead and rear hooks",
+      "states": ["clean_isolated_drilling"],
+      "evidence": "2026-07-30 coach report: lower body and core rotation reintegrated",
+      "open_test": "retention under movement, defense, and live resistance"
+    },
+    {
+      "technique": "gable grip",
+      "states": ["introduced"],
+      "evidence": "Sameer coach report from first MMA coaching session",
+      "open_test": "application under clinch resistance"
+    },
+    {
+      "technique": "high-crotch entry",
+      "states": ["introduced"],
+      "evidence": "Sameer coach report and repeated cooperative entries",
+      "open_test": "posture, setup, and controlled resistance"
+    },
+    {
+      "technique": "double-leg entry",
+      "states": ["introduced"],
+      "evidence": "Sameer coach report from first MMA coaching session",
+      "open_test": "setup and controlled resistance on safe surface"
+    },
+    {
+      "technique": "rear-hand parry and catch into immediate straight counters",
+      "states": ["not_introduced"],
+      "planned_session": "2026-08-01 Week 1 Session A",
+      "advancement_gate": "five consecutive clean defense-counter exchanges with stance, vision, control, and correct response to pressure"
+    }
+  ],
+  "contact_policy": {
+    "current_ceiling": "technical 20-30 percent power",
+    "progression": [
+      "cooperative drilling",
+      "reaction drilling",
+      "technical sparring",
+      "body-only sparring",
+      "restricted integrated rounds",
+      "broader sparring capped around 50 percent"
+    ],
+    "rule": "increase timing difficulty, decision demand, and pressure before impact"
+  },
+  "next_required_writeback": [
+    "modalities actually completed",
+    "parry versus catch reliability",
+    "single versus double-jab performance",
+    "feint recognition",
+    "immediacy of counter",
+    "footwork under pressure",
+    "contact intensity",
+    "pain soreness or fatigue",
+    "five-exchange gate result",
+    "one next-session priority"
+  ]
+}
