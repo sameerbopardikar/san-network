@@ -1,0 +1,60 @@
+{
+  "adoption_status": {
+    "arvy": "awaiting-v0.1.4-destination-receipt",
+    "expert": "published-candidate"
+  },
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "dfffcf6ecde2f993e286bd73c67c4fe55d9efd374a3908995fcdeb53f8cbfefe"
+    },
+    {
+      "path": "architecture/combat-training-os.md",
+      "sha256": "37886aa54fcfd51d2f0e5c50db5dee43014a57a037d98346151fc19e1f698bb0"
+    },
+    {
+      "path": "knowledge/epistemic-contract.md",
+      "sha256": "31eb77a78ffe6c89c2c39007261cadbd8d0a59d783207f436162809394c4118d"
+    },
+    {
+      "path": "packets/arvy-adoption-contract.md",
+      "sha256": "8a1eba0076fcf3a94e03f3a747563bd1c8fd5eceb97dafac4b048daba0362919"
+    },
+    {
+      "path": "research/combat-video-model-technique-analysis.md",
+      "sha256": "4ca8360c758cdafe704b0b2bdf09ac39b46461c6b88b0858d8c58b26f3cddf3a"
+    },
+    {
+      "path": "research/ufc-pi-integrated-programming.md",
+      "sha256": "8f12079b62044f2a8f394cee36d4e3e5ddb9abc60a433c55e95149054e279ebc"
+    },
+    {
+      "path": "sessions/2026-08-01-week-01-session-a.md",
+      "sha256": "c3b0f12983c1d1eebea254d28ed5ca5c6cdfcecd82e995fbfd06cb50f59095c6"
+    },
+    {
+      "path": "state/aneek-state-of-fighter.json",
+      "sha256": "1cfac8bccddea80f45fe8ab684c046265dc2f4a357dd5178e69c60e85c5ab19f"
+    },
+    {
+      "path": "verify_pack.py",
+      "sha256": "06e32bfae8acd6b249c5b807d473f7c4f5f04604247ee5e3e6b19456e63e11c0"
+    }
+  ],
+  "audience": "bilateral",
+  "created_at": "2026-08-04T23:15:00Z",
+  "handling_constraints": [
+    "derived-only",
+    "no-raw-owner-memory"
+  ],
+  "pack_id": "aneek-combat-training",
+  "participants": [
+    "Sameer Bopardikar",
+    "Aneek Patil",
+    "Expert",
+    "Arvy"
+  ],
+  "rights_policy": "Sameer-authorized combat-training material and network-authored synthesis; public-source pointers only; no raw third-party bodies or unrelated private context.",
+  "schema_version": 1,
+  "version": "0.1.4"
+}

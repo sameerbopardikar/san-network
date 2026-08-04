@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "state_version": "1.2.0",
+  "fighter_id": "aneek-patil",
+  "fighter_name": "Aneek Patil",
+  "coach": "Sameer Bopardikar",
+  "integrator_agent": "Expert",
+  "fighter_agent": "Arvy",
+  "visibility": "bilateral-combat-training",
+  "as_of": "2026-08-04",
+  "canonical_private_page": "plans/aneek-state-of-fighter",
+  "goal": {
+    "id": "goals/aneek-fighter-development",
+    "tier": "north_star",
+    "statement": "Become an increasingly complete, adaptive, self-directed fighter who can reliably protect himself, make coherent decisions under pressure across striking, clinch, wrestling, and ground situations, control force and risk, and continue improving independently until able to train as a reciprocal peer who raises Sameer's level.",
+    "competition_policy": "Competition remains possible but is not the organizing objective."
+  },
+  "strategic_goals": [
+    {
+      "id": "goals/aneek-functional-combat-coverage",
+      "desired_reality": "Coherent, safe, usable foundations across striking, clinch, wrestling, takedown defense, bad-position ground survival, technical stand-up, disengagement, and range transitions."
+    },
+    {
+      "id": "goals/aneek-pressure-tested-performance",
+      "desired_reality": "Perceive, decide, and act coherently under progressively less predictable resistance while preserving stance, vision, breathing, timing, composure, force control, and partner safety.",
+      "current_controlling_gap": true
+    },
+    {
+      "id": "goals/aneek-combat-capacity-and-durability",
+      "desired_reality": "Mobility, conditioning, strength integration, and recovery support technical execution rather than limit it."
+    },
+    {
+      "id": "goals/aneek-fighter-autonomy-and-reciprocal-peer",
+      "desired_reality": "Explain, practice, diagnose, and improve independently; provide high-quality resistance and eventually become a reciprocal training peer."
+    }
+  ],
+  "active_hierarchy": {
+    "program": "plans/aneek-boxing-mma-curriculum",
+    "mission": "plans/aneek-boxing-mma-curriculum-12-week-block",
+    "probe": "probes/aneek-week-01-defense-counter-transfer",
+    "run_surface": "Google Calendar",
+    "controller": "wiki/architecture/aneek-combat-training-os"
+  },
+  "current_program": {
+    "name": "First 12-week boxing/MMA block",
+    "week": 1,
+    "completed_session": "A",
+    "next_session": "B",
+    "next_theme": "High guard and shell against head/body hooks, then integrate existing exits and pivots"
+  },
+  "evidence_model": {
+    "claim_classes": [
+      "coach_observation",
+      "trainee_self_report",
+      "observed_performance",
+      "external_source_claim",
+      "expert_inference",
+      "arvy_inference",
+      "adopted_program_decision"
+    ],
+    "technique_states": [
+      "not_introduced",
+      "introduced",
+      "clean_isolated_drilling",
+      "successful_reaction_drilling",
+      "successful_constrained_sparring",
+      "retained_fatigue_contact",
+      "externally_validated",
+      "regressed_needs_repair"
+    ],
+    "rule": "Being taught establishes introduced status only. Cooperative or pad execution does not prove recognition, timing, resistance, fatigue retention, or live competence."
+  },
+  "skills": [
+    {
+      "id": "boxing-stance-guard",
+      "name": "Boxing stance and guard",
+      "category": "boxing-foundation",
+      "state": "introduced",
+      "evidence": ["2026-07-19 coach report"],
+      "open_test": "stance integrity under pressure and fatigue"
+    },
+    {
+      "id": "directional-footwork",
+      "name": "Directional footwork forward/back/left/right",
+      "category": "boxing-foundation",
+      "state": "introduced",
+      "evidence": ["2026-07-19 coach report"],
+      "open_test": "balance, vision, and guard under pressure"
+    },
+    {
+      "id": "jab-cross-one-two",
+      "name": "Jab, cross, and 1-2",
+      "category": "boxing-offense",
+      "state": "introduced",
+      "evidence": ["2026-07-19 coach report"],
+      "open_test": "timing and recovery in live movement"
+    },
+    {
+      "id": "loaded-slips",
+      "name": "Loaded left and right slips",
+      "category": "boxing-defense",
+      "state": "clean_isolated_drilling",
+      "evidence": ["2026-07-30 coach report: diagonal down-and-back loading with planted rear-foot glute connection"],
+      "open_test": "retention under combinations, fatigue, and defense-to-counter timing"
+    },
+    {
+      "id": "lead-hook",
+      "name": "Lead hook",
+      "category": "boxing-offense",
+      "state": "clean_isolated_drilling",
+      "evidence": ["2026-07-30 coach report: lower-body and core rotation reintegrated; judged solid and powerful"],
+      "open_test": "retention under movement, defense, and resistance"
+    },
+    {
+      "id": "rear-hook",
+      "name": "Rear hook",
+      "category": "boxing-offense",
+      "state": "not_introduced",
+      "evidence": ["2026-08-04 Sameer correction: only lead hook was taught"]
+    },
+    {
+      "id": "lead-uppercut",
+      "name": "Lead uppercut",
+      "category": "boxing-offense",
+      "state": "not_introduced",
+      "evidence": ["2026-08-04 Sameer correction: uppercuts were not taught"]
+    },
+    {
+      "id": "rear-uppercut",
+      "name": "Rear uppercut",
+      "category": "boxing-offense",
+      "state": "not_introduced",
+      "evidence": ["2026-08-04 Sameer correction: uppercuts were not taught"]
+    },
+    {
+      "id": "jab-parry-catch-counters",
+      "name": "Rear-hand jab parry/catch into straight counters",
+      "category": "boxing-defense-counter",
+      "state": "introduced",
+      "evidence": ["2026-08-01 completed-reconstructed session", "parry to cross", "catch to jab-cross"],
+      "open_test": "single/double-jab and feint recognition; immediate timing under pressure"
+    },
+    {
+      "id": "left-right-exits",
+      "name": "Exits left and right",
+      "category": "boxing-movement",
+      "state": "introduced",
+      "evidence": ["2026-08-04 Sameer correction about 2026-08-01 session"],
+      "open_test": "reliable use after defense and under boundary pressure"
+    },
+    {
+      "id": "basic-pivots",
+      "name": "Basic pivots",
+      "category": "boxing-movement",
+      "state": "introduced",
+      "evidence": ["2026-08-04 Sameer correction about 2026-08-01 session"],
+      "open_test": "stance and visual contact preserved under pressure"
+    },
+    {
+      "id": "gable-grip",
+      "name": "Gable grip",
+      "category": "grappling",
+      "state": "introduced",
+      "evidence": ["2026-07-19 coach report"],
+      "open_test": "application under clinch resistance"
+    },
+    {
+      "id": "high-crotch-entry",
+      "name": "High-crotch entry",
+      "category": "wrestling",
+      "state": "introduced",
+      "evidence": ["2026-07-19 coach report and repeated cooperative entries"],
+      "open_test": "setup, posture, and controlled resistance"
+    },
+    {
+      "id": "double-leg-entry",
+      "name": "Double-leg entry",
+      "category": "wrestling",
+      "state": "introduced",
+      "evidence": ["2026-07-19 coach report"],
+      "open_test": "setup and controlled resistance on safe surface"
+    }
+  ],
+  "performance_frontier": {
+    "mechanics": "Strongest current evidence is loaded slips and lead hook in isolated drilling.",
+    "recognition": "Jab/feint and single/double-jab recognition were planned on 2026-08-01, but exact execution and outcome were not logged.",
+    "timing": "Immediate straight counters are introduced but not scored under pressure.",
+    "force_control": "Technical contact ceiling was intended at 20-30%; actual control outcome was not logged.",
+    "integration": "Left/right exits and pivots were taught; reliability after defense and under pressure is unproven.",
+    "fatigue_contact_retention": "untested",
+    "external_validation": "none"
+  },
+  "sessions": [
+    {
+      "date": "2026-07-19",
+      "state": "completed",
+      "title": "First MMA fundamentals session",
+      "trained": ["stance", "directional footwork", "jab", "cross", "1-2", "light freestyle movement", "gable grip", "high-crotch entry", "double-leg entry"],
+      "source": "logs/training/2026-07-19-first-mma-coaching-session"
+    },
+    {
+      "date": "2026-07-30",
+      "state": "completed",
+      "title": "Loaded slips and lead hook",
+      "trained": ["loaded left slip", "loaded right slip", "lead hook"],
+      "explicitly_not_trained": ["rear hook", "lead uppercut", "rear uppercut"],
+      "source": "logs/training/2026-07-30-aneek-boxing-slip-and-hook"
+    },
+    {
+      "date": "2026-08-01",
+      "state": "completed-reconstructed",
+      "title": "Defensive hands, immediate counters, exits, and pivots",
+      "trained": ["rear-hand jab parry", "rear-hand jab catch", "parry to cross", "catch to jab-cross", "exit left", "exit right", "basic pivots"],
+      "unknowns": ["exact modules completed", "five-exchange gate result", "first failure under resistance", "reaction-sparring outcome", "contact control result", "pain or fatigue"],
+      "calendar_event_id": "9em1mjvmutasld5qmig83k7lkc",
+      "source": "logs/training/2026-08-01-aneek-defensive-hands-and-counters"
+    }
+  ],
+  "next_session_inheritance": [
+    "Test retention of parry/catch, immediate straight counters, exits, and pivots.",
+    "Teach high guard/shell against head and body hooks while maintaining vision.",
+    "Integrate existing exits and pivots after the shell rather than reteaching them.",
+    "Capture first failure under resistance, contact intensity, fatigue/pain, and a scored advancement gate."
+  ],
+  "version_history": [
+    {
+      "version": "1.2.0",
+      "date": "2026-08-04",
+      "changes": [
+        "Reclassified goals/aneek-fighter-development as the Tier-1 North Star instead of a flat goal.",
+        "Added four Tier-2 strategic goals and explicit program, mission, probe, and run ancestry.",
+        "Identified pressure-tested performance as the current controlling strategic gap.",
+        "Bound the hierarchy to the Combat Training OS controller contract and preserved upper-tier owner authority."
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-08-04",
+      "changes": [
+        "Anchored the State of Fighter and execution-learning loop to goals/aneek-fighter-development.",
+        "Clarified that the state file is an evidence projection rather than the objective itself.",
+        "Clarified that current evidence selects the highest-value next session rather than automatic syllabus advancement."
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-08-04",
+      "changes": [
+        "Created canonical versioned State of Fighter file.",
+        "Corrected false rear-hook attribution: lead hook only.",
+        "Recorded that uppercuts have not been taught.",
+        "Added confirmed left/right exits and pivots from the 2026-08-01 session.",
+        "Compiled all known sessions and separated exposure from demonstrated competence."
+      ]
+    }
+  ]
+}

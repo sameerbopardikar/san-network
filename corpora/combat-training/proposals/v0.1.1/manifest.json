@@ -1,0 +1,52 @@
+{
+  "adoption_status": {
+    "arvy": "awaiting-v0.1.1-destination-receipt",
+    "expert": "published-candidate"
+  },
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "0bd8dcd8362d3769aa840957423fd5eb049c2f3263906c0daa0cd5ce991d6858"
+    },
+    {
+      "path": "knowledge/epistemic-contract.md",
+      "sha256": "31eb77a78ffe6c89c2c39007261cadbd8d0a59d783207f436162809394c4118d"
+    },
+    {
+      "path": "packets/arvy-adoption-contract.md",
+      "sha256": "dc6338427ac8111dd86253748600ca791a684078bfc1c12a96d4cf003f765bf0"
+    },
+    {
+      "path": "research/ufc-pi-integrated-programming.md",
+      "sha256": "8f12079b62044f2a8f394cee36d4e3e5ddb9abc60a433c55e95149054e279ebc"
+    },
+    {
+      "path": "sessions/2026-08-01-week-01-session-a.md",
+      "sha256": "c3b0f12983c1d1eebea254d28ed5ca5c6cdfcecd82e995fbfd06cb50f59095c6"
+    },
+    {
+      "path": "state/aneek-state-of-fighter.json",
+      "sha256": "271bc4996b352037628ff57e9099148d8e82fb618524ab07bbe6ce8a5a62c5af"
+    },
+    {
+      "path": "verify_pack.py",
+      "sha256": "ac9339b2540dcd8a855b85689736faf49fffb7ce6a403968f9e660f054005ea1"
+    }
+  ],
+  "audience": "bilateral",
+  "created_at": "2026-08-04T22:25:00Z",
+  "handling_constraints": [
+    "derived-only",
+    "no-raw-owner-memory"
+  ],
+  "pack_id": "aneek-combat-training",
+  "participants": [
+    "Sameer Bopardikar",
+    "Aneek Patil",
+    "Expert",
+    "Arvy"
+  ],
+  "rights_policy": "Sameer-authorized combat-training material and network-authored synthesis; public-source pointers only; no raw third-party bodies or unrelated private context.",
+  "schema_version": 1,
+  "version": "0.1.1"
+}
